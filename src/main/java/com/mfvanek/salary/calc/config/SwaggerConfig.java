@@ -24,15 +24,6 @@ public class SwaggerConfig {
                 .build()
                 .apiInfo(metaData());
     }
-//
-//    @Override
-//    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//
-//        registry.addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-//    }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
