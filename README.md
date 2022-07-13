@@ -1,8 +1,8 @@
 # salary-calc
 Demo app for salary calculation (Spring Boot)
 
-[Swagger Doc](http://localhost:8080/v2/api-docs)
-[Swagger UI](http://localhost:8080/swagger-ui/)
+[Swagger Doc](http://localhost:8080/v3/api-docs)
+[Swagger UI](http://localhost:8080/swagger-ui.html)
 
 http://localhost:8080/actuator/health
 
