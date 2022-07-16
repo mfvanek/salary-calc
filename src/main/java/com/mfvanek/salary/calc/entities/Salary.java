@@ -73,7 +73,7 @@ public class Salary {
             return false;
         }
 
-        Salary other = (Salary) o;
+        final Salary other = (Salary) o;
         return new EqualsBuilder()
                 .append(this.id, other.id)
                 .isEquals();
