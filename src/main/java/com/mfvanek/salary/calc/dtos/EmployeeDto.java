@@ -2,10 +2,15 @@ package com.mfvanek.salary.calc.dtos;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.UUID;
+import javax.persistence.Id;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class EmployeeDto {

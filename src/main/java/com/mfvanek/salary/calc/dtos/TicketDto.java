@@ -2,10 +2,10 @@ package com.mfvanek.salary.calc.dtos;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class TicketDto {
