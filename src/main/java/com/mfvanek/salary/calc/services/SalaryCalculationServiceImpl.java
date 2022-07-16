@@ -11,10 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
 import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.PreDestroy;
 
 @Service
 @Transactional
@@ -72,7 +77,8 @@ public class SalaryCalculationServiceImpl implements SalaryCalculationService {
 
     private BigDecimal calculateTotalAmount(final Employee employee, int workingDaysCount) {
         final BigDecimal salaryPerHour = employee.getSalaryPerHour();
-        final BigDecimal totalHours = BigDecimal.valueOf(workingDaysCount * employee.getStandardHoursPerDay());
+        final BigDecimal totalHours = BigDecimal.valueOf(workingDaysCount)
+                .multiply(BigDecimal.valueOf(employee.getStandardHoursPerDay()));
         return salaryPerHour.multiply(totalHours);
     }
 }

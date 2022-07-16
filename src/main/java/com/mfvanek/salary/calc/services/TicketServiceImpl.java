@@ -1,21 +1,24 @@
 package com.mfvanek.salary.calc.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import com.mfvanek.salary.calc.services.interfaces.TicketService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import javax.persistence.EntityNotFoundException;
 
+@Slf4j
 @Service
 @Transactional
 public class TicketServiceImpl implements TicketService {
@@ -46,8 +49,8 @@ public class TicketServiceImpl implements TicketService {
             final Ticket newTicket = new Ticket(UUID.randomUUID(), request.getCalculationDate(),
                     employee, true, objectMapper.writeValueAsString(request), null);
             return ticketRepository.save(newTicket);
-        } catch (Exception e) {
-            // TODO write to log
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
         }
 
         ticket = findExisting(request.getEmployeeId(), request.getCalculationDate());

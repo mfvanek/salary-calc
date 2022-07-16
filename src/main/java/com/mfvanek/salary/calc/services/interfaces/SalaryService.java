@@ -1,8 +1,8 @@
 package com.mfvanek.salary.calc.services.interfaces;
 
+import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
-import com.mfvanek.salary.calc.entities.Salary;
 
 import java.util.Optional;
 import java.util.UUID;

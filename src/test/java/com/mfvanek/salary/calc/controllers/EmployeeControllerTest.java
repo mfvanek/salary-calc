@@ -3,8 +3,6 @@ package com.mfvanek.salary.calc.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfvanek.salary.calc.dtos.EmployeeDto;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.HeaderResultMatchers;
 
 import java.math.BigDecimal;
 import java.util.UUID;

@@ -6,11 +6,19 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -70,13 +78,4 @@ public class Salary {
                 .append(this.id, other.id)
                 .isEquals();
     }
-//
-//    public void setEmployeeId(final Employee employee) {
-//        Objects.requireNonNull(employee);
-//        if (this.employeeId != null && this.employeeId != employee) {
-//            throw new IllegalStateException("EmployeeId is already set");
-//        }
-//
-//        this.employeeId = employee;
-//    }
 }
