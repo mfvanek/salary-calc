@@ -5,10 +5,13 @@ import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 
 public interface EmployeeService {
 
-    Optional<Employee> findById(final UUID id);
+    @Nonnull
+    Optional<Employee> findById(@Nonnull UUID id);
 
-    Employee create(final EmployeeCreationRequest request);
+    @Nonnull
+    Employee create(@Nonnull EmployeeCreationRequest request);
 }

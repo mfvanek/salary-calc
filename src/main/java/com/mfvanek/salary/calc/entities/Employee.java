@@ -1,20 +1,19 @@
 package com.mfvanek.salary.calc.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
@@ -25,16 +24,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 @Getter
+@Setter
 @Entity
 @Table(name = "employees")
-public class Employee {
-
-    @Id
-    @NotNull
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+public class Employee extends BaseEntity {
 
     @NotNull
     @NotBlank

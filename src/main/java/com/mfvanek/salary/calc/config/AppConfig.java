@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class AppConfig {
 
     @Bean

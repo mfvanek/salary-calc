@@ -1,16 +1,14 @@
 package com.mfvanek.salary.calc.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,26 +17,21 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @Getter
 @Setter
 @Entity
 @Table(
         name = "tickets",
         indexes = {
-                @Index(name = "IDX_EMPLOYEE_DATE", columnList = "emp_id, calc_date, is_active", unique = true)
+                @Index(name = "idx_employee_date", columnList = "emp_id, calculated_at, is_active", unique = true)
         }
 )
-public class Ticket {
-
-    @Id
-    @NotNull
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+public class Ticket extends BaseEntity {
 
     @NotNull
-    @Column(name = "calc_date", updatable = false, nullable = false)
+    @Column(name = "calculated_at", updatable = false, nullable = false)
     private LocalDate calculationDate;
 
     @NotNull

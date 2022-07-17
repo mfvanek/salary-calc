@@ -4,33 +4,40 @@ import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.repositories.EmployeeRepository;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 import com.mfvanek.salary.calc.services.interfaces.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Transactional(readOnly = true)
+    @Nonnull
     @Override
-    public Optional<Employee> findById(final UUID id) {
+    public Optional<Employee> findById(@Nonnull final UUID id) {
         Objects.requireNonNull(id);
         return employeeRepository.findById(id);
     }
 
+    @Nonnull
+    @Transactional
     @Override
-    public Employee create(final EmployeeCreationRequest request) {
-        final Employee employee = new Employee(UUID.randomUUID(), request.getFirstName(), request.getLastName(),
-                request.getStandardHoursPerDay(), request.getSalaryPerHour(), new HashSet<>(), new HashSet<>());
+    public Employee create(@Nonnull final EmployeeCreationRequest request) {
+        final Employee employee = Employee.builder()
+                .id(UUID.randomUUID())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .standardHoursPerDay(request.getStandardHoursPerDay())
+                .salaryPerHour(request.getSalaryPerHour())
+                .build();
         return employeeRepository.save(employee);
     }
 }
