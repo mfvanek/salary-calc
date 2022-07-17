@@ -1,7 +1,9 @@
 package com.mfvanek.salary.calc.support;
 
+import com.mfvanek.salary.calc.config.ClockHolder;
 import com.mfvanek.salary.calc.entities.BaseEntity;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +13,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +31,8 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 @AutoConfigureMockMvc
 public abstract class TestBase {
 
+    protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
+
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
@@ -36,6 +44,12 @@ public abstract class TestBase {
     @Nonnull
     protected Set<String> getTables() {
         return Set.of("employees", "salary_calc", "tickets");
+    }
+
+    @BeforeAll
+    static void setUpClock() {
+        final Clock fixed = Clock.fixed(BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
+        ClockHolder.setClock(fixed);
     }
 
     @BeforeEach
@@ -65,6 +79,12 @@ public abstract class TestBase {
         var saved = repository.saveAll(entities);
         assertThat(saved)
                 .hasSameSizeAs(entities);
+        saved.forEach(e -> {
+                    assertThat(e.getCreatedAt())
+                            .isEqualTo(BEFORE_MILLENNIUM);
+                    assertThat(e.getUpdatedAt())
+                            .isEqualTo(BEFORE_MILLENNIUM);
+                });
 
         var result = repository.findAll();
         assertThat(result)
