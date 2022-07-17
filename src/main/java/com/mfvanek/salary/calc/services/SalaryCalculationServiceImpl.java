@@ -7,7 +7,7 @@ import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import com.mfvanek.salary.calc.services.interfaces.SalaryCalculationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,15 +21,13 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PreDestroy;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class SalaryCalculationServiceImpl implements SalaryCalculationService {
 
-    @Autowired
-    private SalaryRepository salaryRepository;
-
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final SalaryRepository salaryRepository;
+    private final TicketRepository ticketRepository;
 
     private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private final CompletionService<Salary> completionService = new ExecutorCompletionService<>(executorService);
@@ -62,8 +60,14 @@ public class SalaryCalculationServiceImpl implements SalaryCalculationService {
         }
 
         final BigDecimal totalAmount = calculateTotalAmount(employee, request.getWorkingDaysCount());
-        final Salary newSalary = new Salary(UUID.randomUUID(),
-                request.getCalculationDate(), request.getWorkingDaysCount(), totalAmount, employee, ticket);
+        final Salary newSalary = Salary.builder()
+                .id(UUID.randomUUID())
+                .calculationDate(request.getCalculationDate())
+                .workingDaysCount(request.getWorkingDaysCount())
+                .totalAmount(totalAmount)
+                .employeeId(employee)
+                .ticket(ticket)
+                .build();
         final Salary salary = salaryRepository.save(newSalary);
         markTicketAsFinished(ticket, salary);
         return salary;

@@ -7,8 +7,8 @@ import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import com.mfvanek.salary.calc.services.interfaces.TicketService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,25 +18,23 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class TicketServiceImpl implements TicketService {
 
-    @Autowired
-    private TicketRepository ticketRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final TicketRepository ticketRepository;
+    private final ObjectMapper objectMapper;
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<Ticket> findById(final UUID id) {
         Objects.requireNonNull(id);
         return ticketRepository.findById(id);
     }
 
     @Override
+    @Transactional
     public Ticket create(final Employee employee, final SalaryCalculationOnDateRequest request) {
         // Let's check if it already exists
         Optional<Ticket> ticket = findExisting(request.getEmployeeId(), request.getCalculationDate());
@@ -46,8 +44,13 @@ public class TicketServiceImpl implements TicketService {
 
         // If it doesn't exist, let's try to add a new one
         try {
-            final Ticket newTicket = new Ticket(UUID.randomUUID(), request.getCalculationDate(),
-                    employee, true, objectMapper.writeValueAsString(request), null);
+            final Ticket newTicket = Ticket.builder()
+                    .id(UUID.randomUUID())
+                    .calculationDate(request.getCalculationDate())
+                    .employeeId(employee)
+                    .isActive(true)
+                    .calculationParamsJson(objectMapper.writeValueAsString(request))
+                    .build();
             return ticketRepository.save(newTicket);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
