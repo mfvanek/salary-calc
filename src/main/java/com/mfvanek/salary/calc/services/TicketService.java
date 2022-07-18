@@ -6,7 +6,6 @@ import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
-import com.mfvanek.salary.calc.services.interfaces.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,18 +21,16 @@ import javax.persistence.EntityNotFoundException;
 @Slf4j
 @Service
 @Transactional(readOnly = true)
-public class TicketServiceImpl implements TicketService {
+public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final ObjectMapper objectMapper;
 
-    @Override
     public Optional<Ticket> findById(final UUID id) {
         Objects.requireNonNull(id);
         return ticketRepository.findById(id);
     }
 
-    @Override
     @Transactional
     public Ticket create(final Employee employee, final SalaryCalculationOnDateRequest request) {
         // Let's check if it already exists

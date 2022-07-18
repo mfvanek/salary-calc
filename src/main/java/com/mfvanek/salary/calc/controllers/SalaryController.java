@@ -5,9 +5,9 @@ import com.mfvanek.salary.calc.dtos.TicketDto;
 import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
-import com.mfvanek.salary.calc.services.interfaces.SalaryService;
+import com.mfvanek.salary.calc.services.SalaryService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +25,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/salary")
+@RequiredArgsConstructor
 public class SalaryController {
 
-    @Autowired
-    private SalaryService salaryService;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final SalaryService salaryService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<SalaryDto> getSalaryCalculation(@PathVariable UUID id) {
