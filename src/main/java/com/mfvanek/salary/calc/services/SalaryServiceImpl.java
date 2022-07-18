@@ -5,7 +5,6 @@ import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
-import com.mfvanek.salary.calc.services.interfaces.EmployeeService;
 import com.mfvanek.salary.calc.services.interfaces.SalaryCalculationService;
 import com.mfvanek.salary.calc.services.interfaces.SalaryService;
 import com.mfvanek.salary.calc.services.interfaces.TicketService;
