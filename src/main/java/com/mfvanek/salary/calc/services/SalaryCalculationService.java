@@ -6,7 +6,6 @@ import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
-import com.mfvanek.salary.calc.services.interfaces.SalaryCalculationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,7 @@ import javax.annotation.PreDestroy;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class SalaryCalculationServiceImpl implements SalaryCalculationService {
+public class SalaryCalculationService {
 
     private final SalaryRepository salaryRepository;
     private final TicketRepository ticketRepository;
@@ -32,7 +31,6 @@ public class SalaryCalculationServiceImpl implements SalaryCalculationService {
     private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private final CompletionService<Salary> completionService = new ExecutorCompletionService<>(executorService);
 
-    @Override
     public Future<Salary> submit(final Ticket ticket, final Employee employee, final SalaryCalculationOnDateRequest request) {
         return completionService.submit(() -> calculateOnDate(ticket, employee, request));
     }

@@ -2,9 +2,9 @@ package com.mfvanek.salary.calc.controllers;
 
 import com.mfvanek.salary.calc.dtos.TicketDto;
 import com.mfvanek.salary.calc.entities.Ticket;
-import com.mfvanek.salary.calc.services.interfaces.TicketService;
+import com.mfvanek.salary.calc.services.TicketService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +17,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/ticket")
+@RequiredArgsConstructor
 public class TicketController {
 
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final TicketService ticketService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<TicketDto> getTicket(@PathVariable UUID id) {

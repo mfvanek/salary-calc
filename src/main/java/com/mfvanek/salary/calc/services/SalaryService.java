@@ -5,11 +5,7 @@ import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
-import com.mfvanek.salary.calc.services.interfaces.EmployeeService;
-import com.mfvanek.salary.calc.services.interfaces.SalaryCalculationService;
-import com.mfvanek.salary.calc.services.interfaces.SalaryService;
-import com.mfvanek.salary.calc.services.interfaces.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,29 +15,21 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
 @Service
-@Transactional
-public class SalaryServiceImpl implements SalaryService {
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class SalaryService {
 
-    @Autowired
-    private SalaryRepository salaryRepository;
+    private final SalaryRepository salaryRepository;
+    private final EmployeeService employeeService;
+    private final TicketService ticketService;
+    private final SalaryCalculationService salaryCalculationService;
 
-    @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private SalaryCalculationService salaryCalculationService;
-
-    @Transactional(readOnly = true)
-    @Override
     public Optional<Salary> findById(final UUID id) {
         Objects.requireNonNull(id);
         return salaryRepository.findById(id);
     }
 
-    @Override
+    @Transactional
     public Ticket calculateOnDate(final SalaryCalculationOnDateRequest request) {
         Objects.requireNonNull(request);
         final Optional<Employee> employee = employeeService.findById(request.getEmployeeId());

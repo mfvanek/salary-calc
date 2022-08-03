@@ -3,9 +3,9 @@ package com.mfvanek.salary.calc.controllers;
 import com.mfvanek.salary.calc.dtos.EmployeeDto;
 import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
-import com.mfvanek.salary.calc.services.interfaces.EmployeeService;
+import com.mfvanek.salary.calc.services.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +29,11 @@ import java.util.UUID;
  */
 @RestController()
 @RequestMapping(path = "/employee")
+@RequiredArgsConstructor
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final EmployeeService employeeService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployee(@PathVariable UUID id) {
