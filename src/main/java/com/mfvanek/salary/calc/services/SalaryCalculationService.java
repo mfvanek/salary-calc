@@ -7,6 +7,7 @@ import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PreDestroy;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -54,7 +56,7 @@ public class SalaryCalculationService {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage(), e);
         }
 
         final BigDecimal totalAmount = calculateTotalAmount(employee, request.getWorkingDaysCount());

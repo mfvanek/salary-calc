@@ -65,7 +65,7 @@ public abstract class TestBase {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    protected <T extends BaseEntity> void entityCorrectnessTestCase(@Nonnull final Set<T> entities,
+    protected <T extends BaseEntity> void assertThatEntityIsCorrect(@Nonnull final Set<T> entities,
                                                                     @Nonnull final JpaRepository<T, UUID> repository) {
         assertThat(entities)
                 .as("The size of the collection must be greater than or equal to two")

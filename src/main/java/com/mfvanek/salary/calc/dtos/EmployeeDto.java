@@ -34,12 +34,12 @@ public class EmployeeDto {
     private String lastName;
 
     @NotNull
-    @Min(value = 1)
-    @Max(value = 8)
+    @Min(1)
+    @Max(8)
     private int standardHoursPerDay;
 
     @NotNull
-    @DecimalMax(value = "5000.00")
-    @DecimalMin(value = "100.00")
+    @DecimalMax("5000.00")
+    @DecimalMin("100.00")
     private BigDecimal salaryPerHour;
 }

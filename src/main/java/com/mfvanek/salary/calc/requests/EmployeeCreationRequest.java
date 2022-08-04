@@ -1,6 +1,8 @@
 package com.mfvanek.salary.calc.requests;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.DecimalMax;
@@ -11,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+@SuperBuilder
+@RequiredArgsConstructor
 public class EmployeeCreationRequest {
 
     @NotNull
@@ -22,12 +26,12 @@ public class EmployeeCreationRequest {
     private String lastName;
 
     @NotNull
-    @Min(value = 1)
-    @Max(value = 8)
+    @Min(1)
+    @Max(8)
     private int standardHoursPerDay;
 
     @NotNull
-    @DecimalMax(value = "5000.00")
-    @DecimalMin(value = "100.00")
+    @DecimalMax("5000.00")
+    @DecimalMin("100.00")
     private BigDecimal salaryPerHour;
 }

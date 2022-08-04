@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfvanek.salary.calc.dtos.EmployeeDto;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 import com.mfvanek.salary.calc.support.TestBase;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,15 +28,22 @@ class EmployeeControllerTest extends TestBase {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @SneakyThrows
     @Test
-    void getEmployeeShouldReturnNotFoundForRandomId() throws Exception {
-        mockMvc.perform(get("/employee/{id}", UUID.randomUUID())
+    void getEmployeeShouldReturnNotFoundForRandomId() {
+        final MvcResult mvcResult = mockMvc.perform(get("/employee/{id}", UUID.randomUUID())
                         .contentType("application/json"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andReturn();
+        assertThat(mvcResult)
+                .isNotNull();
+        assertThat(mvcResult.getResponse())
+                .isNotNull();
     }
 
+    @SneakyThrows
     @Test
-    void createEmployee() throws Exception {
+    void createEmployee() {
         final EmployeeCreationRequest employeeCreationRequest = new EmployeeCreationRequest();
         employeeCreationRequest.setFirstName("John");
         employeeCreationRequest.setLastName("Doe");
