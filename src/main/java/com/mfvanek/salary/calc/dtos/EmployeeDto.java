@@ -1,6 +1,9 @@
 package com.mfvanek.salary.calc.dtos;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -13,6 +16,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+@Validated
+@SuperBuilder
+@RequiredArgsConstructor
 public class EmployeeDto {
 
     @Id

@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {PostgresInitializer.class})
+@ContextConfiguration(initializers = PostgresInitializer.class)
 @AutoConfigureMockMvc
 public abstract class TestBase {
 
@@ -76,7 +76,7 @@ public abstract class TestBase {
         assertThat(entities.stream().map(BaseEntity::getId).distinct().count())
                 .as("All identifiers must be unique %s", entities)
                 .isEqualTo(entities.size());
-        var saved = repository.saveAll(entities);
+        final var saved = repository.saveAll(entities);
         assertThat(saved)
                 .hasSameSizeAs(entities);
         saved.forEach(e -> {
@@ -86,7 +86,7 @@ public abstract class TestBase {
                             .isEqualTo(BEFORE_MILLENNIUM);
                 });
 
-        var result = repository.findAll();
+        final var result = repository.findAll();
         assertThat(result)
                 .hasSameSizeAs(entities);
         result.forEach(c -> assertThatNoException()

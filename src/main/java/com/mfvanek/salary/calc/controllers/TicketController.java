@@ -24,7 +24,7 @@ public class TicketController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/{id}")
-    public ResponseEntity<TicketDto> getTicket(@PathVariable UUID id) {
+    public ResponseEntity<TicketDto> getTicket(@PathVariable final UUID id) {
         final Optional<Ticket> ticket = ticketService.findById(id);
         final HttpStatus status = ticket.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         final TicketDto ticketDto = convertToDto(ticket.orElse(new Ticket()));

@@ -47,7 +47,7 @@ public class Ticket extends BaseEntity {
     @Column(name = "calc_params", length = 2000, nullable = false)
     private String calculationParamsJson;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "salary_id")
     private Salary salaryId;
 }

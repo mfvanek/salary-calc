@@ -18,15 +18,24 @@ import java.time.ZoneOffset;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = {CustomConfigurationExampleTest.CustomClockConfiguration.class},
+@SpringBootTest(classes = CustomConfigurationExampleTest.CustomClockConfiguration.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {PostgresInitializer.class})
+@ContextConfiguration(initializers = PostgresInitializer.class)
 class CustomConfigurationExampleTest {
 
     private static final LocalDateTime MILLENNIUM = LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0);
 
     @Autowired
     private Clock clock;
+
+    @Test
+    void clockAlsoShouldBeFixed() {
+        final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
+
+        assertThat(LocalDateTime.now(clock))
+                .isBefore(realNow)
+                .isEqualTo(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0));
+    }
 
     @TestConfiguration
     static class CustomClockConfiguration {
@@ -36,14 +45,5 @@ class CustomConfigurationExampleTest {
         public Clock fixedClock() {
             return Clock.fixed(MILLENNIUM.toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
         }
-    }
-
-    @Test
-    void clockAlsoShouldBeFixed() {
-        final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
-
-        assertThat(LocalDateTime.now(clock))
-                .isBefore(realNow)
-                .isEqualTo(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0));
     }
 }

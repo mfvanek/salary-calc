@@ -77,7 +77,7 @@ public class SalaryCalculationService {
         ticketRepository.save(ticket);
     }
 
-    private BigDecimal calculateTotalAmount(final Employee employee, int workingDaysCount) {
+    private BigDecimal calculateTotalAmount(final Employee employee, final int workingDaysCount) {
         final BigDecimal salaryPerHour = employee.getSalaryPerHour();
         final BigDecimal totalHours = BigDecimal.valueOf(workingDaysCount)
                 .multiply(BigDecimal.valueOf(employee.getStandardHoursPerDay()));

@@ -15,7 +15,7 @@ public class PostgresInitializer implements ApplicationContextInitializer<Config
     private static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>(IMAGE);
 
     @Override
-    public void initialize(ConfigurableApplicationContext context) {
+    public void initialize(final ConfigurableApplicationContext context) {
         CONTAINER
             .withNetwork(NETWORK)
             .withUrlParam("prepareThreshold", "0")
