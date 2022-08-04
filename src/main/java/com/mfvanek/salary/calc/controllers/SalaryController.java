@@ -32,7 +32,7 @@ public class SalaryController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/{id}")
-    public ResponseEntity<SalaryDto> getSalaryCalculation(@PathVariable UUID id) {
+    public ResponseEntity<SalaryDto> getSalaryCalculation(@PathVariable final UUID id) {
         final Optional<Salary> salary = salaryService.findById(id);
         final HttpStatus status = salary.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         final SalaryDto salaryDto = convertToDto(salary.orElse(new Salary()));
@@ -40,8 +40,8 @@ public class SalaryController {
     }
 
     @PostMapping("/onDate")
-    public ResponseEntity<TicketDto> calculateSalary(@RequestBody SalaryCalculationOnDateRequest request,
-                                                     UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<TicketDto> calculateSalary(@RequestBody final SalaryCalculationOnDateRequest request,
+                                                     final UriComponentsBuilder uriComponentsBuilder) {
         final Ticket ticket = salaryService.calculateOnDate(request);
         final UriComponents uriComponents = uriComponentsBuilder.path("/ticket/{id}").buildAndExpand(ticket.getId());
         final HttpHeaders headers = new HttpHeaders();

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfvanek.salary.calc.dtos.EmployeeDto;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 import com.mfvanek.salary.calc.support.TestBase;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,10 +15,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.comparesEqualTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,15 +28,22 @@ class EmployeeControllerTest extends TestBase {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @SneakyThrows
     @Test
-    void getEmployeeShouldReturnNotFoundForRandomId() throws Exception {
-        mockMvc.perform(get("/employee/{id}", UUID.randomUUID())
-                .contentType("application/json"))
-                .andExpect(status().isNotFound());
+    void getEmployeeShouldReturnNotFoundForRandomId() {
+        final MvcResult mvcResult = mockMvc.perform(get("/employee/{id}", UUID.randomUUID())
+                        .contentType("application/json"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+        assertThat(mvcResult)
+                .isNotNull();
+        assertThat(mvcResult.getResponse())
+                .isNotNull();
     }
 
+    @SneakyThrows
     @Test
-    void createEmployee() throws Exception {
+    void createEmployee() {
         final EmployeeCreationRequest employeeCreationRequest = new EmployeeCreationRequest();
         employeeCreationRequest.setFirstName("John");
         employeeCreationRequest.setLastName("Doe");
@@ -46,27 +51,36 @@ class EmployeeControllerTest extends TestBase {
         employeeCreationRequest.setSalaryPerHour(BigDecimal.valueOf(400L));
 
         final MvcResult mvcResult = mockMvc.perform(post("/employee")
-                .contentType("application/json")
-                .content(objectMapper.writeValueAsString(employeeCreationRequest)))
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(employeeCreationRequest)))
                 .andExpect(status().isCreated())
                 .andReturn();
-        assertNotNull(mvcResult);
+        assertThat(mvcResult)
+                .isNotNull();
 
         final MockHttpServletResponse resultResponse = mvcResult.getResponse();
-        assertNotNull(resultResponse);
+        assertThat(resultResponse)
+                .isNotNull();
 
         final EmployeeDto employeeDto = objectMapper.readValue(resultResponse.getContentAsString(), EmployeeDto.class);
-        assertNotNull(employeeDto);
-        assertEquals("John", employeeDto.getFirstName());
-        assertEquals("Doe", employeeDto.getLastName());
-        assertEquals(8, employeeDto.getStandardHoursPerDay());
-        assertThat(employeeDto.getSalaryPerHour(), comparesEqualTo(BigDecimal.valueOf(400L)));
+        assertThat(employeeDto)
+                .isNotNull()
+                .satisfies(e -> {
+                    assertThat(e.getFirstName())
+                            .isEqualTo("John");
+                    assertThat(e.getLastName())
+                            .isEqualTo("Doe");
+                    assertThat(e.getStandardHoursPerDay())
+                            .isEqualTo(8);
+                    assertThat(e.getSalaryPerHour())
+                            .isEqualByComparingTo(BigDecimal.valueOf(400L));
+                });
 
         final String locationHeader = resultResponse.getHeader(HttpHeaders.LOCATION);
-        assertNotNull(locationHeader);
+        assertThat(locationHeader)
+                .isNotNull();
 
-        mockMvc.perform(get(locationHeader)
-                .contentType("application/json"))
+        mockMvc.perform(get(locationHeader).contentType("application/json"))
                 .andExpect(status().isOk());
     }
 }

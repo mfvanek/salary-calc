@@ -42,14 +42,14 @@ public class Employee extends BaseEntity {
     private String lastName;
 
     @NotNull
-    @Min(value = 1)
-    @Max(value = 8)
+    @Min(1)
+    @Max(8)
     @Column(name = "hours_per_day", nullable = false)
     private int standardHoursPerDay;
 
     @NotNull
-    @DecimalMax(value = "5000.00")
-    @DecimalMin(value = "100.00")
+    @DecimalMax("5000.00")
+    @DecimalMin("100.00")
     @Column(name = "salary_per_hour", nullable = false)
     private BigDecimal salaryPerHour;
 

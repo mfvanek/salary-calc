@@ -2,7 +2,7 @@ package com.mfvanek.salary.calc.entities;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class SalaryTest {
 
@@ -11,7 +11,8 @@ class SalaryTest {
     void equalsHashCodeShouldAdhereContracts() {
         final Salary first = new Salary();
         final Salary second = new Salary();
-        assertEquals(first, second);
+        assertThat(first)
+                .isEqualTo(second);
         //        EqualsVerifier.forClass(Salary.class)
         //                .withOnlyTheseFields("id")
         //                .withPrefabValues(Employee.class, new Employee(), new Employee())

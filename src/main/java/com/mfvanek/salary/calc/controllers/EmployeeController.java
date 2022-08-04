@@ -22,12 +22,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * I do mapping to DTO in controller
+ * I do mapping to DTO in controller.
  * https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
  * https://www.javadevjournal.com/spring/data-conversion-spring-rest-api/
  * https://auth0.com/blog/automatically-mapping-dto-to-entity-on-spring-boot-apis/
  */
-@RestController()
+@RestController
 @RequestMapping(path = "/employee")
 @RequiredArgsConstructor
 public class EmployeeController {
@@ -36,7 +36,7 @@ public class EmployeeController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable UUID id) {
+    public ResponseEntity<EmployeeDto> getEmployee(@PathVariable final UUID id) {
         final Optional<Employee> employee = employeeService.findById(id);
         final HttpStatus status = employee.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         final EmployeeDto employeeDto = convertToDto(employee.orElse(new Employee()));
@@ -44,8 +44,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeCreationRequest newEmployee,
-                                                      UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody final EmployeeCreationRequest newEmployee,
+                                                      final UriComponentsBuilder uriComponentsBuilder) {
         final Employee employee = employeeService.create(newEmployee);
         final UriComponents uriComponents = uriComponentsBuilder.path("/employee/{id}").buildAndExpand(employee.getId());
         final HttpHeaders headers = new HttpHeaders();

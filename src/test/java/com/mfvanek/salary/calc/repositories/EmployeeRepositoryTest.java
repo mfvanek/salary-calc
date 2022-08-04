@@ -31,6 +31,6 @@ class EmployeeRepositoryTest extends TestBase {
                 .standardHoursPerDay(8)
                 .build();
 
-        entityCorrectnessTestCase(Set.of(first, second), repository);
+        assertThatEntityIsCorrect(Set.of(first, second), repository);
     }
 }
