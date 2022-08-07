@@ -1,13 +1,12 @@
 package com.mfvanek.salary.calc.services;
 
+import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Salary;
-import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.support.TestBase;
-import org.junit.jupiter.api.Disabled;
+import com.mfvanek.salary.calc.support.TestDataProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -16,8 +15,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SalaryServiceTest extends TestBase {
 
-    @Autowired
-    private SalaryRepository salaryRepository;
     @Autowired
     private SalaryService salaryService;
 
@@ -34,17 +31,16 @@ class SalaryServiceTest extends TestBase {
                 .isNotPresent();
     }
 
-    @Disabled
     @Test
     void findByIdShouldReturnEntityWhenFound() {
-        final Salary notSaved = Salary.builder()
-                .id(UUID.randomUUID())
+        final Employee employee = TestDataProvider.prepareIvanIvanov();
+        final Salary notSaved = TestDataProvider.prepareSalary()
                 .calculationDate(LocalDate.now(clock))
-                .workingDaysCount(4)
-                .totalAmount(new BigDecimal("12534.00"))
+                .employeeId(employee)
                 .build();
-        final Salary saved = salaryRepository.save(notSaved);
-        assertThat(salaryService.findById(saved.getId()))
+        employee.withSalary(notSaved);
+        employeeRepository.save(employee);
+        assertThat(salaryService.findById(notSaved.getId()))
                 .isPresent()
                 .get()
                 .satisfies(r -> {

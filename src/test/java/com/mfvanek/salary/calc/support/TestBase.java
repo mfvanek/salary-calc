@@ -1,6 +1,7 @@
 package com.mfvanek.salary.calc.support;
 
 import com.mfvanek.salary.calc.entities.BaseEntity;
+import com.mfvanek.salary.calc.repositories.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.threeten.extra.MutableClock;
 
 import java.time.Clock;
@@ -42,6 +44,10 @@ public abstract class TestBase {
     protected MutableClock mutableClock;
     @Autowired
     protected Clock clock;
+    @Autowired
+    protected EmployeeRepository employeeRepository;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     @AfterEach
     void resetClock() {
@@ -88,8 +94,10 @@ public abstract class TestBase {
         saved.forEach(e -> {
             assertThat(e.getCreatedAt())
                     .isEqualTo(BEFORE_MILLENNIUM);
-            assertThat(e.getUpdatedAt())
-                    .isNull();
+            if (e.getUpdatedAt() != null) {
+                assertThat(e.getUpdatedAt())
+                        .isEqualTo(BEFORE_MILLENNIUM);
+            }
         });
 
         final var result = repository.findAll();
@@ -98,6 +106,13 @@ public abstract class TestBase {
         result.forEach(c -> assertThatNoException()
                 .as("Метод toString не должен генерировать ошибок")
                 .isThrownBy(c::toString)); // toString
+    }
+
+    protected void assertInTransaction(@Nonnull final Runnable check) {
+        transactionTemplate.execute(ts -> {
+            check.run();
+            return null;
+        });
     }
 
     static Instant getTestInstant() {

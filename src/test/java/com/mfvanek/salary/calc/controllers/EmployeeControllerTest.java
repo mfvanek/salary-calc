@@ -24,7 +24,6 @@ class EmployeeControllerTest extends TestBase {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 

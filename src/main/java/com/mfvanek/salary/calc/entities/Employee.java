@@ -11,6 +11,7 @@ import org.hibernate.annotations.FetchMode;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,4 +63,11 @@ public class Employee extends BaseEntity {
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
     private Set<Ticket> tickets = new HashSet<>();
+
+    public void withSalary(@Nonnull final Salary salary) {
+        if (salaries == null) {
+            salaries = new HashSet<>();
+        }
+        salaries.add(salary);
+    }
 }
