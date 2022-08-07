@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.repositories;
 
-import com.mfvanek.salary.calc.config.ClockHolder;
 import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.support.TestBase;
 import org.junit.jupiter.api.Test;
@@ -38,22 +37,17 @@ class EmployeeRepositoryTest extends TestBase {
     @Test
     void canBeSavedInFuture() {
         final LocalDateTime distantFuture = LocalDateTime.of(3000, Month.JANUARY, 1, 0, 0, 0);
-        final Clock fixed = Clock.fixed(distantFuture.toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
-        final Clock oldClock = ClockHolder.setClock(fixed);
-        try {
-            final Employee notSaved = prepareIvanIvanov();
-            assertThat(notSaved.getCreatedAt())
-                    .isNull();
-            final Employee saved = employeeRepository.save(notSaved);
-            assertThat(saved)
-                    .isNotNull()
-                    .satisfies(e -> assertThat(e.getCreatedAt())
-                            .isEqualTo(LocalDateTime.now(ClockHolder.getClock()))
-                            .isEqualTo(LocalDateTime.of(3000, Month.JANUARY, 1, 0, 0, 0))
-                            .isAfter(LocalDateTime.now(Clock.systemDefaultZone())));
-        } finally {
-            ClockHolder.setClock(oldClock);
-        }
+        mutableClock.setInstant(distantFuture.toInstant(ZoneOffset.UTC));
+
+        final Employee notSaved = prepareIvanIvanov();
+        assertThat(notSaved.getCreatedAt())
+                .isNull();
+        final Employee saved = employeeRepository.save(notSaved);
+        assertThat(saved)
+                .isNotNull()
+                .satisfies(e -> assertThat(e.getCreatedAt())
+                        .isEqualTo(LocalDateTime.of(3000, Month.JANUARY, 1, 0, 0, 0))
+                        .isAfter(LocalDateTime.now(Clock.systemDefaultZone())));
     }
 
     @Test

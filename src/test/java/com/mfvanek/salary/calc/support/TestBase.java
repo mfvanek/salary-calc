@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.support;
 
-import com.mfvanek.salary.calc.config.ClockHolder;
 import com.mfvanek.salary.calc.entities.BaseEntity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,11 +40,8 @@ public abstract class TestBase {
     protected JdbcTemplate jdbcTemplate;
     @Autowired
     protected MutableClock mutableClock;
-
-    @BeforeEach
-    void setUpClock() {
-        ClockHolder.setClock(mutableClock);
-    }
+    @Autowired
+    protected Clock clock;
 
     @AfterEach
     void resetClock() {
@@ -90,11 +86,11 @@ public abstract class TestBase {
         assertThat(saved)
                 .hasSameSizeAs(entities);
         saved.forEach(e -> {
-                    assertThat(e.getCreatedAt())
-                            .isEqualTo(BEFORE_MILLENNIUM);
-                    assertThat(e.getUpdatedAt())
-                            .isEqualTo(BEFORE_MILLENNIUM);
-                });
+            assertThat(e.getCreatedAt())
+                    .isEqualTo(BEFORE_MILLENNIUM);
+            assertThat(e.getUpdatedAt())
+                    .isNull();
+        });
 
         final var result = repository.findAll();
         assertThat(result)
