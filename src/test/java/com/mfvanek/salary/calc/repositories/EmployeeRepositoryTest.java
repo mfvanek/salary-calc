@@ -31,7 +31,6 @@ class EmployeeRepositoryTest extends TestBase {
         assertThat(saved)
                 .isNotNull()
                 .satisfies(e -> assertThat(e.getCreatedAt())
-                        .isEqualTo(LocalDateTime.now(ClockHolder.getClock()))
                         .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59))
                         .isBefore(LocalDateTime.now(Clock.systemDefaultZone())));
     }

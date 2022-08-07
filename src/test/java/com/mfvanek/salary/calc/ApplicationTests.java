@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc;
 
-import com.mfvanek.salary.calc.config.ClockHolder;
 import com.mfvanek.salary.calc.support.TestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,18 +37,12 @@ class ApplicationTests extends TestBase {
 
     @Test
     void clockCanBeChangedLocallyButClockBeanRemainsOld() {
-        final LocalDateTime distantFuture = LocalDateTime.of(3000, Month.JANUARY, 1, 0, 0, 0);
-        final Clock fixed = Clock.fixed(distantFuture.toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
-        final Clock oldClock = ClockHolder.setClock(fixed);
-        try {
-            final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
+        mutableClock.add(1_000L, ChronoUnit.YEARS);
 
-            // clock bean hasn't changed!
-            assertThat(LocalDateTime.now(clock))
-                    .isBefore(realNow)
-                    .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59));
-        } finally {
-            ClockHolder.setClock(oldClock);
-        }
+        final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
+
+        assertThat(LocalDateTime.now(clock))
+                .isAfter(realNow)
+                .isEqualTo(LocalDateTime.of(2999, Month.DECEMBER, 31, 23, 59, 59));
     }
 }
