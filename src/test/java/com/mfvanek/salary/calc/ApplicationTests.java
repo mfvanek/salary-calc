@@ -16,8 +16,6 @@ class ApplicationTests extends TestBase {
 
     @Autowired
     private ApplicationContext context;
-    @Autowired
-    private Clock clock;
 
     @Test
     void contextLoads() {
@@ -28,21 +26,17 @@ class ApplicationTests extends TestBase {
 
     @Test
     void clockShouldBeFixed() {
-        final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
-
         assertThat(LocalDateTime.now(clock))
-                .isBefore(realNow)
+                .isBefore(LocalDateTime.now(Clock.systemDefaultZone()))
                 .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59));
     }
 
     @Test
-    void clockCanBeChangedLocallyButClockBeanRemainsOld() {
+    void clockCanBeChangedLocally() {
         mutableClock.add(1_000L, ChronoUnit.YEARS);
 
-        final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
-
         assertThat(LocalDateTime.now(clock))
-                .isAfter(realNow)
+                .isAfter(LocalDateTime.now(Clock.systemDefaultZone()))
                 .isEqualTo(LocalDateTime.of(2999, Month.DECEMBER, 31, 23, 59, 59));
     }
 }

@@ -27,10 +27,8 @@ class CustomConfigurationExampleTest {
 
     @Test
     void clockAlsoShouldBeFixed() {
-        final LocalDateTime realNow = LocalDateTime.now(Clock.systemDefaultZone());
-
         assertThat(LocalDateTime.now(clock))
-                .isBefore(realNow)
+                .isBefore(LocalDateTime.now(Clock.systemDefaultZone()))
                 .isEqualTo(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0));
     }
 
