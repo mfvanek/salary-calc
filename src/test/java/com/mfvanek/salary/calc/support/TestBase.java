@@ -1,19 +1,24 @@
 package com.mfvanek.salary.calc.support;
 
-import com.mfvanek.salary.calc.config.ClockHolder;
 import com.mfvanek.salary.calc.entities.BaseEntity;
+import com.mfvanek.salary.calc.repositories.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.threeten.extra.MutableClock;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
@@ -27,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = PostgresInitializer.class)
+@ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
 @AutoConfigureMockMvc
 public abstract class TestBase {
 
@@ -35,6 +40,19 @@ public abstract class TestBase {
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;
+    @Autowired
+    protected MutableClock mutableClock;
+    @Autowired
+    protected Clock clock;
+    @Autowired
+    protected EmployeeRepository employeeRepository;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    @AfterEach
+    void resetClock() {
+        mutableClock.setInstant(getTestInstant());
+    }
 
     protected final long countRecordsInTable(@Nonnull final String tableName) {
         final var queryResult = jdbcTemplate.queryForObject("select count(*) from " + tableName, Long.class);
@@ -44,12 +62,6 @@ public abstract class TestBase {
     @Nonnull
     protected Set<String> getTables() {
         return Set.of("employees", "salary_calc", "tickets");
-    }
-
-    @BeforeAll
-    static void setUpClock() {
-        final Clock fixed = Clock.fixed(BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
-        ClockHolder.setClock(fixed);
     }
 
     @BeforeEach
@@ -80,11 +92,13 @@ public abstract class TestBase {
         assertThat(saved)
                 .hasSameSizeAs(entities);
         saved.forEach(e -> {
-                    assertThat(e.getCreatedAt())
-                            .isEqualTo(BEFORE_MILLENNIUM);
-                    assertThat(e.getUpdatedAt())
-                            .isEqualTo(BEFORE_MILLENNIUM);
-                });
+            assertThat(e.getCreatedAt())
+                    .isEqualTo(BEFORE_MILLENNIUM);
+            if (e.getUpdatedAt() != null) {
+                assertThat(e.getUpdatedAt())
+                        .isEqualTo(BEFORE_MILLENNIUM);
+            }
+        });
 
         final var result = repository.findAll();
         assertThat(result)
@@ -92,5 +106,31 @@ public abstract class TestBase {
         result.forEach(c -> assertThatNoException()
                 .as("Метод toString не должен генерировать ошибок")
                 .isThrownBy(c::toString)); // toString
+    }
+
+    protected void assertInTransaction(@Nonnull final Runnable check) {
+        transactionTemplate.execute(ts -> {
+            check.run();
+            return null;
+        });
+    }
+
+    static Instant getTestInstant() {
+        return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);
+    }
+
+    @TestConfiguration
+    static class CustomClockConfiguration {
+
+        @Bean
+        public MutableClock mutableClock() {
+            return MutableClock.of(getTestInstant(), ZoneOffset.UTC);
+        }
+
+        @Bean
+        @Primary
+        public Clock fixedClock(@Nonnull final MutableClock mutableClock) {
+            return mutableClock;
+        }
     }
 }

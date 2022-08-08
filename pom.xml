@@ -118,6 +118,12 @@
             <artifactId>postgresql</artifactId>
             <version>42.4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.threeten</groupId>
+            <artifactId>threeten-extra</artifactId>
+            <version>1.7.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -309,22 +315,22 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.36</minimum>
+                                            <minimum>0.39</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>5</maximum>
+                                            <maximum>3</maximum>
                                         </limit>
                                         <limit>
                                             <counter>METHOD</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>22</maximum>
+                                            <maximum>20</maximum>
                                         </limit>
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>97</maximum>
+                                            <maximum>89</maximum>
                                         </limit>
                                     </limits>
                                 </rule>

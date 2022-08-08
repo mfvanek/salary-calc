@@ -81,4 +81,11 @@
         <exclude name="BeanMembersShouldSerialize"/>
         <exclude name="DataflowAnomalyAnalysis"/>
     </rule>
+
+    <rule ref="category/java/errorprone.xml/EqualsNull">
+        <properties>
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceBodyDeclaration/Annotation/MarkerAnnotation//Name[@Image='Test']"/>
+        </properties>
+    </rule>
 </ruleset>

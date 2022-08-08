@@ -10,6 +10,6 @@ public class ClockConfig {
 
     @Bean
     public Clock clock() {
-        return ClockHolder.getClock();
+        return Clock.systemDefaultZone();
     }
 }

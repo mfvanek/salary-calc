@@ -25,7 +25,7 @@ public class SalaryService {
     private final SalaryCalculationService salaryCalculationService;
 
     public Optional<Salary> findById(final UUID id) {
-        Objects.requireNonNull(id);
+        Objects.requireNonNull(id, "id cannot be null");
         return salaryRepository.findById(id);
     }
 
