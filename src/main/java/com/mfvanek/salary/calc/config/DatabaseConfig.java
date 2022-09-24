@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @Configuration(proxyBeanMethods = false)
 public class DatabaseConfig {
 
-    public static final String PG_IMAGE = "postgres:13.5-alpine";
+    public static final String PG_IMAGE = "postgres:14.5-alpine";
 
     @Bean(initMethod = "start", destroyMethod = "stop")
     public JdbcDatabaseContainer<?> jdbcDatabaseContainer() {
