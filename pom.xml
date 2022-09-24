@@ -5,24 +5,26 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.9</version>
+        <version>2.7.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.mfvanek</groupId>
     <artifactId>salary.calc</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>salary.calc</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Demo project with Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <source.encoding>UTF-8</source.encoding>
+        <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <lombok.version>1.18.24</lombok.version>
+        <assertj.version>3.23.1</assertj.version>
     </properties>
 
     <dependencyManagement>
@@ -33,6 +35,11 @@
                 <version>1.17.3</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>1.32</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -58,6 +65,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
@@ -83,12 +96,12 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.9</version>
+            <version>1.6.11</version>
         </dependency>
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.9.0</version>
+            <version>5.9.1</version>
             <scope>test</scope>
             <type>pom</type>
         </dependency>
@@ -101,13 +114,18 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.23.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -116,12 +134,23 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.4.1</version>
+            <version>42.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.threeten</groupId>
             <artifactId>threeten-extra</artifactId>
             <version>1.7.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -143,7 +172,7 @@
                         <dependency>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>2.6.9</version>
+                            <version>2.7.4</version>
                         </dependency>
                     </annotationProcessorPaths>
                 </configuration>
@@ -186,7 +215,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.1.0</version>
+                <version>4.7.2.0</version>
                 <configuration>
                     <includeTests>true</includeTests>
                     <effort>Max</effort>
@@ -207,12 +236,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.3.1</version>
+                        <version>10.3.3</version>
                     </dependency>
                     <dependency>
                         <groupId>com.thomasjensen.checkstyle.addons</groupId>
@@ -221,7 +250,6 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <violationSeverity>info</violationSeverity>
                     <failOnViolation>true</failOnViolation>
@@ -262,8 +290,12 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.17.0</version>
+                <version>3.19.0</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
                     <includeTests>true</includeTests>
@@ -316,6 +348,11 @@
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
                                             <minimum>0.39</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.46</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>

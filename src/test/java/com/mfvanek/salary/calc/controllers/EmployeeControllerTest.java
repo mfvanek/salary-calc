@@ -1,70 +1,80 @@
 package com.mfvanek.salary.calc.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfvanek.salary.calc.dtos.EmployeeDto;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 import com.mfvanek.salary.calc.support.TestBase;
-import lombok.SneakyThrows;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class EmployeeControllerTest extends TestBase {
 
     @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+    private WebTestClient webTestClient;
 
-    @SneakyThrows
     @Test
     void getEmployeeShouldReturnNotFoundForRandomId() {
-        final MvcResult mvcResult = mockMvc.perform(get("/employee/{id}", UUID.randomUUID())
-                        .contentType("application/json"))
-                .andExpect(status().isNotFound())
-                .andReturn();
-        assertThat(mvcResult)
-                .isNotNull();
-        assertThat(mvcResult.getResponse())
-                .isNotNull();
+        final var result = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/employee/{id}")
+                        .build(UUID.randomUUID()))
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody(EmployeeDto.class)
+                .returnResult()
+                .getResponseBody();
+        assertThat(result)
+                .isEqualTo(new EmployeeDto());
     }
 
-    @SneakyThrows
     @Test
     void createEmployee() {
-        final EmployeeCreationRequest employeeCreationRequest = new EmployeeCreationRequest();
-        employeeCreationRequest.setFirstName("John");
-        employeeCreationRequest.setLastName("Doe");
-        employeeCreationRequest.setStandardHoursPerDay(8);
-        employeeCreationRequest.setSalaryPerHour(BigDecimal.valueOf(400L));
+        final var employeeCreationRequest = EmployeeCreationRequest.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .standardHoursPerDay(8)
+                .salaryPerHour(BigDecimal.valueOf(400L))
+                .build();
 
-        final MvcResult mvcResult = mockMvc.perform(post("/employee")
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(employeeCreationRequest)))
-                .andExpect(status().isCreated())
-                .andReturn();
-        assertThat(mvcResult)
+        final var result = webTestClient.post()
+                .uri("/employee")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(employeeCreationRequest)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(EmployeeDto.class)
+                .returnResult();
+
+        assertThat(result)
                 .isNotNull();
+        assertThat(result.getResponseHeaders())
+                .hasSize(2)
+                .containsOnlyKeys(HttpHeaders.CONTENT_TYPE, HttpHeaders.LOCATION);
 
-        final MockHttpServletResponse resultResponse = mvcResult.getResponse();
-        assertThat(resultResponse)
-                .isNotNull();
+        final List<String> location = result.getResponseHeaders().get(HttpHeaders.LOCATION);
+        assertThat(location)
+                .isNotNull()
+                .hasSize(1)
+                .first(InstanceOfAssertFactories.STRING)
+                .startsWith("http://localhost/employee/");
 
-        final EmployeeDto employeeDto = objectMapper.readValue(resultResponse.getContentAsString(), EmployeeDto.class);
-        assertThat(employeeDto)
+        final var createdEmployee = result.getResponseBody();
+        assertThat(createdEmployee)
                 .isNotNull()
                 .satisfies(e -> {
+                    assertThat(e.getId())
+                            .isNotNull();
                     assertThat(e.getFirstName())
                             .isEqualTo("John");
                     assertThat(e.getLastName())
@@ -72,14 +82,21 @@ class EmployeeControllerTest extends TestBase {
                     assertThat(e.getStandardHoursPerDay())
                             .isEqualTo(8);
                     assertThat(e.getSalaryPerHour())
-                            .isEqualByComparingTo(BigDecimal.valueOf(400L));
+                            .isEqualByComparingTo("400.00");
                 });
 
-        final String locationHeader = resultResponse.getHeader(HttpHeaders.LOCATION);
-        assertThat(locationHeader)
-                .isNotNull();
+        final var foundEmployee = webTestClient.get()
+                .uri(location.get(0))
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(EmployeeDto.class)
+                .returnResult()
+                .getResponseBody();
 
-        mockMvc.perform(get(locationHeader).contentType("application/json"))
-                .andExpect(status().isOk());
+        assertThat(foundEmployee)
+                .isNotNull()
+                .satisfies(e -> assertThat(e.getId())
+                        .isEqualTo(createdEmployee.getId()));
     }
 }

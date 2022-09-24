@@ -45,4 +45,9 @@ class SalaryRepositoryTest extends TestBase {
                                                 .isEqualTo(s)))
         );
     }
+
+    @Test
+    void entitiesShouldNotNaveNullableColumnsOfPrimitiveTypes() {
+        assertThatAllEntitiesDoesNotHavePrimitiveNullableFields("com.mfvanek.salary.calc", 3);
+    }
 }

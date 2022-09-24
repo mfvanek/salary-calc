@@ -4,6 +4,7 @@ import com.mfvanek.salary.calc.entities.BaseEntity;
 import com.mfvanek.salary.calc.repositories.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,14 +23,18 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nonnull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+@SuppressWarnings("PMD.ExcessiveImports")
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
@@ -113,6 +118,24 @@ public abstract class TestBase {
             check.run();
             return null;
         });
+    }
+
+    protected void assertThatAllEntitiesDoesNotHavePrimitiveNullableFields(@Nonnull final String packageName,
+                                                                           final int numberOfEntities) {
+        final Set<Class<?>> allEntities = new Reflections(packageName).getTypesAnnotatedWith(Entity.class);
+        assertThat(allEntities).hasSize(numberOfEntities);
+        allEntities.forEach(this::assertThatNullableFieldsAreNotPrimitive);
+    }
+
+    private <T> void assertThatNullableFieldsAreNotPrimitive(final Class<T> entityClass) {
+        Arrays.stream(entityClass.getDeclaredFields())
+                .filter(field -> field.isAnnotationPresent(Column.class) &&
+                        field.getAnnotation(Column.class).nullable()
+                )
+                .forEach(field -> assertThat(field.getType().isPrimitive())
+                        .withFailMessage(String.format("In %s field %s is primitive", entityClass.getName(), field.getName()))
+                        .isFalse()
+                );
     }
 
     static Instant getTestInstant() {
