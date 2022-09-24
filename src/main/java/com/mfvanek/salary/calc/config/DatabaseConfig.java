@@ -20,6 +20,7 @@ public class DatabaseConfig {
 
     public static final String PG_IMAGE = "postgres:14.5-alpine";
 
+    @SuppressWarnings({"resource", "java:S2095", "java:S1452"})
     @Bean(initMethod = "start", destroyMethod = "stop")
     public JdbcDatabaseContainer<?> jdbcDatabaseContainer() {
         return new PostgreSQLContainer<>(PG_IMAGE)
