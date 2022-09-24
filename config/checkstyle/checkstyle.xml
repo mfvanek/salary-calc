@@ -225,7 +225,8 @@
                       value="^org\.springframework\.lang\.(NonNull|Nullable), ^org\.jetbrains\.annotations\.(NotNull|Nullable),
                 ^io\.micrometer\.core\.lang\.(NonNull|Nullable),
                 ^org\.elasticsearch\.common\.Nullable, ^org\.apache\.thrift\.annotation\.Nullable,
-                ^org\.junit\.Test, ^org\.junit\.jupiter\.api\.Assertions, ^org\.junit\.Test, ^org\.junit\.jupiter\.api\.Assertions\..*"/>
+                ^org\.junit\.Test, ^org\.junit\.jupiter\.api\.Assertions, ^org\.junit\.Test, ^org\.junit\.jupiter\.api\.Assertions\..*,
+                ^org\.springframework\.boot\.test\.web\.client\.TestRestTemplate"/>
             <property name="illegalPkgs" value="^org\.hamcrest"/>
         </module>
         <module name="MethodParamPad"/>
@@ -287,6 +288,11 @@
         </module>
         <module name="CommentsIndentation">
             <property name="tokens" value="SINGLE_LINE_COMMENT, BLOCK_COMMENT_BEGIN"/>
+        </module>
+        <module name="IllegalMethodCall">
+            <property name="illegalMethodNames"
+                      value="emptyList,emptyMap,emptySet,emptyNavigableMap,emptyNavigableSet,emptySortedMap,emptySortedSet,singleton,singletonList,singletonMap,asList"/>
+            <property name="excludedQualifiers" value=""/>
         </module>
     </module>
 </module>
