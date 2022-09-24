@@ -45,8 +45,9 @@ public class SalaryCalculationService {
                 executorService.shutdownNow();
             }
         } catch (InterruptedException e) {
-            // TODO write to log
+            log.warn(e.getMessage(), e);
             executorService.shutdownNow();
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -57,6 +58,7 @@ public class SalaryCalculationService {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             log.warn(e.getMessage(), e);
+            Thread.currentThread().interrupt();
         }
 
         final BigDecimal totalAmount = calculateTotalAmount(employee, request.getWorkingDaysCount());
