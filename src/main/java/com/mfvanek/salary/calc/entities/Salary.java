@@ -13,6 +13,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -24,7 +25,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Entity
-@Table(name = "salary_calc")
+@Table(name = "salary_calc", indexes = {
+        @Index(name = "idx_salary_calc_emp_id", columnList = "emp_id")
+})
 @org.hibernate.annotations.Table(comment = "Table for storing calculated salary", appliesTo = "salary_calc")
 public class Salary extends BaseEntity {
 
