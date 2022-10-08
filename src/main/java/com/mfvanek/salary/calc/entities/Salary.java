@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "salary_calc")
+@org.hibernate.annotations.Table(comment = "Table for storing calculated salary", appliesTo = "salary_calc")
 public class Salary extends BaseEntity {
 
     @NotNull

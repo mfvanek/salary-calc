@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
 import javax.persistence.Column;
@@ -28,6 +29,7 @@ import javax.validation.constraints.Size;
                 @Index(name = "idx_employee_date", columnList = "emp_id, calculated_at, is_active", unique = true)
         }
 )
+@org.hibernate.annotations.Table(comment = "Table for tickets", appliesTo = "tickets")
 public class Ticket extends BaseEntity {
 
     @NotNull

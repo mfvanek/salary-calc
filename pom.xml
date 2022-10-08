@@ -11,7 +11,7 @@
 
     <groupId>com.mfvanek</groupId>
     <artifactId>salary.calc</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <name>salary.calc</name>
     <description>Demo app for salary calculation (Spring Boot)</description>
 
@@ -152,6 +152,12 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.mfvanek</groupId>
+            <artifactId>pg-index-health-test-starter</artifactId>
+            <version>0.6.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
