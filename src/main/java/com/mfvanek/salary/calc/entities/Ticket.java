@@ -25,9 +25,11 @@ import javax.validation.constraints.Size;
 @Table(
         name = "tickets",
         indexes = {
-                @Index(name = "idx_employee_date", columnList = "emp_id, calculated_at, is_active", unique = true)
+                @Index(name = "idx_tickets_employee_date", columnList = "emp_id, calculated_at, is_active", unique = true),
+                @Index(name = "idx_tickets_salary_id", columnList = "salary_id") // JPA doesn't support partial indexes
         }
 )
+@org.hibernate.annotations.Table(comment = "Table for tickets", appliesTo = "tickets")
 public class Ticket extends BaseEntity {
 
     @NotNull

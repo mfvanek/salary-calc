@@ -33,7 +33,9 @@
         <module name="AvoidNestedBlocks"/>
         <module name="BooleanExpressionComplexity"/>
         <module name="ClassDataAbstractionCoupling"/>
-        <module name="ClassFanOutComplexity"/>
+        <module name="ClassFanOutComplexity">
+            <property name="max" value="21"/>
+        </module>
         <!-- <module name="ClassMemberImpliedModifier"/> invalid -->
         <module name="RedundantModifier"/>
         <module name="CovariantEquals"/>

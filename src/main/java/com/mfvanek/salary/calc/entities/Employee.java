@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table(name = "employees")
+@org.hibernate.annotations.Table(comment = "Table for storing employees data", appliesTo = "employees")
 public class Employee extends BaseEntity {
 
     @NotNull
