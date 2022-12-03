@@ -15,6 +15,7 @@ import javax.persistence.PreUpdate;
 public class ClockAwareEntityListener {
 
     // Couldn't use constructor injection here
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private Clock clock;
 

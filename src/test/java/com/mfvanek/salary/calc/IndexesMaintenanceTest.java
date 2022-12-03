@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 class IndexesMaintenanceTest extends TestBase {
 
     @Autowired
