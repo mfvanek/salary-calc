@@ -53,22 +53,25 @@ class SalaryServiceTest extends TestBase {
                 });
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     void calculateOnDateShouldThrowExceptionOnInvalidRequest() {
         assertThatThrownBy(() -> salaryService.calculateOnDate(null))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("request cannot be null");
 
-        assertThatThrownBy(() -> salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder().build()))
+        final var request = SalaryCalculationOnDateRequest.builder().build();
+        assertThatThrownBy(() -> salaryService.calculateOnDate(request))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("id cannot be null");
     }
 
     @Test
     void calculateOnDateShouldThrowExceptionWhenEmployeeDoesNotExist() {
-        assertThatThrownBy(() -> salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder()
+        final var request = SalaryCalculationOnDateRequest.builder()
                 .employeeId(UUID.fromString("2071becc-7866-46f3-938b-547b338bec80"))
-                .build()))
+                .build();
+        assertThatThrownBy(() -> salaryService.calculateOnDate(request))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Employee with id = 2071becc-7866-46f3-938b-547b338bec80 not found");
     }

@@ -47,7 +47,7 @@ public class Salary extends BaseEntity {
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employeeId;
 
-    @OneToOne(mappedBy = "salaryId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "salaryId", cascade = CascadeType.ALL)
     private Ticket ticket;
 
     @Override
