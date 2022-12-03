@@ -15,6 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.threeten.extra.MutableClock;
 
@@ -51,6 +52,8 @@ public abstract class TestBase {
     protected Clock clock;
     @Autowired
     protected EmployeeRepository employeeRepository;
+    @Autowired
+    protected WebTestClient webTestClient;
     @Autowired
     private TransactionTemplate transactionTemplate;
 

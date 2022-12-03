@@ -4,11 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,33 +47,24 @@ public class Salary extends BaseEntity {
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employeeId;
 
-    @OneToOne(mappedBy = "salaryId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "salaryId", cascade = CascadeType.ALL)
     private Ticket ticket;
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(19, 41)
-                .append(getId())
-                .toHashCode();
+        return Objects.hash(this.getId());
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (o == null) {
-            return false;
-        }
-
         if (o == this) {
             return true;
         }
 
-        if (!(o instanceof Salary)) {
+        if (!(o instanceof final Salary other)) {
             return false;
         }
 
-        final Salary other = (Salary) o;
-        return new EqualsBuilder()
-                .append(this.getId(), other.getId())
-                .isEquals();
+        return Objects.equals(this.getId(), other.getId());
     }
 }

@@ -1,6 +1,7 @@
 package com.mfvanek.salary.calc.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -55,20 +56,22 @@ public class Employee extends BaseEntity {
     @Column(name = "salary_per_hour", nullable = false)
     private BigDecimal salaryPerHour;
 
+    @Builder.Default
     @JsonIgnore
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
     private Set<Salary> salaries = new HashSet<>();
 
+    @Builder.Default
     @JsonIgnore
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
     private Set<Ticket> tickets = new HashSet<>();
 
-    public void withSalary(@Nonnull final Salary salary) {
-        if (salaries == null) {
-            salaries = new HashSet<>();
-        }
+    @Nonnull
+    public Employee withSalary(@Nonnull final Salary salary) {
         salaries.add(salary);
+        salary.setEmployeeId(this);
+        return this;
     }
 }
