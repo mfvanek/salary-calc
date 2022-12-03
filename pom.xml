@@ -16,7 +16,7 @@
     <description>Demo app for salary calculation (Spring Boot)</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
@@ -222,7 +222,7 @@
                                     <version>[3.8,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[11,)</version>
+                                    <version>[17,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -386,7 +386,7 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.46</minimum>
+                                            <minimum>0.57</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
@@ -396,17 +396,17 @@
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>3</maximum>
+                                            <maximum>2</maximum>
                                         </limit>
                                         <limit>
                                             <counter>METHOD</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>17</maximum>
+                                            <maximum>14</maximum>
                                         </limit>
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>79</maximum>
+                                            <maximum>69</maximum>
                                         </limit>
                                     </limits>
                                 </rule>

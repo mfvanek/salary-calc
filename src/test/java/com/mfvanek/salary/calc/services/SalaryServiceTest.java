@@ -2,13 +2,19 @@ package com.mfvanek.salary.calc.services;
 
 import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Salary;
+import com.mfvanek.salary.calc.entities.Ticket;
+import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import com.mfvanek.salary.calc.support.TestBase;
 import com.mfvanek.salary.calc.support.TestDataProvider;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.annotation.Nonnull;
+import javax.persistence.EntityNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -33,23 +39,62 @@ class SalaryServiceTest extends TestBase {
 
     @Test
     void findByIdShouldReturnEntityWhenFound() {
-        final Employee employee = TestDataProvider.prepareIvanIvanov();
-        final Salary notSaved = TestDataProvider.prepareSalary()
-                .calculationDate(LocalDate.now(clock))
-                .employeeId(employee)
-                .build();
-        employee.withSalary(notSaved);
-        employeeRepository.save(employee);
-        assertThat(salaryService.findById(notSaved.getId()))
+        final var ids = createEmployeeWithSalary();
+        assertThat(salaryService.findById(ids.getRight()))
                 .isPresent()
                 .get()
                 .satisfies(r -> {
                     assertThat(r.getId())
-                            .isEqualTo(notSaved.getId());
+                            .isEqualTo(ids.getRight());
                     assertThat(r.getCreatedAt())
                             .isEqualTo(BEFORE_MILLENNIUM);
                     assertThat(r.getUpdatedAt())
                             .isNull();
                 });
+    }
+
+    @Test
+    void calculateOnDateShouldThrowExceptionOnInvalidRequest() {
+        assertThatThrownBy(() -> salaryService.calculateOnDate(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("request cannot be null");
+
+        assertThatThrownBy(() -> salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder().build()))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("id cannot be null");
+    }
+
+    @Test
+    void calculateOnDateShouldThrowExceptionWhenEmployeeDoesNotExist() {
+        assertThatThrownBy(() -> salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder()
+                .employeeId(UUID.fromString("2071becc-7866-46f3-938b-547b338bec80"))
+                .build()))
+                .isInstanceOf(EntityNotFoundException.class)
+                .hasMessage("Employee with id = 2071becc-7866-46f3-938b-547b338bec80 not found");
+    }
+
+    @Test
+    void calculateOnDateShouldWork() {
+        final var ids = createEmployeeWithSalary();
+
+        final Ticket result = salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder()
+                .employeeId(ids.getLeft())
+                .workingDaysCount(0)
+                .calculationDate(LocalDate.now(clock))
+                .build());
+
+        assertThat(result)
+                .isNotNull();
+    }
+
+    @Nonnull
+    private Pair<UUID, UUID> createEmployeeWithSalary() {
+        final Salary notSaved = TestDataProvider.prepareSalary()
+                .calculationDate(LocalDate.now(clock))
+                .build();
+        final Employee employee = TestDataProvider.prepareIvanIvanov()
+                .withSalary(notSaved);
+        employeeRepository.save(employee);
+        return ImmutablePair.of(employee.getId(), notSaved.getId());
     }
 }

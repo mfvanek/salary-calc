@@ -1,6 +1,8 @@
 package com.mfvanek.salary.calc.dtos;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,6 +11,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Data
+@SuperBuilder
+@RequiredArgsConstructor
 public class SalaryDto {
 
     @Id

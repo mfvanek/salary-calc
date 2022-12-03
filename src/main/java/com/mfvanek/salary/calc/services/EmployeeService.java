@@ -23,7 +23,7 @@ public class EmployeeService extends AbstractService {
 
     @Nonnull
     public Optional<Employee> findById(@Nonnull final UUID id) {
-        Objects.requireNonNull(id);
+        Objects.requireNonNull(id, "id cannot be null");
         return employeeRepository.findById(id);
     }
 

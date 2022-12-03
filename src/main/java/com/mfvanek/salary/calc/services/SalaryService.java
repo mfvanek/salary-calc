@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import javax.annotation.Nonnull;
 import javax.persistence.EntityNotFoundException;
 
 @Service
@@ -30,8 +31,8 @@ public class SalaryService {
     }
 
     @Transactional
-    public Ticket calculateOnDate(final SalaryCalculationOnDateRequest request) {
-        Objects.requireNonNull(request);
+    public Ticket calculateOnDate(@Nonnull final SalaryCalculationOnDateRequest request) {
+        Objects.requireNonNull(request, "request cannot be null");
         final Optional<Employee> employee = employeeService.findById(request.getEmployeeId());
         if (employee.isEmpty()) {
             throw new EntityNotFoundException(String.format("Employee with id = %s not found", request.getEmployeeId()));

@@ -5,10 +5,8 @@ import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 import com.mfvanek.salary.calc.support.TestBase;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,9 +15,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EmployeeControllerTest extends TestBase {
-
-    @Autowired
-    private WebTestClient webTestClient;
 
     @Test
     void getEmployeeShouldReturnNotFoundForRandomId() {
