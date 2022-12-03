@@ -48,6 +48,6 @@ class SalaryRepositoryTest extends TestBase {
 
     @Test
     void entitiesShouldNotNaveNullableColumnsOfPrimitiveTypes() {
-        assertThatAllEntitiesDoesNotHavePrimitiveNullableFields("com.mfvanek.salary.calc", 3);
+        assertThatAllEntitiesDoesNotHavePrimitiveNullableFields();
     }
 }

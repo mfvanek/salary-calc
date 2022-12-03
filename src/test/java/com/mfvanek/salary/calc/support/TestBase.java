@@ -120,10 +120,9 @@ public abstract class TestBase {
         });
     }
 
-    protected void assertThatAllEntitiesDoesNotHavePrimitiveNullableFields(@Nonnull final String packageName,
-                                                                           final int numberOfEntities) {
-        final Set<Class<?>> allEntities = new Reflections(packageName).getTypesAnnotatedWith(Entity.class);
-        assertThat(allEntities).hasSize(numberOfEntities);
+    protected void assertThatAllEntitiesDoesNotHavePrimitiveNullableFields() {
+        final Set<Class<?>> allEntities = new Reflections("com.mfvanek.salary.calc").getTypesAnnotatedWith(Entity.class);
+        assertThat(allEntities).hasSize(3);
         allEntities.forEach(this::assertThatNullableFieldsAreNotPrimitive);
     }
 

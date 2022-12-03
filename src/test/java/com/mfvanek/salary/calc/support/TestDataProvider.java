@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 @UtilityClass
 public class TestDataProvider {
 

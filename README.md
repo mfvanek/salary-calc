@@ -9,6 +9,11 @@ Demo app for salary calculation (Spring Boot)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=mfvanek_salary-calc&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=mfvanek_salary-calc)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mfvanek_salary-calc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mfvanek_salary-calc)
 
+## Requirements
+Java 11+  
+Spring Boot 2.7.x
+
+## API
 [Swagger Doc](http://localhost:8080/v3/api-docs)  
 [Swagger UI](http://localhost:8080/swagger-ui.html)
 

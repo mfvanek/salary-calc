@@ -33,7 +33,7 @@ public class SalaryService {
     public Ticket calculateOnDate(final SalaryCalculationOnDateRequest request) {
         Objects.requireNonNull(request);
         final Optional<Employee> employee = employeeService.findById(request.getEmployeeId());
-        if (!employee.isPresent()) {
+        if (employee.isEmpty()) {
             throw new EntityNotFoundException(String.format("Employee with id = %s not found", request.getEmployeeId()));
         }
         final Ticket ticket = ticketService.create(employee.get(), request);
