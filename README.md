@@ -3,6 +3,9 @@ Demo app for salary calculation (Spring Boot)
 
 [![Java CI](https://github.com/mfvanek/salary-calc/actions/workflows/tests.yml/badge.svg)](https://github.com/mfvanek/salary-calc/actions/workflows/tests.yml)
 
+[![Total lines](https://tokei.rs/b1/github/mfvanek/salary-calc)](https://github.com/mfvanek/salary-calc)
+[![Files](https://tokei.rs/b1/github/mfvanek/salary-calc?category=files)](https://github.com/mfvanek/salary-calc)
+
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=mfvanek_salary-calc&metric=bugs)](https://sonarcloud.io/summary/new_code?id=mfvanek_salary-calc)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=mfvanek_salary-calc&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=mfvanek_salary-calc)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=mfvanek_salary-calc&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=mfvanek_salary-calc)
