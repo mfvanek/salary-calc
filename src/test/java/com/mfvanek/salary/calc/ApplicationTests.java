@@ -27,7 +27,7 @@ class ApplicationTests extends TestBase {
     @Test
     void clockShouldBeFixed() {
         assertThat(LocalDateTime.now(clock))
-                .isBefore(LocalDateTime.now(Clock.systemDefaultZone()))
+                .isBefore(LocalDateTime.now(Clock.systemUTC()))
                 .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59));
     }
 
@@ -36,7 +36,7 @@ class ApplicationTests extends TestBase {
         mutableClock.add(1_000L, ChronoUnit.YEARS);
 
         assertThat(LocalDateTime.now(clock))
-                .isAfter(LocalDateTime.now(Clock.systemDefaultZone()))
+                .isAfter(LocalDateTime.now(Clock.systemUTC()))
                 .isEqualTo(LocalDateTime.of(2999, Month.DECEMBER, 31, 23, 59, 59));
     }
 }
