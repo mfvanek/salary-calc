@@ -2,7 +2,6 @@ package com.mfvanek.salary.calc.entities;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SalaryTest {
 
     @Test
-    @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes"})
+    @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes", "EqualsIncompatibleType"})
     void equalsHashCodeShouldAdhereContracts() {
         final Salary first = Salary.builder().build();
         final Salary second = new Salary(); // different creation way
@@ -25,7 +24,7 @@ class SalaryTest {
                 .isFalse();
 
         // with different type
-        assertThat(first.equals(BigDecimal.ONE))
+        assertThat(first.equals(Integer.MAX_VALUE))
                 .isFalse();
 
         final Salary third = Salary.builder()
