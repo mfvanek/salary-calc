@@ -24,7 +24,7 @@
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.26</lombok.version>
         <assertj.version>3.23.1</assertj.version>
         <pmd.version>6.55.0</pmd.version>
     </properties>
