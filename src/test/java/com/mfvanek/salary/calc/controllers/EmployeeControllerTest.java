@@ -54,15 +54,15 @@ class EmployeeControllerTest extends TestBase {
         assertThat(result)
                 .isNotNull();
         assertThat(result.getResponseHeaders())
-                .hasSize(2)
-                .containsOnlyKeys(HttpHeaders.CONTENT_TYPE, HttpHeaders.LOCATION);
+                .hasSizeGreaterThanOrEqualTo(2)
+                .containsKeys(HttpHeaders.CONTENT_TYPE, HttpHeaders.LOCATION);
 
         final List<String> location = result.getResponseHeaders().get(HttpHeaders.LOCATION);
         assertThat(location)
                 .isNotNull()
                 .hasSize(1)
                 .first(InstanceOfAssertFactories.STRING)
-                .startsWith("http://localhost/employee/");
+                .startsWith("http://localhost:%d/api/employee/".formatted(port));
 
         final var createdEmployee = result.getResponseBody();
         assertThat(createdEmployee)

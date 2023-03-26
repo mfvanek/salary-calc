@@ -15,7 +15,62 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQL10Dialect
                 enable_lazy_load_no_trans: false
-    main:
-        banner-mode: off
-    profiles:
-        active: local
+    main.banner-mode: off
+    profiles.active: local
+    application.name: salary-calc
+
+server:
+    port: 8080
+    servlet:
+        context-path: /api
+    # See also https://docs.spring.io/spring-boot/docs/2.7.9/reference/html/application-properties.html#appendix.application-properties.server
+    tomcat:
+        accept-count: 10
+        max-connections: 400
+        threads:
+            max: 10
+            min-spare: 5 # actuator port uses the same configuration
+
+management:
+    server:
+        port: 8090
+    endpoints:
+        enabled-by-default: false
+        web.exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
+    endpoint:
+        health:
+            enabled: true
+            probes.enabled: true
+            group:
+                readiness:
+                    include: readinessState,db
+                    additional-path: server:/readyz # In order to collect probes from application main port
+                    # show-components: always
+        prometheus:
+            enabled: true
+        info:
+            enabled: true
+        threaddump:
+            enabled: true
+        heapdump:
+            enabled: true
+    metrics:
+        distribution:
+            percentiles-histogram:
+                "[http.server.requests]": true
+        export:
+            prometheus.enabled: true
+    info:
+        env.enabled: true
+    health:
+        livenessstate:
+            enabled: true
+        readinessstate:
+            enabled: true
+
+springdoc:
+    show-actuator: true
+    use-management-port: true
+
+info:
+    app.version: @project.version@

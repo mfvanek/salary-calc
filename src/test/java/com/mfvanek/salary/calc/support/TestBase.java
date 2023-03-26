@@ -6,9 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.web.server.LocalManagementPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,7 +40,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
-@AutoConfigureMockMvc
 public abstract class TestBase {
 
     protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
@@ -54,6 +54,10 @@ public abstract class TestBase {
     protected EmployeeRepository employeeRepository;
     @Autowired
     protected WebTestClient webTestClient;
+    @LocalServerPort
+    protected int port;
+    @LocalManagementPort
+    protected int actuatorPort;
     @Autowired
     private TransactionTemplate transactionTemplate;
 
