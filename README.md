@@ -18,8 +18,8 @@ Spring Boot 2.7.x
 
 ## API
 [Swagger Doc](http://localhost:8090/v3/api-docs)  
-[Swagger UI](http://localhost:8090/swagger-ui.html)
+[Swagger UI](http://localhost:8090/actuator/swagger-ui)
 
-http://localhost:8090/actuator/health
+[Health](http://localhost:8090/actuator/health)
 
 http://localhost:8080/api/employee/dcffa631-595a-44e6-8f8c-1c077de895bf
