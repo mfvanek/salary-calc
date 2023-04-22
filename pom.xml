@@ -23,7 +23,7 @@
         <source.encoding>UTF-8</source.encoding>
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
-        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
         <lombok.version>1.18.26</lombok.version>
         <assertj.version>3.23.1</assertj.version>
         <pmd.version>6.55.0</pmd.version>
@@ -320,6 +320,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <image>
+                        <name>mfvanek/${project.artifactId}:${project.version}</name>
+                    </image>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
