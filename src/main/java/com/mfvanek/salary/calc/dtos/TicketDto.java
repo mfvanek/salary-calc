@@ -1,11 +1,11 @@
 package com.mfvanek.salary.calc.dtos;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class TicketDto {

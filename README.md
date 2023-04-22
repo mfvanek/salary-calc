@@ -14,7 +14,7 @@ Demo app for salary calculation (Spring Boot)
 
 ## Requirements
 Java 17+  
-Spring Boot 2.7.x
+Spring Boot 3.0+
 
 ## API
 [Swagger Doc](http://localhost:8090/v3/api-docs)  

@@ -1,5 +1,7 @@
 package com.mfvanek.salary.calc.entities;
 
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,8 +9,6 @@ import org.springframework.stereotype.Component;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import javax.annotation.Nonnull;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 @Component
 @NoArgsConstructor
