@@ -23,3 +23,8 @@ Spring Boot 2.7.x
 [Health](http://localhost:8090/actuator/health)
 
 http://localhost:8080/api/employee/dcffa631-595a-44e6-8f8c-1c077de895bf
+
+## Build image
+```
+mvn spring-boot:build-image
+```
