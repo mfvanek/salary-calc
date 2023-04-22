@@ -166,7 +166,7 @@
         <dependency>
             <groupId>io.github.mfvanek</groupId>
             <artifactId>pg-index-health-test-starter</artifactId>
-            <version>0.9.0</version>
+            <version>0.9.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
