@@ -37,3 +37,5 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 run: mvn clean verify -P sonar
+            -   name: Build Docker image
+                run: mvn spring-boot:build-image -DskipTests
