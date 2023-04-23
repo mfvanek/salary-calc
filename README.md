@@ -17,7 +17,6 @@ Java 17+
 Spring Boot 3.0+
 
 ## API
-[Swagger Doc](http://localhost:8090/v3/api-docs)  
 [Swagger UI](http://localhost:8090/actuator/swagger-ui)
 
 [Health](http://localhost:8090/actuator/health)

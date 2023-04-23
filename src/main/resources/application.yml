@@ -36,7 +36,12 @@ management:
         port: 8090
     endpoints:
         enabled-by-default: false
-        web.exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
+        web:
+            exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
+            cors:
+                allowed-methods: '*'
+                allowed-origins: '*'
+                allowed-headers: '*'
     endpoint:
         health:
             enabled: true
