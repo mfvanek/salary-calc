@@ -42,6 +42,8 @@ class ActuatorEndpointTest extends TestBase {
             "health|{\"status\":\"UP\",\"groups\":[\"liveness\",\"readiness\"]}|application/json",
             "health/liveness|{\"status\":\"UP\"}|application/json",
             "health/readiness|{\"status\":\"UP\"}|application/json",
+            "openapi/springdocDefault|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
+            "openapi/x-actuator|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
             "info|\"version\":|application/json"}, delimiter = '|')
     void actuatorEndpointShouldReturnOk(@Nonnull final String endpointName,
                                         @Nonnull final String expectedSubstring,
@@ -90,5 +92,21 @@ class ActuatorEndpointTest extends TestBase {
                 .getResponseBody();
         assertThat(result)
                 .isEqualTo("{\"status\":\"UP\"}");
+    }
+
+    @Test
+    void openapiEndpointNotFound() {
+        final var result = actuatorClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .pathSegment("openapi")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+        assertThat(result)
+                .contains("\"status\":404,\"error\":\"Not Found\",\"path\":\"/actuator/openapi\"");
     }
 }

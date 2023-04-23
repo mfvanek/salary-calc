@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -25,6 +26,11 @@ public class EmployeeService extends AbstractService {
     public Optional<Employee> findById(@Nonnull final UUID id) {
         Objects.requireNonNull(id, "id cannot be null");
         return employeeRepository.findById(id);
+    }
+
+    @Nonnull
+    public List<Employee> getAll() {
+        return employeeRepository.findAll();
     }
 
     @Nonnull

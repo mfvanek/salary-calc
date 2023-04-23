@@ -5,6 +5,7 @@ import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.Nonnull;
-import javax.persistence.EntityNotFoundException;
 
 @Service
 @Transactional(readOnly = true)

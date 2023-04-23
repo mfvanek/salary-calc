@@ -6,6 +6,7 @@ import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.PreDestroy;
 
 @Slf4j
 @RequiredArgsConstructor
