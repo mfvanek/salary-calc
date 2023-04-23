@@ -6,6 +6,7 @@ import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import javax.persistence.EntityNotFoundException;
 
 @RequiredArgsConstructor
 @Slf4j

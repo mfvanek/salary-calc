@@ -33,6 +33,22 @@ class EmployeeControllerTest extends TestBase {
     }
 
     @Test
+    void getAllShouldReturnEmptyListOnEmptyDatabase() {
+        final var result = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/employee/all")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(EmployeeDto[].class)
+                .returnResult()
+                .getResponseBody();
+        assertThat(result)
+                .isEmpty();
+    }
+
+    @Test
     void createEmployee() {
         final var employeeCreationRequest = EmployeeCreationRequest.builder()
                 .firstName("John")
@@ -93,5 +109,19 @@ class EmployeeControllerTest extends TestBase {
                 .isNotNull()
                 .satisfies(e -> assertThat(e.getId())
                         .isEqualTo(createdEmployee.getId()));
+
+        final var allEmployees = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/employee/all")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(EmployeeDto[].class)
+                .returnResult()
+                .getResponseBody();
+        assertThat(allEmployees)
+                .hasSize(1)
+                .containsExactly(createdEmployee);
     }
 }

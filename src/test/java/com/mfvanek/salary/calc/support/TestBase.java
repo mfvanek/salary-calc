@@ -2,6 +2,8 @@ package com.mfvanek.salary.calc.support;
 
 import com.mfvanek.salary.calc.entities.BaseEntity;
 import com.mfvanek.salary.calc.repositories.EmployeeRepository;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.reflections.Reflections;
@@ -30,8 +32,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nonnull;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;

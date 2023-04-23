@@ -13,7 +13,7 @@ spring:
         open-in-view: false
         properties:
             hibernate:
-                dialect: org.hibernate.dialect.PostgreSQL10Dialect
+                dialect: org.hibernate.dialect.PostgreSQLDialect
                 enable_lazy_load_no_trans: false
     main.banner-mode: off
     profiles.active: local
@@ -36,7 +36,12 @@ management:
         port: 8090
     endpoints:
         enabled-by-default: false
-        web.exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
+        web:
+            exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
+            cors:
+                allowed-methods: '*'
+                allowed-origins: '*'
+                allowed-headers: '*'
     endpoint:
         health:
             enabled: true
@@ -58,8 +63,6 @@ management:
         distribution:
             percentiles-histogram:
                 "[http.server.requests]": true
-        export:
-            prometheus.enabled: true
     info:
         env.enabled: true
     health:
@@ -67,6 +70,10 @@ management:
             enabled: true
         readinessstate:
             enabled: true
+    prometheus:
+        metrics:
+            export:
+                enabled: true
 
 springdoc:
     show-actuator: true

@@ -1,0 +1,85 @@
+version: "3.9"
+services:
+    postgres:
+        container_name: postgres_container
+        image: postgres:14.5-alpine
+        command:
+            - "postgres"
+            - "-c"
+            - "max_connections=50"
+            - "-c"
+            - "shared_buffers=1GB"
+            - "-c"
+            - "effective_cache_size=4GB"
+            - "-c"
+            - "work_mem=16MB"
+            - "-c"
+            - "maintenance_work_mem=512MB"
+            - "-c"
+            - "random_page_cost=1.1"
+            - "-c"
+            - "temp_file_limit=10GB"
+            - "-c"
+            - "log_min_duration_statement=200ms"
+            - "-c"
+            - "idle_in_transaction_session_timeout=10s"
+            - "-c"
+            - "lock_timeout=1s"
+            - "-c"
+            - "statement_timeout=60s"
+            - "-c"
+            - "shared_preload_libraries=pg_stat_statements"
+            - "-c"
+            - "pg_stat_statements.max=10000"
+            - "-c"
+            - "pg_stat_statements.track=all"
+        environment:
+            POSTGRES_DB: "salary_calc_demo"
+            POSTGRES_USER: "salary_calc_demo_user"
+            POSTGRES_PASSWORD: "salary_calc_demo_user_pwd"
+            PGDATA: "/var/lib/postgresql/data/pgdata"
+        volumes:
+            - .:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U salary_calc_demo_user -d salary_calc_demo" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+        restart: unless-stopped
+        deploy:
+            resources:
+                limits:
+                    cpus: '1'
+                    memory: 4G
+        networks:
+            - postgres
+
+    salary-calc:
+        container_name: salary_calc_container
+        image: docker.io/mfvanek/salary.calc:0.2.0
+        environment:
+            SPRING_PROFILES_ACTIVE: "docker"
+            SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/salary_calc_demo?prepareThreshold=0"
+            SPRING_DATASOURCE_USERNAME: "salary_calc_demo_user"
+            SPRING_DATASOURCE_PASSWORD: "salary_calc_demo_user_pwd"
+        ports:
+            - "8080:8080"
+            - "8090:8090"
+        restart: unless-stopped
+        depends_on:
+            postgres:
+                condition: service_healthy
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.5'
+                    memory: 512M
+        networks:
+            - postgres
+
+networks:
+    postgres:
+        driver: bridge
