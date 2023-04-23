@@ -17,13 +17,35 @@ Java 17+
 Spring Boot 3.0+
 
 ## API
+### Actuator
 [Swagger UI](http://localhost:8090/actuator/swagger-ui)
-
 [Health](http://localhost:8090/actuator/health)
 
-http://localhost:8080/api/employee/dcffa631-595a-44e6-8f8c-1c077de895bf
+### Endpoints
+```shell
+curl http://localhost:8080/api/employee/dcffa631-595a-44e6-8f8c-1c077de895bf
+```
+
+```shell
+curl -i -X POST -d "{\"firstName\": \"John\",\"lastName\": \"Wick\",\"standardHoursPerDay\": 8,\"salaryPerHour\": 5000}" http://localhost:8080/api/employee -H "Content-Type: application/json"
+```
+
+```shell
+curl http://localhost:8080/api/employee/all
+```
 
 ## Build image
 ```
 mvn spring-boot:build-image
+```
+
+### Docker Compose
+#### Start
+```shell
+docker-compose --project-name="salary-calc" up -d
+```
+
+#### Stop
+```shell
+docker-compose --project-name="salary-calc" down
 ```

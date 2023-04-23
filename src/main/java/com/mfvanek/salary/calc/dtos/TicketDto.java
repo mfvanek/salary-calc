@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.dtos;
 
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -8,9 +7,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-public class TicketDto {
+public final class TicketDto {
 
-    @Id
     @NotNull
     private UUID id;
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,6 +42,15 @@ public class EmployeeController {
         final HttpStatus status = employee.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         final EmployeeDto employeeDto = convertToDto(employee.orElse(new Employee()));
         return new ResponseEntity<>(employeeDto, status);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
+        final List<Employee> allEmployees = employeeService.getAll();
+        final List<EmployeeDto> allEmployeesDto = allEmployees.stream()
+                .map(this::convertToDto)
+                .toList();
+        return ResponseEntity.ok(allEmployeesDto);
     }
 
     @PostMapping

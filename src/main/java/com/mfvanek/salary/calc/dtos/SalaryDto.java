@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.dtos;
 
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +12,8 @@ import java.util.UUID;
 @Data
 @SuperBuilder
 @RequiredArgsConstructor
-public class SalaryDto {
+public final class SalaryDto {
 
-    @Id
     @NotNull
     private UUID id;
 
