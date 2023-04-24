@@ -26,6 +26,7 @@
         <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
         <assertj.version>3.23.1</assertj.version>
         <pmd.version>6.55.0</pmd.version>
+        <skipSpotbugs>false</skipSpotbugs>
     </properties>
 
     <dependencyManagement>
@@ -264,6 +265,7 @@
                     <threshold>Low</threshold>
                     <xmlOutput>false</xmlOutput>
                     <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
+                    <skip>${skipSpotbugs}</skip>
                 </configuration>
                 <executions>
                     <execution>
@@ -330,6 +332,10 @@
                         <name>mfvanek/${project.artifactId}:${project.version}</name>
                     </image>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -404,7 +410,7 @@
                     </execution>
                     <execution>
                         <id>jacoco-check-minimal-coverage</id>
-                        <phase>package</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
