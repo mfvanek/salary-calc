@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
 public class PostgresInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
@@ -19,6 +20,7 @@ public class PostgresInitializer implements ApplicationContextInitializer<Config
         CONTAINER
             .withNetwork(NETWORK)
             .withUrlParam("prepareThreshold", "0")
+            .waitingFor(Wait.forListeningPort())
             .start();
 
         TestPropertyValues.of(

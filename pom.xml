@@ -11,7 +11,7 @@
 
     <groupId>com.mfvanek</groupId>
     <artifactId>salary.calc</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <name>salary.calc</name>
     <description>Demo app for salary calculation (Spring Boot)</description>
 
@@ -41,14 +41,14 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.18.0</version>
+                <version>1.18.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.9.2</version>
+                <version>5.9.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -60,7 +60,7 @@
             <dependency>
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
-                <version>1.10.6</version>
+                <version>1.11.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>3.14.1</version>
+            <version>3.15</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -173,7 +173,7 @@
         <dependency>
             <groupId>io.github.mfvanek</groupId>
             <artifactId>pg-index-health-test-starter</artifactId>
-            <version>0.9.0.1</version>
+            <version>0.9.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -205,7 +205,7 @@
                         <path>
                             <groupId>com.google.errorprone</groupId>
                             <artifactId>error_prone_core</artifactId>
-                            <version>2.18.0</version>
+                            <version>2.20.0</version>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -258,7 +258,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.3.4</version>
+                <version>4.7.3.5</version>
                 <configuration>
                     <includeTests>true</includeTests>
                     <effort>Max</effort>
@@ -280,12 +280,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.3.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.9.3</version>
+                        <version>10.12.1</version>
                     </dependency>
                     <dependency>
                         <groupId>com.thomasjensen.checkstyle.addons</groupId>
@@ -348,7 +348,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.20.0</version>
+                <version>3.21.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>net.sourceforge.pmd</groupId>
@@ -393,7 +393,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.9</version>
+                <version>0.8.10</version>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
