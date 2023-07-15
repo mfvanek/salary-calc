@@ -59,7 +59,7 @@ services:
 
     salary-calc:
         container_name: salary_calc_container
-        image: docker.io/mfvanek/salary.calc:0.2.0
+        image: docker.io/mfvanek/salary.calc:0.2.2
         environment:
             SPRING_PROFILES_ACTIVE: "docker"
         ports:
