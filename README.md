@@ -34,6 +34,11 @@ curl -i -X POST -d "{\"firstName\": \"John\",\"lastName\": \"Wick\",\"standardHo
 curl http://localhost:8080/api/employee/all
 ```
 
+## Run locally
+```shell
+mvn spring-boot:run -Dspring-boot.run.profiles=extern
+```
+
 ## Run in Docker
 ### Build image
 ```

@@ -15,9 +15,16 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
                 enable_lazy_load_no_trans: false
-    main.banner-mode: off
-    profiles.active: local
-    application.name: salary-calc
+    main:
+        banner-mode: off
+    profiles:
+        active: local
+    application:
+        name: salary-calc
+    datasource:
+        hikari:
+            connection-timeout: 1000 # 1 second
+            maximum-pool-size: 5
 
 server:
     port: 8080
