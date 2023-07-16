@@ -34,15 +34,20 @@ curl -i -X POST -d "{\"firstName\": \"John\",\"lastName\": \"Wick\",\"standardHo
 curl http://localhost:8080/api/employee/all
 ```
 
+## Run locally
+```shell
+mvn spring-boot:run -Dspring-boot.run.profiles=extern
+```
+
 ## Run in Docker
 ### Build image
-```
-mvn clean spring-boot:build-image
+```shell
+mvn clean spring-boot:build-image -DskipTests -DskipSpotbugs=true
 ```
 
 ### Build native image
 **_Unfortunately, built application doesn't start in container_**
-```
+```shell
 mvn clean spring-boot:build-image -DskipTests -DskipSpotbugs=true -Pnative
 ```
 
