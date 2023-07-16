@@ -39,7 +39,7 @@ services:
             POSTGRES_PASSWORD: "salary_calc_demo_user_pwd"
             PGDATA: "/var/lib/postgresql/data/pgdata"
         volumes:
-            - .:/var/lib/postgresql/data
+            - salary-calc-data:/var/lib/postgresql/data
         ports:
             - "5432:5432"
         healthcheck:
@@ -59,12 +59,9 @@ services:
 
     salary-calc:
         container_name: salary_calc_container
-        image: docker.io/mfvanek/salary.calc:0.2.0
+        image: docker.io/mfvanek/salary.calc:0.2.2
         environment:
             SPRING_PROFILES_ACTIVE: "docker"
-            SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/salary_calc_demo?prepareThreshold=0"
-            SPRING_DATASOURCE_USERNAME: "salary_calc_demo_user"
-            SPRING_DATASOURCE_PASSWORD: "salary_calc_demo_user_pwd"
         ports:
             - "8080:8080"
             - "8090:8090"
@@ -83,3 +80,6 @@ services:
 networks:
     postgres:
         driver: bridge
+
+volumes:
+    salary-calc-data:

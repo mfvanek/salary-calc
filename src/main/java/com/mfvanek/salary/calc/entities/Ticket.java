@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Comment;
 
 import java.time.LocalDate;
 
@@ -25,11 +26,11 @@ import java.time.LocalDate;
 @Table(
         name = "tickets",
         indexes = {
-                @Index(name = "idx_tickets_employee_date", columnList = "emp_id, calculated_at, is_active", unique = true),
+                @Index(name = "idx_tickets_employee_date", columnList = "emp_id,calculated_at,is_active", unique = true),
                 @Index(name = "idx_tickets_salary_id", columnList = "salary_id") // JPA doesn't support partial indexes
         }
 )
-@org.hibernate.annotations.Table(comment = "Table for tickets", appliesTo = "tickets")
+@Comment("Table for tickets")
 public class Ticket extends BaseEntity {
 
     @NotNull
