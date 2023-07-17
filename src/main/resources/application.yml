@@ -44,7 +44,7 @@ management:
     endpoints:
         enabled-by-default: false
         web:
-            exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
+            exposure.include: health,prometheus,info,threaddump,heapdump
             cors:
                 allowed-methods: '*'
                 allowed-origins: '*'
@@ -81,10 +81,6 @@ management:
         metrics:
             export:
                 enabled: true
-
-springdoc:
-    show-actuator: true
-    use-management-port: true
 
 info:
     app.version: @project.version@

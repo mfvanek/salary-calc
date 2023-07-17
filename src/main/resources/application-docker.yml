@@ -1,6 +1,0 @@
-spring:
-    datasource:
-        username: salary_calc_demo_user
-        password: salary_calc_demo_user_pwd
-        # socketTimeout should be greater than the longest sql query
-        url: jdbc:postgresql://postgres:5432/salary_calc_demo?prepareThreshold=0&targetServerType=primary&hostRecheckSeconds=2&connectTimeout=1&socketTimeout=600

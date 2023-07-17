@@ -4,12 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -21,10 +18,10 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.Nonnull;
+import java.util.UUID;
 
 @NoArgsConstructor
 @SuperBuilder
@@ -33,7 +30,18 @@ import javax.annotation.Nonnull;
 @Entity
 @Table(name = "employees")
 @Comment("Table for storing employees data")
-public class Employee extends BaseEntity {
+public class Employee {
+
+    @Id
+    @NotNull
+    @Column(updatable = false, nullable = false)
+    private UUID id;
+
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", insertable = false)
+    private LocalDateTime updatedAt;
 
     @NotNull
     @NotBlank
@@ -45,34 +53,9 @@ public class Employee extends BaseEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotNull
-    @Min(1)
-    @Max(8)
-    @Column(name = "hours_per_day", nullable = false)
-    private int standardHoursPerDay;
-
-    @NotNull
-    @DecimalMax("5000.00")
-    @DecimalMin("100.00")
-    @Column(name = "salary_per_hour", nullable = false)
-    private BigDecimal salaryPerHour;
-
-    @Builder.Default
-    @JsonIgnore
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
-    private Set<Salary> salaries = new HashSet<>();
-
     @Builder.Default
     @JsonIgnore
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
     private Set<Ticket> tickets = new HashSet<>();
-
-    @Nonnull
-    public Employee withSalary(@Nonnull final Salary salary) {
-        salaries.add(salary);
-        salary.setEmployeeId(this);
-        return this;
-    }
 }

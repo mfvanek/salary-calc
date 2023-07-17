@@ -42,8 +42,6 @@ class ActuatorEndpointTest extends TestBase {
             "health|{\"status\":\"UP\",\"groups\":[\"liveness\",\"readiness\"]}|application/json",
             "health/liveness|{\"status\":\"UP\"}|application/json",
             "health/readiness|{\"status\":\"UP\"}|application/json",
-            "openapi/springdocDefault|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
-            "openapi/x-actuator|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
             "info|\"version\":|application/json"}, delimiter = '|')
     void actuatorEndpointShouldReturnOk(@Nonnull final String endpointName,
                                         @Nonnull final String expectedSubstring,
@@ -60,22 +58,6 @@ class ActuatorEndpointTest extends TestBase {
                 .getResponseBody();
         assertThat(result)
                 .contains(expectedSubstring);
-    }
-
-    @Test
-    void swaggerUiEndpointShouldReturnFound() {
-        final var result = actuatorClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .pathSegment("swagger-ui")
-                        .build())
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isFound()
-                .expectHeader().location("/actuator/swagger-ui/index.html")
-                .expectBody()
-                .returnResult()
-                .getResponseBody();
-        assertThat(result).isNull();
     }
 
     @Test
