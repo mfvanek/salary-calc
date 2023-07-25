@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.8</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.mfvanek</groupId>
     <artifactId>salary.calc</artifactId>
-    <version>0.2.2</version>
+    <version>0.3.0</version>
     <name>salary.calc</name>
     <description>Demo app for salary calculation (Spring Boot)</description>
 
@@ -23,9 +23,9 @@
         <source.encoding>UTF-8</source.encoding>
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
-        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
-        <assertj.version>3.24.2</assertj.version>
         <pmd.version>6.55.0</pmd.version>
+        <hibernate.version>6.2.7.Final</hibernate.version>
+        <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <skipSpotbugs>false</skipSpotbugs>
     </properties>
 
@@ -37,30 +37,6 @@
                 <version>2.1.0</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>1.18.3</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.10.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.yaml</groupId>
-                <artifactId>snakeyaml</artifactId>
-                <version>1.33</version>
-            </dependency>
-            <dependency>
-                <groupId>io.micrometer</groupId>
-                <artifactId>micrometer-registry-prometheus</artifactId>
-                <version>1.11.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -151,7 +127,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.threeten</groupId>
@@ -215,7 +190,7 @@
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>3.0.6</version>
+                            <version>3.1.2</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

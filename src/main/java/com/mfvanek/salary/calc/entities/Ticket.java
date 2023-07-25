@@ -26,8 +26,7 @@ import java.time.LocalDate;
 @Table(
         name = "tickets",
         indexes = {
-                @Index(name = "idx_tickets_employee_date", columnList = "emp_id,calculated_at,is_active", unique = true),
-                @Index(name = "idx_tickets_salary_id", columnList = "salary_id") // JPA doesn't support partial indexes
+                @Index(name = "idx_tickets_employee_date", columnList = "emp_id,calculated_at,is_active", unique = true)
         }
 )
 @Comment("Table for tickets")
@@ -51,6 +50,6 @@ public class Ticket extends BaseEntity {
     private String calculationParamsJson;
 
     @OneToOne
-    @JoinColumn(name = "salary_id")
+    @JoinColumn(name = "salary_id", unique = true)
     private Salary salaryId;
 }
