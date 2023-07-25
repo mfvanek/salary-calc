@@ -11,7 +11,6 @@ import io.github.mfvanek.pg.checks.host.IntersectedIndexesCheckOnHost;
 import io.github.mfvanek.pg.checks.host.InvalidIndexesCheckOnHost;
 import io.github.mfvanek.pg.checks.host.TablesWithoutDescriptionCheckOnHost;
 import io.github.mfvanek.pg.checks.host.TablesWithoutPrimaryKeyCheckOnHost;
-import io.github.mfvanek.pg.model.index.IndexWithNulls;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,12 +80,9 @@ class IndexesMaintenanceTest extends TestBase {
     }
 
     @Test
-    void getIndexesWithNullValuesShouldReturnOneRow() {
+    void getIndexesWithNullValuesShouldReturnNothing() {
         assertThat(indexesWithNullValuesCheck.check())
-                .hasSize(1)
-                .containsExactly(
-                        IndexWithNulls.of("tickets", "idx_tickets_salary_id", 8_192L, "salary_id")
-                );
+                .isEmpty();
     }
 
     @Test
