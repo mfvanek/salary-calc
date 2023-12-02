@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.mfvanek</groupId>
     <artifactId>salary.calc</artifactId>
-    <version>0.3.1</version>
+    <version>0.4.0</version>
     <name>salary.calc</name>
     <description>Demo app for salary calculation (Spring Boot)</description>
 
@@ -24,24 +24,23 @@
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
         <pmd.version>6.55.0</pmd.version>
-        <hibernate.version>6.2.7.Final</hibernate.version>
-        <junit-jupiter.version>5.10.0</junit-jupiter.version>
         <skipSpotbugs>false</skipSpotbugs>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi</artifactId>
-                <version>2.2.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+<!--            See https://github.com/springdoc/springdoc-openapi/issues/2440-->
+<!--            <dependency>-->
+<!--                <groupId>org.springdoc</groupId>-->
+<!--                <artifactId>springdoc-openapi</artifactId>-->
+<!--                <version>2.2.0</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>io.github.mfvanek</groupId>
                 <artifactId>pg-index-health-bom</artifactId>
-                <version>0.10.1</version>
+                <version>0.10.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -102,9 +101,14 @@
             <version>3.2.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>2.2.19</version>
         </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>org.springdoc</groupId>-->
+<!--            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
@@ -182,6 +186,7 @@
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <failOnWarning>true</failOnWarning>
+                    <parameters>true</parameters>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>com.google.errorprone</groupId>
@@ -312,6 +317,12 @@
                     <image>
                         <name>mfvanek/${project.artifactId}:${project.version}</name>
                     </image>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
