@@ -9,7 +9,6 @@ package com.mfvanek.salary.calc;
 
 import com.mfvanek.salary.calc.support.TestBase;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -43,8 +42,8 @@ class ActuatorEndpointTest extends TestBase {
             "health|{\"status\":\"UP\",\"groups\":[\"liveness\",\"readiness\"]}|application/json",
             "health/liveness|{\"status\":\"UP\"}|application/json",
             "health/readiness|{\"status\":\"UP\"}|application/json",
-            //"openapi/springdocDefault|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
-            //"openapi/x-actuator|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
+            "openapi/springdocDefault|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
+            "openapi/x-actuator|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
             "info|\"version\":|application/json"}, delimiter = '|')
     void actuatorEndpointShouldReturnOk(@Nonnull final String endpointName,
                                         @Nonnull final String expectedSubstring,
@@ -63,7 +62,6 @@ class ActuatorEndpointTest extends TestBase {
                 .contains(expectedSubstring);
     }
 
-    @Disabled("Due to https://github.com/springdoc/springdoc-openapi/issues/2440")
     @Test
     void swaggerUiEndpointShouldReturnFound() {
         final var result = actuatorClient.get()
