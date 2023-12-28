@@ -25,7 +25,6 @@ public class EmployeeCreationRequest {
     @NotBlank
     private String lastName;
 
-    @NotNull
     @Min(1)
     @Max(8)
     private int standardHoursPerDay;
