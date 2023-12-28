@@ -33,7 +33,6 @@ public final class EmployeeDto {
     @NotBlank
     private String lastName;
 
-    @NotNull
     @Min(1)
     @Max(8)
     private int standardHoursPerDay;

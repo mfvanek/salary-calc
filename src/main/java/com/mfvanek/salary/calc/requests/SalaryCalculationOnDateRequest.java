@@ -17,7 +17,6 @@ public class SalaryCalculationOnDateRequest {
     @NotNull
     private UUID employeeId;
 
-    @NotNull
     @Min(0)
     private int workingDaysCount;
 

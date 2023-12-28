@@ -35,7 +35,6 @@ public class Salary extends BaseEntity {
     @Column(name = "calculated_at", nullable = false)
     private LocalDate calculationDate;
 
-    @NotNull
     @Column(name = "wrk_days", nullable = false)
     private int workingDaysCount;
 

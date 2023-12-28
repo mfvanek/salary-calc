@@ -20,7 +20,6 @@ public final class SalaryDto {
     @NotNull
     private LocalDate calculationDate;
 
-    @NotNull
     private int workingDaysCount;
 
     @NotNull
