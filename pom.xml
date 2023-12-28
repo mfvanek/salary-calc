@@ -192,7 +192,7 @@
                     <target>${java.version}</target>
                     <compilerArgs>
                         <arg>-XDcompilePolicy=simple</arg>
-                        <arg>-Xplugin:ErrorProne -Xep:MissingSummary:OFF -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF</arg>
+                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -Xep:MissingSummary:OFF -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF</arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <failOnWarning>true</failOnWarning>
