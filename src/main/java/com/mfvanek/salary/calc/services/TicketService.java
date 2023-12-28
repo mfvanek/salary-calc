@@ -50,7 +50,7 @@ public class TicketService {
                     .build();
             return ticketRepository.save(newTicket);
         } catch (JsonProcessingException e) {
-            log.error(e.getMessage(), e);
+            log.error("Error occurred while processing json", e);
         }
 
         ticket = findExisting(request.getEmployeeId(), request.getCalculationDate());
