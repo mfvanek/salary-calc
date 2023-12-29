@@ -34,7 +34,7 @@ public class TicketService {
     @Transactional
     public Ticket create(final Employee employee, final SalaryCalculationOnDateRequest request) {
         // Let's check if it already exists
-        Optional<Ticket> ticket = findExisting(request.getEmployeeId(), request.getCalculationDate());
+        final Optional<Ticket> ticket = findExisting(request.getEmployeeId(), request.getCalculationDate());
         if (ticket.isPresent()) {
             return ticket.get();
         }
@@ -45,7 +45,7 @@ public class TicketService {
                     .id(UUID.randomUUID())
                     .calculationDate(request.getCalculationDate())
                     .employeeId(employee)
-                    .isActive(true)
+                    .isActive(Boolean.TRUE)
                     .calculationParamsJson(objectMapper.writeValueAsString(request))
                     .build();
             return ticketRepository.save(newTicket);
@@ -53,12 +53,8 @@ public class TicketService {
             log.error("Error occurred while processing json", e);
         }
 
-        ticket = findExisting(request.getEmployeeId(), request.getCalculationDate());
-        if (ticket.isPresent()) {
-            return ticket.get();
-        } else {
-            throw new EntityNotFoundException();
-        }
+        return findExisting(request.getEmployeeId(), request.getCalculationDate())
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     private Optional<Ticket> findExisting(final UUID employeeId, final LocalDate calculationDate) {

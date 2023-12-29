@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.services;
 
-import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.SalaryRepository;
@@ -33,12 +32,15 @@ public class SalaryService {
     @Transactional
     public Ticket calculateOnDate(@Nonnull final SalaryCalculationOnDateRequest request) {
         Objects.requireNonNull(request, "request cannot be null");
-        final Optional<Employee> employee = employeeService.findById(request.getEmployeeId());
-        if (employee.isEmpty()) {
-            throw new EntityNotFoundException(String.format("Employee with id = %s not found", request.getEmployeeId()));
-        }
-        final Ticket ticket = ticketService.create(employee.get(), request);
-        salaryCalculationService.submit(ticket, employee.get(), request);
-        return ticket;
+        return employeeService.findById(request.getEmployeeId())
+                .map(e -> {
+                    final Ticket ticket = ticketService.create(e, request);
+                    salaryCalculationService.submit(ticket, e, request);
+                    return ticket;
+                })
+                .orElseThrow(() -> {
+                    final String message = String.format("Employee with id = %s not found", request.getEmployeeId());
+                    return new EntityNotFoundException(message);
+                });
     }
 }

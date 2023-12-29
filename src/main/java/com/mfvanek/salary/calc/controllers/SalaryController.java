@@ -35,7 +35,7 @@ public class SalaryController {
     public ResponseEntity<SalaryDto> getSalaryCalculation(@PathVariable final UUID id) {
         final Optional<Salary> salary = salaryService.findById(id);
         final HttpStatus status = salary.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        final SalaryDto salaryDto = convertToDto(salary.orElse(new Salary()));
+        final SalaryDto salaryDto = convertToDto(salary.orElseGet(Salary::new));
         return new ResponseEntity<>(salaryDto, status);
     }
 
