@@ -204,6 +204,11 @@
                             <version>2.24.0</version>
                         </path>
                         <path>
+                            <groupId>jp.skypencil.errorprone.slf4j</groupId>
+                            <artifactId>errorprone-slf4j</artifactId>
+                            <version>0.1.21</version>
+                        </path>
+                        <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
@@ -260,8 +265,26 @@
                     <effort>Max</effort>
                     <threshold>Low</threshold>
                     <xmlOutput>false</xmlOutput>
+                    <htmlOutput>true</htmlOutput>
                     <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
                     <skip>${skipSpotbugs}</skip>
+                    <plugins>
+                        <plugin>
+                            <groupId>jp.skypencil.findbugs.slf4j</groupId>
+                            <artifactId>bug-pattern</artifactId>
+                            <version>1.5.0</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.mebigfatguy.fb-contrib</groupId>
+                            <artifactId>fb-contrib</artifactId>
+                            <version>7.6.4</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>1.12.0</version>
+                        </plugin>
+                    </plugins>
                 </configuration>
                 <executions>
                     <execution>
@@ -424,27 +447,27 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.57</minimum>
+                                            <minimum>0.66</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.50</minimum>
+                                            <minimum>0.60</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>2</maximum>
+                                            <maximum>1</maximum>
                                         </limit>
                                         <limit>
                                             <counter>METHOD</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>14</maximum>
+                                            <maximum>12</maximum>
                                         </limit>
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>69</maximum>
+                                            <maximum>58</maximum>
                                         </limit>
                                     </limits>
                                 </rule>

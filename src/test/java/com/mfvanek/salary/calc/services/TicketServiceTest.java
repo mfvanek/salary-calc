@@ -25,15 +25,15 @@ class TicketServiceTest extends TestBase {
     @Test
     void createShouldWork() {
         final var employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
-        final var ticket = ticketService.create(employee,
-                SalaryCalculationOnDateRequest.builder()
-                        .calculationDate(LocalDate.now(clock))
-                        .workingDaysCount(10)
-                        .employeeId(employee.getId())
-                        .build());
+        final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder()
+                .calculationDate(LocalDate.now(clock))
+                .workingDaysCount(10)
+                .employeeId(employee.getId())
+                .build();
+        final var firstTicket = ticketService.create(employee, request);
 
         assertInTransaction(() ->
-                assertThat(ticket)
+                assertThat(firstTicket)
                         .isNotNull()
                         .satisfies(t -> {
                             assertThat(t.getId())
@@ -42,10 +42,16 @@ class TicketServiceTest extends TestBase {
                                     .isEqualTo(employee.getId());
                         })
         );
+        assertThat(countRecordsInTable("tickets")).isEqualTo(1);
 
-        assertThat(ticketService.findById(ticket.getId()))
+        // Second creation shouldn't work
+        final var secondTicket = ticketService.create(employee, request);
+        assertThat(secondTicket.getId()).isEqualTo(firstTicket.getId());
+        assertThat(countRecordsInTable("tickets")).isEqualTo(1);
+
+        assertThat(ticketService.findById(firstTicket.getId()))
                 .isPresent()
                 .get()
-                .satisfies(t -> assertThat(t.getId()).isEqualTo(ticket.getId()));
+                .satisfies(t -> assertThat(t.getId()).isEqualTo(firstTicket.getId()));
     }
 }

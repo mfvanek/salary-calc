@@ -27,7 +27,7 @@ public class TicketController {
     public ResponseEntity<TicketDto> getTicket(@PathVariable final UUID id) {
         final Optional<Ticket> ticket = ticketService.findById(id);
         final HttpStatus status = ticket.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        final TicketDto ticketDto = convertToDto(ticket.orElse(new Ticket()));
+        final TicketDto ticketDto = convertToDto(ticket.orElseGet(Ticket::new));
         return new ResponseEntity<>(ticketDto, status);
     }
 

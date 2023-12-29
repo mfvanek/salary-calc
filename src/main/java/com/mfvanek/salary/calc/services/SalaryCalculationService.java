@@ -45,7 +45,7 @@ public class SalaryCalculationService {
                 executorService.shutdownNow();
             }
         } catch (InterruptedException e) {
-            log.warn(e.getMessage(), e);
+            log.warn("Shutdown was interrupted", e);
             executorService.shutdownNow();
             Thread.currentThread().interrupt();
         }
@@ -57,7 +57,7 @@ public class SalaryCalculationService {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            log.warn(e.getMessage(), e);
+            log.warn("Calculation was interrupted", e);
             Thread.currentThread().interrupt();
         }
 

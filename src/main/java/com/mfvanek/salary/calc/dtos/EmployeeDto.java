@@ -47,6 +47,8 @@ public final class EmployeeDto {
     @EqualsAndHashCode.Include
     private BigDecimal getSalaryForEquals() {
         // https://stackoverflow.com/questions/36625347/how-to-make-lomboks-equalsandhashcode-work-with-bigdecimal
-        return Optional.ofNullable(salaryPerHour).map(BigDecimal::stripTrailingZeros).orElse(null);
+        return Optional.ofNullable(salaryPerHour)
+                .map(BigDecimal::stripTrailingZeros)
+                .orElse(null);
     }
 }

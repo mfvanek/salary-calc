@@ -4,10 +4,20 @@
         <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
     </Match>
     <Match>
-        <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE"/>
+        <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE,SLF4J_LOGGER_SHOULD_BE_NON_STATIC,IMC_IMMATURE_CLASS_NO_TOSTRING,USBR_UNNECESSARY_STORE_BEFORE_RETURN"/>
     </Match>
     <Match>
-        <Bug pattern="EC_NULL_ARG,EC_UNRELATED_TYPES,NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS,NP_NONNULL_PARAM_VIOLATION,UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
-        <Class name="~.*Test"/>
+        <Bug pattern="EC_NULL_ARG,EC_UNRELATED_TYPES,NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS,NP_NONNULL_PARAM_VIOLATION,UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR,SQL_INJECTION_SPRING_JDBC"/>
+        <Or>
+            <Class name="~.*Test"/>
+            <Class name="~.*TestBase"/>
+        </Or>
+    </Match>
+    <Match>
+        <Bug pattern="MDM_THREAD_YIELD"/>
+        <Class name="com.mfvanek.salary.calc.services.SalaryCalculationService"/>
+    </Match>
+    <Match>
+        <Bug pattern="SPRING_ENDPOINT"/>
     </Match>
 </FindBugsFilter>

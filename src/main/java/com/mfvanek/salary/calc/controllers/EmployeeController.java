@@ -40,7 +40,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> getEmployee(@PathVariable final UUID id) {
         final Optional<Employee> employee = employeeService.findById(id);
         final HttpStatus status = employee.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
-        final EmployeeDto employeeDto = convertToDto(employee.orElse(new Employee()));
+        final EmployeeDto employeeDto = convertToDto(employee.orElseGet(Employee::new));
         return new ResponseEntity<>(employeeDto, status);
     }
 
