@@ -216,7 +216,7 @@
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>3.2.1</version>
+                            <version>3.2.2</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
