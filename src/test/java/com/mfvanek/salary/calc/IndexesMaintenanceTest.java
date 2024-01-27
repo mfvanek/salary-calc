@@ -46,7 +46,7 @@ class IndexesMaintenanceTest extends TestBase {
     void checkPostgresVersion() {
         final String pgVersion = jdbcTemplate.queryForObject("select version();", String.class);
         assertThat(pgVersion)
-                .startsWith("PostgreSQL 14.5");
+                .startsWith("PostgreSQL 16.1");
     }
 
     @Test
