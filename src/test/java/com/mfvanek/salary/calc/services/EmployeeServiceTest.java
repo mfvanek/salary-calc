@@ -1,5 +1,6 @@
 package com.mfvanek.salary.calc.services;
 
+import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.support.TestBase;
 import com.mfvanek.salary.calc.support.TestDataProvider;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class EmployeeServiceTest extends TestBase {
         assertThat(employeeService.findById(UUID.randomUUID()))
                 .isNotPresent();
 
-        final var employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
+        final Employee employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
         assertThat(employeeService.findById(employee.getId()))
                 .isPresent()
                 .get()

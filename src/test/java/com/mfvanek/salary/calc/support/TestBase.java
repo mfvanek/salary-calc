@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -67,7 +68,7 @@ public abstract class TestBase {
     }
 
     protected final long countRecordsInTable(@Nonnull final String tableName) {
-        final var queryResult = jdbcTemplate.queryForObject("select count(*) from " + tableName, Long.class);
+        final Long queryResult = jdbcTemplate.queryForObject("select count(*) from " + tableName, Long.class);
         return Objects.requireNonNullElse(queryResult, 0L);
     }
 
@@ -100,7 +101,7 @@ public abstract class TestBase {
         assertThat(entities.stream().map(BaseEntity::getId).distinct().count())
                 .as("All identifiers must be unique %s", entities)
                 .isEqualTo(entities.size());
-        final var saved = repository.saveAll(entities);
+        final List<T> saved = repository.saveAll(entities);
         assertThat(saved)
                 .hasSameSizeAs(entities);
         saved.forEach(e -> {
@@ -112,7 +113,7 @@ public abstract class TestBase {
             }
         });
 
-        final var result = repository.findAll();
+        final List<T> result = repository.findAll();
         assertThat(result)
                 .hasSameSizeAs(entities);
         result.forEach(c -> assertThatNoException()

@@ -7,6 +7,7 @@ import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.EntityExchangeResult;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,7 +19,7 @@ class EmployeeControllerTest extends TestBase {
 
     @Test
     void getEmployeeShouldReturnNotFoundForRandomId() {
-        final var result = webTestClient.get()
+        final EmployeeDto result = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/employee/{id}")
                         .build(UUID.randomUUID()))
@@ -34,7 +35,7 @@ class EmployeeControllerTest extends TestBase {
 
     @Test
     void getAllShouldReturnEmptyListOnEmptyDatabase() {
-        final var result = webTestClient.get()
+        final EmployeeDto[] result = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/employee/all")
                         .build())
@@ -50,14 +51,14 @@ class EmployeeControllerTest extends TestBase {
 
     @Test
     void createEmployee() {
-        final var employeeCreationRequest = EmployeeCreationRequest.builder()
+        final EmployeeCreationRequest employeeCreationRequest = EmployeeCreationRequest.builder()
                 .firstName("John")
                 .lastName("Doe")
                 .standardHoursPerDay(8)
                 .salaryPerHour(BigDecimal.valueOf(400L))
                 .build();
 
-        final var result = webTestClient.post()
+        final EntityExchangeResult<EmployeeDto> result = webTestClient.post()
                 .uri("/employee")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +81,7 @@ class EmployeeControllerTest extends TestBase {
                 .first(InstanceOfAssertFactories.STRING)
                 .startsWith("http://localhost:%d/api/employee/".formatted(port));
 
-        final var createdEmployee = result.getResponseBody();
+        final EmployeeDto createdEmployee = result.getResponseBody();
         assertThat(createdEmployee)
                 .isNotNull()
                 .satisfies(e -> {
@@ -96,7 +97,7 @@ class EmployeeControllerTest extends TestBase {
                             .isEqualByComparingTo("400.00");
                 });
 
-        final var foundEmployee = webTestClient.get()
+        final EmployeeDto foundEmployee = webTestClient.get()
                 .uri(location.get(0))
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -110,7 +111,7 @@ class EmployeeControllerTest extends TestBase {
                 .satisfies(e -> assertThat(e.getId())
                         .isEqualTo(createdEmployee.getId()));
 
-        final var allEmployees = webTestClient.get()
+        final EmployeeDto[] allEmployees = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/employee/all")
                         .build())

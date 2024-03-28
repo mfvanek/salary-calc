@@ -46,8 +46,8 @@ class EmployeeRepositoryTest extends TestBase {
 
     @Test
     void correctness() {
-        final var first = TestDataProvider.prepareIvanIvanov();
-        final var second = TestDataProvider.preparePetrPetrov();
+        final Employee first = TestDataProvider.prepareIvanIvanov();
+        final Employee second = TestDataProvider.preparePetrPetrov();
         assertThatEntityIsCorrect(Set.of(first, second), employeeRepository);
     }
 }

@@ -1,5 +1,6 @@
 package com.mfvanek.salary.calc.repositories;
 
+import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Salary;
 import com.mfvanek.salary.calc.support.TestBase;
 import com.mfvanek.salary.calc.support.TestDataProvider;
@@ -19,8 +20,8 @@ class SalaryRepositoryTest extends TestBase {
 
     @Test
     void correctness() {
-        final var first = TestDataProvider.prepareIvanIvanov();
-        final var second = TestDataProvider.preparePetrPetrov();
+        final Employee first = TestDataProvider.prepareIvanIvanov();
+        final Employee second = TestDataProvider.preparePetrPetrov();
         employeeRepository.saveAll(List.of(first, second));
 
         final Salary firstSalary = TestDataProvider.prepareSalary()

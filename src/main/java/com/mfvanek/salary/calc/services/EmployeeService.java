@@ -17,7 +17,8 @@ import javax.annotation.Nonnull;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeService extends AbstractService {
+@Transactional(readOnly = true)
+public class EmployeeService {
 
     private final Clock clock;
     private final EmployeeRepository employeeRepository;
