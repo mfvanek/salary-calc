@@ -48,7 +48,7 @@ class ActuatorEndpointTest extends TestBase {
     void actuatorEndpointShouldReturnOk(@Nonnull final String endpointName,
                                         @Nonnull final String expectedSubstring,
                                         @Nonnull final String mediaType) {
-        final var result = actuatorClient.get()
+        final String result = actuatorClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(endpointName)
                         .build())
@@ -64,7 +64,7 @@ class ActuatorEndpointTest extends TestBase {
 
     @Test
     void swaggerUiEndpointShouldReturnFound() {
-        final var result = actuatorClient.get()
+        final byte[] result = actuatorClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .pathSegment("swagger-ui")
                         .build())
@@ -80,7 +80,7 @@ class ActuatorEndpointTest extends TestBase {
 
     @Test
     void readinessProbeShouldBeCollectedFromApplicationMainPort() {
-        final var result = webTestClient.get()
+        final String result = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .pathSegment("readyz")
                         .build())
@@ -96,7 +96,7 @@ class ActuatorEndpointTest extends TestBase {
 
     @Test
     void openapiEndpointNotFound() {
-        final var result = actuatorClient.get()
+        final String result = actuatorClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .pathSegment("openapi")
                         .build())

@@ -13,7 +13,13 @@
 
     <rule ref="category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod">
         <properties>
-            <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration['.*TestBase']"/>
+            <property name="violationSuppressXPath" value=".[@SimpleName = 'TestBase'] | .[@SimpleName = 'BaseEntity']"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml/LooseCoupling">
+        <properties>
+            <property name="allowedTypes" value="org.springframework.http.HttpHeaders" />
         </properties>
     </rule>
 
@@ -40,8 +46,7 @@
     <rule ref="category/java/codestyle.xml/LinguisticNaming">
         <properties>
             <property name="checkSetters" value="false"/>
-            <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceBodyDeclaration/Annotation/MarkerAnnotation//Name[@Image='Test']"/>
+            <property name="violationSuppressXPath" value=".[pmd-java:hasAnnotation('org.junit.jupiter.api.Test')]"/>
         </properties>
     </rule>
 
@@ -58,9 +63,9 @@
         <exclude name="UseUtilityClass"/>
     </rule>
 
-    <rule ref="category/java/design.xml/AbstractClassWithoutAnyMethod">
+    <rule ref="category/java/design.xml/SimplifyBooleanReturns">
         <properties>
-            <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration['.*TestBase']"/>
+            <property name="violationSuppressXPath" value="./ancestor::*[@Name = 'equals'] | ./ancestor::*[@Name = 'hashCode']"/>
         </properties>
     </rule>
 
@@ -77,14 +82,5 @@
 
     <rule ref="category/java/security.xml"/>
 
-    <rule ref="category/java/errorprone.xml">
-        <exclude name="DataflowAnomalyAnalysis"/>
-    </rule>
-
-    <rule ref="category/java/errorprone.xml/EqualsNull">
-        <properties>
-            <property name="violationSuppressXPath"
-                      value="//ClassOrInterfaceBodyDeclaration/Annotation/MarkerAnnotation//Name[@Image='Test']"/>
-        </properties>
-    </rule>
+    <rule ref="category/java/errorprone.xml"/>
 </ruleset>

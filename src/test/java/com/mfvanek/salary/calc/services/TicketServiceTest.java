@@ -1,5 +1,7 @@
 package com.mfvanek.salary.calc.services;
 
+import com.mfvanek.salary.calc.entities.Employee;
+import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import com.mfvanek.salary.calc.support.TestBase;
 import com.mfvanek.salary.calc.support.TestDataProvider;
@@ -24,13 +26,13 @@ class TicketServiceTest extends TestBase {
 
     @Test
     void createShouldWork() {
-        final var employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
+        final Employee employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
         final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder()
                 .calculationDate(LocalDate.now(clock))
                 .workingDaysCount(10)
                 .employeeId(employee.getId())
                 .build();
-        final var firstTicket = ticketService.create(employee, request);
+        final Ticket firstTicket = ticketService.create(employee, request);
 
         assertInTransaction(() ->
                 assertThat(firstTicket)
@@ -45,7 +47,7 @@ class TicketServiceTest extends TestBase {
         assertThat(countRecordsInTable("tickets")).isEqualTo(1);
 
         // Second creation shouldn't work
-        final var secondTicket = ticketService.create(employee, request);
+        final Ticket secondTicket = ticketService.create(employee, request);
         assertThat(secondTicket.getId()).isEqualTo(firstTicket.getId());
         assertThat(countRecordsInTable("tickets")).isEqualTo(1);
 

@@ -39,7 +39,7 @@ class SalaryServiceTest extends TestBase {
 
     @Test
     void findByIdShouldReturnEntityWhenFound() {
-        final var ids = createEmployeeWithSalary();
+        final Pair<UUID, UUID> ids = createEmployeeWithSalary();
         assertThat(salaryService.findById(ids.getRight()))
                 .isPresent()
                 .get()
@@ -60,7 +60,7 @@ class SalaryServiceTest extends TestBase {
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("request cannot be null");
 
-        final var request = SalaryCalculationOnDateRequest.builder().build();
+        final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder().build();
         assertThatThrownBy(() -> salaryService.calculateOnDate(request))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("id cannot be null");
@@ -68,7 +68,7 @@ class SalaryServiceTest extends TestBase {
 
     @Test
     void calculateOnDateShouldThrowExceptionWhenEmployeeDoesNotExist() {
-        final var request = SalaryCalculationOnDateRequest.builder()
+        final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder()
                 .employeeId(UUID.fromString("2071becc-7866-46f3-938b-547b338bec80"))
                 .build();
         assertThatThrownBy(() -> salaryService.calculateOnDate(request))
@@ -78,7 +78,7 @@ class SalaryServiceTest extends TestBase {
 
     @Test
     void calculateOnDateShouldWork() {
-        final var ids = createEmployeeWithSalary();
+        final Pair<UUID, UUID> ids = createEmployeeWithSalary();
 
         final Ticket result = salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder()
                 .employeeId(ids.getLeft())

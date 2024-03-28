@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SalaryTest {
 
     @Test
-    @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes", "EqualsIncompatibleType"})
+    @SuppressWarnings({"ConstantConditions", "EqualsBetweenInconvertibleTypes", "EqualsIncompatibleType", "PMD.EqualsNull"})
     void equalsHashCodeShouldAdhereContracts() {
         final Salary first = Salary.builder().build();
         final Salary second = new Salary(); // different creation way
