@@ -13,6 +13,7 @@ import io.github.mfvanek.pg.checks.host.IndexesWithNullValuesCheckOnHost;
 import io.github.mfvanek.pg.checks.host.IntersectedIndexesCheckOnHost;
 import io.github.mfvanek.pg.checks.host.InvalidIndexesCheckOnHost;
 import io.github.mfvanek.pg.checks.host.NotValidConstraintsCheckOnHost;
+import io.github.mfvanek.pg.checks.host.PrimaryKeysWithSerialTypesCheckOnHost;
 import io.github.mfvanek.pg.checks.host.SequenceOverflowCheckOnHost;
 import io.github.mfvanek.pg.checks.host.TablesWithoutDescriptionCheckOnHost;
 import io.github.mfvanek.pg.checks.host.TablesWithoutPrimaryKeyCheckOnHost;
@@ -22,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+@SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection", "PMD.TooManyFields"})
 class IndexesMaintenanceTest extends TestBase {
 
     @Autowired
@@ -55,6 +56,8 @@ class IndexesMaintenanceTest extends TestBase {
     private BtreeIndexesOnArrayColumnsCheckOnHost btreeIndexesOnArrayColumnsCheck;
     @Autowired
     private SequenceOverflowCheckOnHost sequenceOverflowCheck;
+    @Autowired
+    private PrimaryKeysWithSerialTypesCheckOnHost primaryKeysWithSerialTypesCheck;
 
     @Test
     @DisplayName("Always check PostgreSQL version in your tests")
@@ -151,6 +154,12 @@ class IndexesMaintenanceTest extends TestBase {
     @Test
     void sequenceOverflowCheckShouldReturnNothing() {
         assertThat(sequenceOverflowCheck.check())
+                .isEmpty();
+    }
+
+    @Test
+    void getPrimaryKeysWithSerialTypesShouldReturnNothing() {
+        assertThat(primaryKeysWithSerialTypesCheck.check())
                 .isEmpty();
     }
 }
