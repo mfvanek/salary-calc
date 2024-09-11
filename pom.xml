@@ -190,7 +190,7 @@
                         <path>
                             <groupId>jp.skypencil.errorprone.slf4j</groupId>
                             <artifactId>errorprone-slf4j</artifactId>
-                            <version>0.1.25</version>
+                            <version>0.1.28</version>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>
