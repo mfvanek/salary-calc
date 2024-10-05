@@ -1,3 +1,10 @@
 logging:
     level:
         org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+spring:
+    jpa:
+        properties:
+            jakarta:
+                persistence:
+                    query:
+                        timeout: 4000
