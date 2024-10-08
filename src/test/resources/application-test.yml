@@ -7,4 +7,4 @@ spring:
             jakarta:
                 persistence:
                     query:
-                        timeout: 4000
+                        timeout: 4000 # milliseconds
