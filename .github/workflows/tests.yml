@@ -41,10 +41,10 @@ jobs:
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                run: mvn clean verify -P sonar
+                run: ./mvnw clean verify -P sonar
             -   name: Build with Maven
                 if: matrix.type != 'sonar'
-                run: mvn clean verify
+                run: ./mvnw clean verify
             -   name: Build Docker image
                 if: matrix.type == 'sonar'
-                run: mvn spring-boot:build-image -DskipTests
+                run: ./mvnw spring-boot:build-image -DskipTests
