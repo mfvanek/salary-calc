@@ -16,14 +16,14 @@
     <description>Demo app for salary calculation (Spring Boot)</description>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <source.encoding>UTF-8</source.encoding>
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
-        <pmd.version>7.2.0</pmd.version>
+        <pmd.version>7.6.0</pmd.version>
         <skipSpotbugs>false</skipSpotbugs>
     </properties>
 
@@ -39,7 +39,7 @@
             <dependency>
                 <groupId>io.github.mfvanek</groupId>
                 <artifactId>pg-index-health-bom</artifactId>
-                <version>0.13.0</version>
+                <version>0.13.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -230,10 +230,10 @@
                             <rules>
                                 <banDuplicatePomDependencyVersions/>
                                 <requireMavenVersion>
-                                    <version>[3.8,)</version>
+                                    <version>[3.9,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[17,)</version>
+                                    <version>[21,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -359,11 +359,6 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.25.0</version>
                 <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.pmd</groupId>
-                        <artifactId>pmd-compat6</artifactId>
-                        <version>${pmd.version}</version>
-                    </dependency>
                     <dependency>
                         <groupId>net.sourceforge.pmd</groupId>
                         <artifactId>pmd-core</artifactId>
