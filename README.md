@@ -13,8 +13,8 @@ Demo app for salary calculation (Spring Boot)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=mfvanek_salary-calc&metric=coverage)](https://sonarcloud.io/summary/new_code?id=mfvanek_salary-calc)
 
 ## Requirements
-Java 17+  
-Spring Boot 3.0+
+Java 21+  
+Spring Boot 3.3+
 
 ## API
 ### Actuator
