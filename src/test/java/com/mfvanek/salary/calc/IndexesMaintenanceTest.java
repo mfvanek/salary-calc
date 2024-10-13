@@ -34,6 +34,9 @@ class IndexesMaintenanceTest extends TestBase {
             if (check.getDiagnostic() == Diagnostic.COLUMNS_WITHOUT_DESCRIPTION) {
                 assertThat(check.check())
                         .hasSize(22);
+            } else if (check.getDiagnostic() == Diagnostic.TABLES_WITH_MISSING_INDEXES) {
+                assertThat(check.check())
+                        .hasSizeLessThanOrEqualTo(1); // TODO skip runtime checks after https://github.com/mfvanek/pg-index-health/issues/456
             } else {
                 assertThat(check.check())
                         .as(check.getDiagnostic().name())
