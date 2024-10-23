@@ -61,3 +61,6 @@ docker-compose --project-name="salary-calc" up -d
 ```shell
 docker-compose --project-name="salary-calc" down
 ```
+## Features
+Calculates the salary based upon a given data.
+Keeps the track of salary in an organized manner.
