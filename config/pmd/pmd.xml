@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset
-         xmlns="" name="Custom ruleset"
+         xmlns=""
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0">
     <description>PMD configuration</description>
