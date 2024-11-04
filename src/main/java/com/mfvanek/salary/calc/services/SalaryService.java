@@ -33,14 +33,14 @@ public class SalaryService {
     public Ticket calculateOnDate(@Nonnull final SalaryCalculationOnDateRequest request) {
         Objects.requireNonNull(request, "request cannot be null");
         return employeeService.findById(request.getEmployeeId())
-                .map(e -> {
-                    final Ticket ticket = ticketService.create(e, request);
-                    salaryCalculationService.submit(ticket, e, request);
-                    return ticket;
-                })
-                .orElseThrow(() -> {
-                    final String message = String.format("Employee with id = %s not found", request.getEmployeeId());
-                    return new EntityNotFoundException(message);
-                });
+            .map(e -> {
+                final Ticket ticket = ticketService.create(e, request);
+                salaryCalculationService.submit(ticket, e, request);
+                return ticket;
+            })
+            .orElseThrow(() -> {
+                final String message = String.format("Employee with id = %s not found", request.getEmployeeId());
+                return new EntityNotFoundException(message);
+            });
     }
 }

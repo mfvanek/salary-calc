@@ -13,6 +13,6 @@ import java.util.UUID;
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
 
     @Query(value = "select * from tickets t where t.emp_id = ?1 and t.calculated_at = ?2 and t.is_active = true",
-            nativeQuery = true)
+        nativeQuery = true)
     Optional<Ticket> findByEmployeeIdAndCalculationDate(UUID employeeId, LocalDate calculationDate);
 }

@@ -27,53 +27,53 @@ class SalaryServiceTest extends TestBase {
     @Test
     void findByIdShouldThrowErrorOnNullArgument() {
         assertThatThrownBy(() -> salaryService.findById(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("id cannot be null");
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("id cannot be null");
     }
 
     @Test
     void findByIdShouldReturnEmptyOptionalWhenNotFound() {
         assertThat(salaryService.findById(UUID.randomUUID()))
-                .isNotPresent();
+            .isNotPresent();
     }
 
     @Test
     void findByIdShouldReturnEntityWhenFound() {
         final Pair<UUID, UUID> ids = createEmployeeWithSalary();
         assertThat(salaryService.findById(ids.getRight()))
-                .isPresent()
-                .get()
-                .satisfies(r -> {
-                    assertThat(r.getId())
-                            .isEqualTo(ids.getRight());
-                    assertThat(r.getCreatedAt())
-                            .isEqualTo(BEFORE_MILLENNIUM);
-                    assertThat(r.getUpdatedAt())
-                            .isNull();
-                });
+            .isPresent()
+            .get()
+            .satisfies(r -> {
+                assertThat(r.getId())
+                    .isEqualTo(ids.getRight());
+                assertThat(r.getCreatedAt())
+                    .isEqualTo(BEFORE_MILLENNIUM);
+                assertThat(r.getUpdatedAt())
+                    .isNull();
+            });
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test
     void calculateOnDateShouldThrowExceptionOnInvalidRequest() {
         assertThatThrownBy(() -> salaryService.calculateOnDate(null))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("request cannot be null");
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("request cannot be null");
 
         final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder().build();
         assertThatThrownBy(() -> salaryService.calculateOnDate(request))
-                .isInstanceOf(NullPointerException.class)
-                .hasMessage("id cannot be null");
+            .isInstanceOf(NullPointerException.class)
+            .hasMessage("id cannot be null");
     }
 
     @Test
     void calculateOnDateShouldThrowExceptionWhenEmployeeDoesNotExist() {
         final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder()
-                .employeeId(UUID.fromString("2071becc-7866-46f3-938b-547b338bec80"))
-                .build();
+            .employeeId(UUID.fromString("2071becc-7866-46f3-938b-547b338bec80"))
+            .build();
         assertThatThrownBy(() -> salaryService.calculateOnDate(request))
-                .isInstanceOf(EntityNotFoundException.class)
-                .hasMessage("Employee with id = 2071becc-7866-46f3-938b-547b338bec80 not found");
+            .isInstanceOf(EntityNotFoundException.class)
+            .hasMessage("Employee with id = 2071becc-7866-46f3-938b-547b338bec80 not found");
     }
 
     @Test
@@ -81,22 +81,22 @@ class SalaryServiceTest extends TestBase {
         final Pair<UUID, UUID> ids = createEmployeeWithSalary();
 
         final Ticket result = salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder()
-                .employeeId(ids.getLeft())
-                .workingDaysCount(0)
-                .calculationDate(LocalDate.now(clock))
-                .build());
+            .employeeId(ids.getLeft())
+            .workingDaysCount(0)
+            .calculationDate(LocalDate.now(clock))
+            .build());
 
         assertThat(result)
-                .isNotNull();
+            .isNotNull();
     }
 
     @Nonnull
     private Pair<UUID, UUID> createEmployeeWithSalary() {
         final Salary notSaved = TestDataProvider.prepareSalary()
-                .calculationDate(LocalDate.now(clock))
-                .build();
+            .calculationDate(LocalDate.now(clock))
+            .build();
         final Employee employee = TestDataProvider.prepareIvanIvanov()
-                .withSalary(notSaved);
+            .withSalary(notSaved);
         employeeRepository.save(employee);
         return ImmutablePair.of(employee.getId(), notSaved.getId());
     }

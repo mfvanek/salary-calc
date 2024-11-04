@@ -26,7 +26,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = "salary_calc", indexes = {
-        @Index(name = "idx_salary_calc_emp_id", columnList = "emp_id")
+    @Index(name = "idx_salary_calc_emp_id", columnList = "emp_id")
 })
 @Comment("Table for storing calculated salary")
 public class Salary extends BaseEntity {

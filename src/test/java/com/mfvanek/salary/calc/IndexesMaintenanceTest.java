@@ -22,26 +22,25 @@ class IndexesMaintenanceTest extends TestBase {
     void checkPostgresVersion() {
         final String pgVersion = jdbcTemplate.queryForObject("select version();", String.class);
         assertThat(pgVersion)
-                .startsWith("PostgreSQL 16.4");
+            .startsWith("PostgreSQL 17.0");
     }
 
     @Test
     void databaseStructureCheckForPublicSchema() {
         assertThat(checks)
-                .hasSameSizeAs(Diagnostic.values());
+            .hasSameSizeAs(Diagnostic.values());
 
-        checks.forEach(check -> {
-            if (check.getDiagnostic() == Diagnostic.COLUMNS_WITHOUT_DESCRIPTION) {
-                assertThat(check.check())
+        checks.stream()
+            .filter(DatabaseCheckOnHost::isStatic)
+            .forEach(check -> {
+                if (check.getDiagnostic() == Diagnostic.COLUMNS_WITHOUT_DESCRIPTION) {
+                    assertThat(check.check())
                         .hasSize(22);
-            } else if (check.getDiagnostic() == Diagnostic.TABLES_WITH_MISSING_INDEXES) {
-                assertThat(check.check())
-                        .hasSizeLessThanOrEqualTo(1); // TODO skip runtime checks after https://github.com/mfvanek/pg-index-health/issues/456
-            } else {
-                assertThat(check.check())
+                } else {
+                    assertThat(check.check())
                         .as(check.getDiagnostic().name())
                         .isEmpty();
-            }
-        });
+                }
+            });
     }
 }

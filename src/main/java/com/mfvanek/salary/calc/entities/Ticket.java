@@ -24,10 +24,10 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(
-        name = "tickets",
-        indexes = {
-                @Index(name = "idx_tickets_employee_date", columnList = "emp_id,calculated_at,is_active", unique = true)
-        }
+    name = "tickets",
+    indexes = {
+        @Index(name = "idx_tickets_employee_date", columnList = "emp_id,calculated_at,is_active", unique = true)
+    }
 )
 @Comment("Table for tickets")
 public class Ticket extends BaseEntity {

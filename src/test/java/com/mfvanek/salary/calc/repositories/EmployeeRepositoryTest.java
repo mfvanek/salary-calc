@@ -19,13 +19,13 @@ class EmployeeRepositoryTest extends TestBase {
     void createdAtShouldBeSetAutomaticallyOnSave() {
         final Employee notSaved = TestDataProvider.prepareIvanIvanov();
         assertThat(notSaved.getCreatedAt())
-                .isNull();
+            .isNull();
         final Employee saved = employeeRepository.save(notSaved);
         assertThat(saved)
-                .isNotNull()
-                .satisfies(e -> assertThat(e.getCreatedAt())
-                        .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59))
-                        .isBefore(LocalDateTime.now(Clock.systemUTC())));
+            .isNotNull()
+            .satisfies(e -> assertThat(e.getCreatedAt())
+                .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59))
+                .isBefore(LocalDateTime.now(Clock.systemUTC())));
     }
 
     @Test
@@ -35,13 +35,13 @@ class EmployeeRepositoryTest extends TestBase {
 
         final Employee notSaved = TestDataProvider.prepareIvanIvanov();
         assertThat(notSaved.getCreatedAt())
-                .isNull();
+            .isNull();
         final Employee saved = employeeRepository.save(notSaved);
         assertThat(saved)
-                .isNotNull()
-                .satisfies(e -> assertThat(e.getCreatedAt())
-                        .isEqualTo(LocalDateTime.of(3000, Month.JANUARY, 1, 0, 0, 0))
-                        .isAfter(LocalDateTime.now(Clock.systemUTC())));
+            .isNotNull()
+            .satisfies(e -> assertThat(e.getCreatedAt())
+                .isEqualTo(LocalDateTime.of(3000, Month.JANUARY, 1, 0, 0, 0))
+                .isAfter(LocalDateTime.now(Clock.systemUTC())));
     }
 
     @Test

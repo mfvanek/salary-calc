@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface SalaryRepository extends JpaRepository<Salary, UUID> {
+
 }

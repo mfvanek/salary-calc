@@ -41,12 +41,12 @@ public class TicketService {
 
         // If it doesn't exist, let's try to add a new one
         final Ticket newTicket = Ticket.builder()
-                .id(UUID.randomUUID())
-                .calculationDate(request.getCalculationDate())
-                .employeeId(employee)
-                .isActive(Boolean.TRUE)
-                .calculationParamsJson(objectMapper.writeValueAsString(request))
-                .build();
+            .id(UUID.randomUUID())
+            .calculationDate(request.getCalculationDate())
+            .employeeId(employee)
+            .isActive(Boolean.TRUE)
+            .calculationParamsJson(objectMapper.writeValueAsString(request))
+            .build();
         return ticketRepository.save(newTicket);
     }
 

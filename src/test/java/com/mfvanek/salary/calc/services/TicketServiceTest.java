@@ -21,28 +21,28 @@ class TicketServiceTest extends TestBase {
     @Test
     void findByIdShouldWork() {
         assertThat(ticketService.findById(UUID.randomUUID()))
-                .isNotPresent();
+            .isNotPresent();
     }
 
     @Test
     void createShouldWork() {
         final Employee employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
         final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder()
-                .calculationDate(LocalDate.now(clock))
-                .workingDaysCount(10)
-                .employeeId(employee.getId())
-                .build();
+            .calculationDate(LocalDate.now(clock))
+            .workingDaysCount(10)
+            .employeeId(employee.getId())
+            .build();
         final Ticket firstTicket = ticketService.create(employee, request);
 
         assertInTransaction(() ->
-                assertThat(firstTicket)
-                        .isNotNull()
-                        .satisfies(t -> {
-                            assertThat(t.getId())
-                                    .isNotNull();
-                            assertThat(t.getEmployeeId().getId())
-                                    .isEqualTo(employee.getId());
-                        })
+            assertThat(firstTicket)
+                .isNotNull()
+                .satisfies(t -> {
+                    assertThat(t.getId())
+                        .isNotNull();
+                    assertThat(t.getEmployeeId().getId())
+                        .isEqualTo(employee.getId());
+                })
         );
         assertThat(countRecordsInTable("tickets")).isEqualTo(1);
 
@@ -52,8 +52,8 @@ class TicketServiceTest extends TestBase {
         assertThat(countRecordsInTable("tickets")).isEqualTo(1);
 
         assertThat(ticketService.findById(firstTicket.getId()))
-                .isPresent()
-                .get()
-                .satisfies(t -> assertThat(t.getId()).isEqualTo(firstTicket.getId()));
+            .isPresent()
+            .get()
+            .satisfies(t -> assertThat(t.getId()).isEqualTo(firstTicket.getId()));
     }
 }

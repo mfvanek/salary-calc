@@ -25,25 +25,25 @@ class SalaryRepositoryTest extends TestBase {
         employeeRepository.saveAll(List.of(first, second));
 
         final Salary firstSalary = TestDataProvider.prepareSalary()
-                .calculationDate(LocalDate.now(clock))
-                .employeeId(first)
-                .build();
+            .calculationDate(LocalDate.now(clock))
+            .employeeId(first)
+            .build();
         final Salary secondSalary = TestDataProvider.prepareSalary()
-                .calculationDate(LocalDate.now(clock))
-                .employeeId(second)
-                .build();
+            .calculationDate(LocalDate.now(clock))
+            .employeeId(second)
+            .build();
         assertThatEntityIsCorrect(Set.of(firstSalary, secondSalary), salaryRepository);
 
         assertInTransaction(() ->
-                assertThat(salaryRepository.findAll())
-                        .hasSize(2)
-                        .allSatisfy(s ->
-                                assertThat(s.getEmployeeId())
-                                        .isNotNull()
-                                        .satisfies(e -> assertThat(e.getSalaries())
-                                                .hasSize(1)
-                                                .first()
-                                                .isEqualTo(s)))
+            assertThat(salaryRepository.findAll())
+                .hasSize(2)
+                .allSatisfy(s ->
+                    assertThat(s.getEmployeeId())
+                        .isNotNull()
+                        .satisfies(e -> assertThat(e.getSalaries())
+                            .hasSize(1)
+                            .first()
+                            .isEqualTo(s)))
         );
     }
 

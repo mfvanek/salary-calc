@@ -14,16 +14,16 @@ class SalaryControllerTest extends TestBase {
     @Test
     void getSalaryCalculationShouldReturnNotFoundOnEmptyDatabase() {
         final SalaryDto salary = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/salary/{id}")
-                        .build(UUID.randomUUID()))
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isNotFound()
-                .expectBody(SalaryDto.class)
-                .returnResult()
-                .getResponseBody();
+            .uri(uriBuilder -> uriBuilder.path("/salary/{id}")
+                .build(UUID.randomUUID()))
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isNotFound()
+            .expectBody(SalaryDto.class)
+            .returnResult()
+            .getResponseBody();
         assertThat(salary)
-                .isNotNull()
-                .isEqualTo(SalaryDto.builder().build());
+            .isNotNull()
+            .isEqualTo(SalaryDto.builder().build());
     }
 }

@@ -80,8 +80,8 @@ public abstract class TestBase {
     @BeforeEach
     void check() {
         getTables().stream()
-                .map(this::countRecordsInTable)
-                .forEach(count -> assertThat(count).isZero());
+            .map(this::countRecordsInTable)
+            .forEach(count -> assertThat(count).isZero());
     }
 
     @AfterEach
@@ -93,32 +93,32 @@ public abstract class TestBase {
     protected <T extends BaseEntity> void assertThatEntityIsCorrect(@Nonnull final Set<T> entities,
                                                                     @Nonnull final JpaRepository<T, UUID> repository) {
         assertThat(entities)
-                .as("The size of the collection must be greater than or equal to two")
-                .hasSizeGreaterThanOrEqualTo(2);
+            .as("The size of the collection must be greater than or equal to two")
+            .hasSizeGreaterThanOrEqualTo(2);
         entities.forEach(e -> assertThat(e.getId())
-                .as("The ID must be filled in before saving")
-                .isNotNull());
+            .as("The ID must be filled in before saving")
+            .isNotNull());
         assertThat(entities.stream().map(BaseEntity::getId).distinct().count())
-                .as("All identifiers must be unique %s", entities)
-                .isEqualTo(entities.size());
+            .as("All identifiers must be unique %s", entities)
+            .isEqualTo(entities.size());
         final List<T> saved = repository.saveAll(entities);
         assertThat(saved)
-                .hasSameSizeAs(entities);
+            .hasSameSizeAs(entities);
         saved.forEach(e -> {
             assertThat(e.getCreatedAt())
-                    .isEqualTo(BEFORE_MILLENNIUM);
+                .isEqualTo(BEFORE_MILLENNIUM);
             if (e.getUpdatedAt() != null) {
                 assertThat(e.getUpdatedAt())
-                        .isEqualTo(BEFORE_MILLENNIUM);
+                    .isEqualTo(BEFORE_MILLENNIUM);
             }
         });
 
         final List<T> result = repository.findAll();
         assertThat(result)
-                .hasSameSizeAs(entities);
+            .hasSameSizeAs(entities);
         result.forEach(c -> assertThatNoException()
-                .as("Метод toString не должен генерировать ошибок")
-                .isThrownBy(c::toString)); // toString
+            .as("Метод toString не должен генерировать ошибок")
+            .isThrownBy(c::toString)); // toString
     }
 
     protected void assertInTransaction(@Nonnull final Runnable check) {
@@ -136,13 +136,13 @@ public abstract class TestBase {
 
     private <T> void assertThatNullableFieldsAreNotPrimitive(final Class<T> entityClass) {
         Arrays.stream(entityClass.getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(Column.class) &&
-                        field.getAnnotation(Column.class).nullable()
-                )
-                .forEach(field -> assertThat(field.getType().isPrimitive())
-                        .withFailMessage(String.format("In %s field %s is primitive", entityClass.getName(), field.getName()))
-                        .isFalse()
-                );
+            .filter(field -> field.isAnnotationPresent(Column.class) &&
+                field.getAnnotation(Column.class).nullable()
+            )
+            .forEach(field -> assertThat(field.getType().isPrimitive())
+                .withFailMessage(String.format("In %s field %s is primitive", entityClass.getName(), field.getName()))
+                .isFalse()
+            );
     }
 
     static Instant getTestInstant() {

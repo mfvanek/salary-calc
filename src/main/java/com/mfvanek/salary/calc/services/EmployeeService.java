@@ -38,13 +38,13 @@ public class EmployeeService {
     @Transactional
     public Employee create(@Nonnull final EmployeeCreationRequest request) {
         final Employee employee = Employee.builder()
-                .id(UUID.randomUUID())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .standardHoursPerDay(request.getStandardHoursPerDay())
-                .salaryPerHour(request.getSalaryPerHour())
-                .createdAt(LocalDateTime.now(clock))
-                .build();
+            .id(UUID.randomUUID())
+            .firstName(request.getFirstName())
+            .lastName(request.getLastName())
+            .standardHoursPerDay(request.getStandardHoursPerDay())
+            .salaryPerHour(request.getSalaryPerHour())
+            .createdAt(LocalDateTime.now(clock))
+            .build();
         return employeeRepository.save(employee);
     }
 }
