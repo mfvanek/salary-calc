@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,5 +14,5 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
 
     @Query(value = "select * from tickets t where t.emp_id = ?1 and t.calculated_at = ?2 and t.is_active = true",
         nativeQuery = true)
-    Optional<Ticket> findByEmployeeIdAndCalculationDate(UUID employeeId, LocalDate calculationDate);
+    Optional<Ticket> findByEmployeeIdAndCalculationDate(UUID employeeId, ZonedDateTime calculationDate);
 }

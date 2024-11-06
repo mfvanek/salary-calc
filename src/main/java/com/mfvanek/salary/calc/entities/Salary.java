@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -32,8 +32,8 @@ import java.util.Objects;
 public class Salary extends BaseEntity {
 
     @NotNull
-    @Column(name = "calculated_at", nullable = false)
-    private LocalDate calculationDate;
+    @Column(name = "calculated_at", nullable = false, columnDefinition = "timestamptz")
+    private ZonedDateTime calculationDate;
 
     @Column(name = "wrk_days", nullable = false)
     private int workingDaysCount;

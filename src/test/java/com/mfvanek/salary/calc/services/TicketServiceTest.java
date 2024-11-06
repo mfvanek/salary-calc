@@ -8,7 +8,7 @@ import com.mfvanek.salary.calc.support.TestDataProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +28,7 @@ class TicketServiceTest extends TestBase {
     void createShouldWork() {
         final Employee employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
         final SalaryCalculationOnDateRequest request = SalaryCalculationOnDateRequest.builder()
-            .calculationDate(LocalDate.now(clock))
+            .calculationDate(ZonedDateTime.now(clock))
             .workingDaysCount(10)
             .employeeId(employee.getId())
             .build();

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import javax.annotation.Nonnull;
 
 @Component
@@ -22,14 +22,14 @@ public class ClockAwareEntityListener {
     @PrePersist
     public void initCreatedAt(@Nonnull final BaseEntity entity) {
         if (entity.getCreatedAt() == null) {
-            entity.setCreatedAt(LocalDateTime.now(clock));
+            entity.setCreatedAt(ZonedDateTime.now(clock));
         }
     }
 
     @PreUpdate
     public void initUpdatedAt(@Nonnull final BaseEntity entity) {
         if (entity.getId() != null && entity.getCreatedAt() != null) {
-            entity.setUpdatedAt(LocalDateTime.now(clock));
+            entity.setUpdatedAt(ZonedDateTime.now(clock));
         }
     }
 }

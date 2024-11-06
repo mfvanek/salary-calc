@@ -23,10 +23,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.threeten.extra.MutableClock;
 
 import java.time.Clock;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +43,8 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 @ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
 public abstract class TestBase {
 
-    protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
+    protected static final ZoneOffset FIXED_ZONE = ZoneOffset.ofHours(-1);
+    private static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;
@@ -64,7 +65,7 @@ public abstract class TestBase {
 
     @AfterEach
     void resetClock() {
-        mutableClock.setInstant(getTestInstant());
+        mutableClock.setInstant(BEFORE_MILLENNIUM.toInstant(FIXED_ZONE));
     }
 
     protected final long countRecordsInTable(@Nonnull final String tableName) {
@@ -105,11 +106,12 @@ public abstract class TestBase {
         assertThat(saved)
             .hasSameSizeAs(entities);
         saved.forEach(e -> {
+            final ZonedDateTime expected = beforeMillennium();
             assertThat(e.getCreatedAt())
-                .isEqualTo(BEFORE_MILLENNIUM);
+                .isEqualTo(expected);
             if (e.getUpdatedAt() != null) {
                 assertThat(e.getUpdatedAt())
-                    .isEqualTo(BEFORE_MILLENNIUM);
+                    .isEqualTo(expected);
             }
         });
 
@@ -134,6 +136,11 @@ public abstract class TestBase {
         allEntities.forEach(this::assertThatNullableFieldsAreNotPrimitive);
     }
 
+    @Nonnull
+    protected ZonedDateTime beforeMillennium() {
+        return ZonedDateTime.of(BEFORE_MILLENNIUM, clock.getZone());
+    }
+
     private <T> void assertThatNullableFieldsAreNotPrimitive(final Class<T> entityClass) {
         Arrays.stream(entityClass.getDeclaredFields())
             .filter(field -> field.isAnnotationPresent(Column.class) &&
@@ -145,16 +152,12 @@ public abstract class TestBase {
             );
     }
 
-    static Instant getTestInstant() {
-        return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);
-    }
-
     @TestConfiguration
     static class CustomClockConfiguration {
 
         @Bean
         public MutableClock mutableClock() {
-            return MutableClock.of(getTestInstant(), ZoneOffset.UTC);
+            return MutableClock.of(BEFORE_MILLENNIUM.toInstant(FIXED_ZONE), FIXED_ZONE);
         }
 
         @Bean

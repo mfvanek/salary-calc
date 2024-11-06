@@ -12,7 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 
@@ -47,7 +47,7 @@ class SalaryServiceTest extends TestBase {
                 assertThat(r.getId())
                     .isEqualTo(ids.getRight());
                 assertThat(r.getCreatedAt())
-                    .isEqualTo(BEFORE_MILLENNIUM);
+                    .isEqualTo(beforeMillennium());
                 assertThat(r.getUpdatedAt())
                     .isNull();
             });
@@ -83,7 +83,7 @@ class SalaryServiceTest extends TestBase {
         final Ticket result = salaryService.calculateOnDate(SalaryCalculationOnDateRequest.builder()
             .employeeId(ids.getLeft())
             .workingDaysCount(0)
-            .calculationDate(LocalDate.now(clock))
+            .calculationDate(ZonedDateTime.now(clock))
             .build());
 
         assertThat(result)
@@ -93,7 +93,7 @@ class SalaryServiceTest extends TestBase {
     @Nonnull
     private Pair<UUID, UUID> createEmployeeWithSalary() {
         final Salary notSaved = TestDataProvider.prepareSalary()
-            .calculationDate(LocalDate.now(clock))
+            .calculationDate(ZonedDateTime.now(clock))
             .build();
         final Employee employee = TestDataProvider.prepareIvanIvanov()
             .withSalary(notSaved);
