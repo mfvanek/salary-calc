@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 @ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
 public abstract class TestBase {
 
-    protected static final ZoneOffset FIXED_ZONE = ZoneOffset.UTC;
+    protected static final ZoneOffset FIXED_ZONE = ZoneOffset.ofHours(-1);
     private static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
 
     @Autowired
