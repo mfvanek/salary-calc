@@ -15,6 +15,7 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
                 enable_lazy_load_no_trans: false
+                jdbc.time_zone: UTC # always store the data in the database according to UTC
             jakarta:
                 persistence:
                     query:

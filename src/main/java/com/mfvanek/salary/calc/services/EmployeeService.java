@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,7 +18,6 @@ import javax.annotation.Nonnull;
 @Transactional(readOnly = true)
 public class EmployeeService {
 
-    private final Clock clock;
     private final EmployeeRepository employeeRepository;
 
     @Nonnull
@@ -43,7 +40,6 @@ public class EmployeeService {
             .lastName(request.getLastName())
             .standardHoursPerDay(request.getStandardHoursPerDay())
             .salaryPerHour(request.getSalaryPerHour())
-            .createdAt(LocalDateTime.now(clock))
             .build();
         return employeeRepository.save(employee);
     }

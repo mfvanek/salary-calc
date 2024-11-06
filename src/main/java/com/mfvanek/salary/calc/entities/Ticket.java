@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 @NoArgsConstructor
 @SuperBuilder
@@ -33,8 +33,8 @@ import java.time.LocalDate;
 public class Ticket extends BaseEntity {
 
     @NotNull
-    @Column(name = "calculated_at", updatable = false, nullable = false)
-    private LocalDate calculationDate;
+    @Column(name = "calculated_at", updatable = false, nullable = false, columnDefinition = "timestamptz")
+    private ZonedDateTime calculationDate;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)

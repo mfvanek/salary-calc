@@ -7,7 +7,7 @@ import com.mfvanek.salary.calc.support.TestDataProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -25,11 +25,11 @@ class SalaryRepositoryTest extends TestBase {
         employeeRepository.saveAll(List.of(first, second));
 
         final Salary firstSalary = TestDataProvider.prepareSalary()
-            .calculationDate(LocalDate.now(clock))
+            .calculationDate(ZonedDateTime.now(clock))
             .employeeId(first)
             .build();
         final Salary secondSalary = TestDataProvider.prepareSalary()
-            .calculationDate(LocalDate.now(clock))
+            .calculationDate(ZonedDateTime.now(clock))
             .employeeId(second)
             .build();
         assertThatEntityIsCorrect(Set.of(firstSalary, secondSalary), salaryRepository);
