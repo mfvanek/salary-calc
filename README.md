@@ -35,29 +35,44 @@ curl http://localhost:8080/api/employee/all
 ```
 
 ## Run locally
-```shell
-mvn spring-boot:run -Dspring-boot.run.profiles=extern
+
+### With database from Testcontainers
+
+```
+mvn spring-boot:run -Dspring-boot.run.profiles=local -Dspring-boot.run.jvmArguments="-Duser.timezone=Europe/Moscow"
+```
+
+### With external database
+
+```
+mvn spring-boot:run -Dspring-boot.run.profiles=extern -Dspring-boot.run.jvmArguments="-Duser.timezone=Europe/Moscow"
 ```
 
 ## Run in Docker
+
 ### Build image
-```shell
+
+```
 mvn clean spring-boot:build-image -DskipTests -DskipSpotbugs=true
 ```
 
 ### Build native image
+
 **_Unfortunately, built application doesn't start in container_**
-```shell
+```
 mvn clean spring-boot:build-image -DskipTests -DskipSpotbugs=true -Pnative
 ```
 
 ### Docker Compose
+
 #### Start
+
 ```shell
 docker-compose --project-name="salary-calc" up -d
 ```
 
 #### Stop
+
 ```shell
 docker-compose --project-name="salary-calc" down
 ```

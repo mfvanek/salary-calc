@@ -176,7 +176,9 @@
                     <target>${java.version}</target>
                     <compilerArgs>
                         <arg>-XDcompilePolicy=simple</arg>
-                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -Xep:MissingSummary:OFF -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF</arg>
+                        <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -Xep:MissingSummary:OFF
+                            -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF
+                        </arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <failOnWarning>true</failOnWarning>
@@ -333,6 +335,9 @@
                 <configuration>
                     <image>
                         <name>mfvanek/${project.artifactId}:${project.version}</name>
+                        <env>
+                            <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+                        </env>
                     </image>
                     <excludes>
                         <exclude>
