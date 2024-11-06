@@ -59,9 +59,10 @@ services:
 
     salary-calc:
         container_name: salary_calc_container
-        image: docker.io/mfvanek/salary.calc:0.4.3
+        image: docker.io/mfvanek/salary.calc:0.4.7
         environment:
             SPRING_PROFILES_ACTIVE: "docker"
+            TZ: Europe/Moscow
         ports:
             - "8080:8080"
             - "8090:8090"
@@ -73,7 +74,7 @@ services:
             resources:
                 limits:
                     cpus: '0.5'
-                    memory: 512M
+                    memory: 768M
         networks:
             - postgres
 
