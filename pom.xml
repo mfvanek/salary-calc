@@ -179,6 +179,7 @@
                         <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -Xep:MissingSummary:OFF
                             -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF
                         </arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <failOnWarning>true</failOnWarning>
@@ -187,7 +188,7 @@
                         <path>
                             <groupId>com.google.errorprone</groupId>
                             <artifactId>error_prone_core</artifactId>
-                            <version>2.35.1</version>
+                            <version>2.36.0</version>
                         </path>
                         <path>
                             <groupId>jp.skypencil.errorprone.slf4j</groupId>
