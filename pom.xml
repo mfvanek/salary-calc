@@ -179,6 +179,7 @@
                         <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -Xep:MissingSummary:OFF
                             -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF
                         </arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <failOnWarning>true</failOnWarning>
