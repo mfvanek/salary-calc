@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Data
@@ -21,5 +21,5 @@ public class SalaryCalculationOnDateRequest {
     private int workingDaysCount;
 
     @NotNull
-    private LocalDate calculationDate;
+    private ZonedDateTime calculationDate;
 }

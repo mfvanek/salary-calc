@@ -14,16 +14,16 @@ class TicketControllerTest extends TestBase {
     @Test
     void getTicketShouldReturnNotFoundForUnknownId() {
         final TicketDto ticket = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/ticket/{id}")
-                        .build(UUID.randomUUID()))
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isNotFound()
-                .expectBody(TicketDto.class)
-                .returnResult()
-                .getResponseBody();
+            .uri(uriBuilder -> uriBuilder.path("/ticket/{id}")
+                .build(UUID.randomUUID()))
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().isNotFound()
+            .expectBody(TicketDto.class)
+            .returnResult()
+            .getResponseBody();
         assertThat(ticket)
-                .isNotNull()
-                .isEqualTo(TicketDto.builder().build());
+            .isNotNull()
+            .isEqualTo(TicketDto.builder().build());
     }
 }

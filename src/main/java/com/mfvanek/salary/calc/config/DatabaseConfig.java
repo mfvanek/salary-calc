@@ -18,16 +18,16 @@ import javax.sql.DataSource;
 @Configuration(proxyBeanMethods = false)
 public class DatabaseConfig {
 
-    public static final String PG_IMAGE = "postgres:16.4";
+    public static final String PG_IMAGE = "postgres:17.0";
 
     @SuppressWarnings({"resource", "java:S2095", "java:S1452"})
     @Bean(initMethod = "start", destroyMethod = "stop")
     public JdbcDatabaseContainer<?> jdbcDatabaseContainer() {
         return new PostgreSQLContainer<>(PG_IMAGE)
-                .withDatabaseName("salary_calc_demo")
-                .withUsername("salary_calc_demo_user")
-                .withPassword("salary_calc_demo_user_pwd")
-                .waitingFor(Wait.forListeningPort());
+            .withDatabaseName("salary_calc_demo")
+            .withUsername("salary_calc_demo_user")
+            .withPassword("salary_calc_demo_user_pwd")
+            .waitingFor(Wait.forListeningPort());
     }
 
     @Bean

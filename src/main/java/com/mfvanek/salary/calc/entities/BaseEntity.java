@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Getter
@@ -26,9 +26,9 @@ public abstract class BaseEntity {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", updatable = false, nullable = false, columnDefinition = "timestamptz")
+    private ZonedDateTime createdAt;
 
-    @Column(name = "updated_at", insertable = false)
-    private LocalDateTime updatedAt;
+    @Column(name = "updated_at", insertable = false, columnDefinition = "timestamptz")
+    private ZonedDateTime updatedAt;
 }

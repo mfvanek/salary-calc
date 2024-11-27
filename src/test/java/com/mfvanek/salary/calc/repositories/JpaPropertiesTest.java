@@ -19,19 +19,19 @@ class JpaPropertiesTest extends TestBase {
     @Test
     void failsWhenQueryTooLong() {
         final Query query = entityManager
-                .createNativeQuery(
-                        "SELECT pg_sleep(2)");
+            .createNativeQuery(
+                "SELECT pg_sleep(2)");
         assertThatThrownBy(query::getResultList)
-                .isInstanceOf(QueryTimeoutException.class)
-                .hasMessageContaining("ERROR: canceling statement due to user request");
+            .isInstanceOf(QueryTimeoutException.class)
+            .hasMessageContaining("ERROR: canceling statement due to user request");
     }
 
     @Test
     @DisplayName("Does not throw exception when query does not exceed timeout")
     void exceptionWithNotLongQuery() {
         final Query query = entityManager
-                .createNativeQuery(
-                        "SELECT pg_sleep(0.9)");
+            .createNativeQuery(
+                "SELECT pg_sleep(0.9)");
         assertThatNoException().isThrownBy(query::getResultList);
     }
 }

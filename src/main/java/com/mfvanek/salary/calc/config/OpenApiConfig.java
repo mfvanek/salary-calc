@@ -16,9 +16,9 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI openApi() {
         return new OpenAPI()
-                .info(new Info().title("salary-calc")
-                        .description("Demo app for salary calculation")
-                        .version(appVersion)
-                        .license(new License().name("Apache 2.0").url("https://github.com/mfvanek/salary-calc/blob/master/LICENSE")));
+            .info(new Info().title("salary-calc")
+                .description("Demo app for salary calculation")
+                .version(appVersion)
+                .license(new License().name("Apache 2.0").url("https://github.com/mfvanek/salary-calc/blob/master/LICENSE")));
     }
 }

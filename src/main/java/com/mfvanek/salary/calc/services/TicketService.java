@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,16 +41,16 @@ public class TicketService {
 
         // If it doesn't exist, let's try to add a new one
         final Ticket newTicket = Ticket.builder()
-                .id(UUID.randomUUID())
-                .calculationDate(request.getCalculationDate())
-                .employeeId(employee)
-                .isActive(Boolean.TRUE)
-                .calculationParamsJson(objectMapper.writeValueAsString(request))
-                .build();
+            .id(UUID.randomUUID())
+            .calculationDate(request.getCalculationDate())
+            .employeeId(employee)
+            .isActive(Boolean.TRUE)
+            .calculationParamsJson(objectMapper.writeValueAsString(request))
+            .build();
         return ticketRepository.save(newTicket);
     }
 
-    private Optional<Ticket> findExisting(final UUID employeeId, final LocalDate calculationDate) {
+    private Optional<Ticket> findExisting(final UUID employeeId, final ZonedDateTime calculationDate) {
         return ticketRepository.findByEmployeeIdAndCalculationDate(employeeId, calculationDate);
     }
 }

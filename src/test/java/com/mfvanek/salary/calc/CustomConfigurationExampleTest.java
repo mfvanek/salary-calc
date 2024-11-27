@@ -28,8 +28,8 @@ class CustomConfigurationExampleTest {
     @Test
     void clockAlsoShouldBeFixed() {
         assertThat(LocalDateTime.now(clock))
-                .isBefore(LocalDateTime.now(Clock.systemUTC()))
-                .isEqualTo(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0));
+            .isBefore(LocalDateTime.now(Clock.systemUTC()))
+            .isEqualTo(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0));
     }
 
     @TestConfiguration

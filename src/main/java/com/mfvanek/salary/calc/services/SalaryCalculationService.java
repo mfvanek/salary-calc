@@ -63,13 +63,13 @@ public class SalaryCalculationService {
 
         final BigDecimal totalAmount = calculateTotalAmount(employee, request.getWorkingDaysCount());
         final Salary newSalary = Salary.builder()
-                .id(UUID.randomUUID())
-                .calculationDate(request.getCalculationDate())
-                .workingDaysCount(request.getWorkingDaysCount())
-                .totalAmount(totalAmount)
-                .employeeId(employee)
-                .ticket(ticket)
-                .build();
+            .id(UUID.randomUUID())
+            .calculationDate(request.getCalculationDate())
+            .workingDaysCount(request.getWorkingDaysCount())
+            .totalAmount(totalAmount)
+            .employeeId(employee)
+            .ticket(ticket)
+            .build();
         final Salary salary = salaryRepository.save(newSalary);
         markTicketAsFinished(ticket, salary);
         return salary;
@@ -84,7 +84,7 @@ public class SalaryCalculationService {
     private BigDecimal calculateTotalAmount(final Employee employee, final int workingDaysCount) {
         final BigDecimal salaryPerHour = employee.getSalaryPerHour();
         final BigDecimal totalHours = BigDecimal.valueOf(workingDaysCount)
-                .multiply(BigDecimal.valueOf(employee.getStandardHoursPerDay()));
+            .multiply(BigDecimal.valueOf(employee.getStandardHoursPerDay()));
         return salaryPerHour.multiply(totalHours);
     }
 }

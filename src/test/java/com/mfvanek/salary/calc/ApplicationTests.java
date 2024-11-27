@@ -20,15 +20,15 @@ class ApplicationTests extends TestBase {
     @Test
     void contextLoads() {
         assertThat(context.getBean("clock"))
-                .isNotNull()
-                .isInstanceOf(Clock.class);
+            .isNotNull()
+            .isInstanceOf(Clock.class);
     }
 
     @Test
     void clockShouldBeFixed() {
         assertThat(LocalDateTime.now(clock))
-                .isBefore(LocalDateTime.now(Clock.systemUTC()))
-                .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59));
+            .isBefore(LocalDateTime.now(Clock.systemUTC()))
+            .isEqualTo(LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59));
     }
 
     @Test
@@ -36,7 +36,7 @@ class ApplicationTests extends TestBase {
         mutableClock.add(1_000L, ChronoUnit.YEARS);
 
         assertThat(LocalDateTime.now(clock))
-                .isAfter(LocalDateTime.now(Clock.systemUTC()))
-                .isEqualTo(LocalDateTime.of(2999, Month.DECEMBER, 31, 23, 59, 59));
+            .isAfter(LocalDateTime.now(Clock.systemUTC()))
+            .isEqualTo(LocalDateTime.of(2999, Month.DECEMBER, 31, 23, 59, 59));
     }
 }

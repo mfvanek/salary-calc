@@ -10,7 +10,7 @@ class EmployeeDtoTest {
     @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
     void equalsHashCodeShouldAdhereContracts() {
         EqualsVerifier.forClass(EmployeeDto.class)
-                .suppress(Warning.NONFINAL_FIELDS)
-                .verify();
+            .suppress(Warning.NONFINAL_FIELDS)
+            .verify();
     }
 }

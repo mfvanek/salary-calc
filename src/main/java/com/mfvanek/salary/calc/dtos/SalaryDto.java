@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Data
@@ -18,7 +18,7 @@ public final class SalaryDto {
     private UUID id;
 
     @NotNull
-    private LocalDate calculationDate;
+    private ZonedDateTime calculationDate;
 
     private int workingDaysCount;
 

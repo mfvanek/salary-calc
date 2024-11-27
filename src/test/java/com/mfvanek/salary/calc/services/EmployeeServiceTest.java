@@ -18,17 +18,17 @@ class EmployeeServiceTest extends TestBase {
     @Test
     void findByIdShouldWork() {
         assertThat(employeeService.findById(UUID.randomUUID()))
-                .isNotPresent();
+            .isNotPresent();
 
         final Employee employee = employeeRepository.saveAndFlush(TestDataProvider.prepareIvanIvanov());
         assertThat(employeeService.findById(employee.getId()))
-                .isPresent()
-                .get()
-                .satisfies(e -> {
-                    assertThat(e.getId())
-                            .isEqualTo(employee.getId());
-                    assertThat(e.getFirstName())
-                            .isEqualTo("Ivan");
-                });
+            .isPresent()
+            .get()
+            .satisfies(e -> {
+                assertThat(e.getId())
+                    .isEqualTo(employee.getId());
+                assertThat(e.getFirstName())
+                    .isEqualTo("Ivan");
+            });
     }
 }

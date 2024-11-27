@@ -48,8 +48,8 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
         final List<Employee> allEmployees = employeeService.getAll();
         final List<EmployeeDto> allEmployeesDto = allEmployees.stream()
-                .map(this::convertToDto)
-                .toList();
+            .map(this::convertToDto)
+            .toList();
         return ResponseEntity.ok(allEmployeesDto);
     }
 
