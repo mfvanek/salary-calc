@@ -42,8 +42,8 @@ class ActuatorEndpointTest extends TestBase {
         "health|{\"status\":\"UP\",\"groups\":[\"liveness\",\"readiness\"]}|application/json",
         "health/liveness|{\"status\":\"UP\"}|application/json",
         "health/readiness|{\"status\":\"UP\"}|application/json",
-        "openapi/springdocDefault|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
-        "openapi/x-actuator|{\"openapi\":\"3.0.1\",\"info\":{\"title\":\"salary-calc\"|application/json",
+        "openapi/springdocDefault|{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"salary-calc\"|application/json",
+        "openapi/x-actuator|{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"salary-calc\"|application/json",
         "info|\"version\":|application/json"}, delimiter = '|')
     void actuatorEndpointShouldReturnOk(@Nonnull final String endpointName,
                                         @Nonnull final String expectedSubstring,

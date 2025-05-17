@@ -47,30 +47,31 @@ management:
     server:
         port: 8090
     endpoints:
-        enabled-by-default: false
         web:
             exposure.include: health,prometheus,info,threaddump,heapdump,openapi,swaggerui
             cors:
                 allowed-methods: '*'
                 allowed-origins: '*'
                 allowed-headers: '*'
+        access:
+            default: read_only
     endpoint:
         health:
-            enabled: true
             probes.enabled: true
             group:
                 readiness:
                     include: readinessState,db
                     additional-path: server:/readyz # In order to collect probes from application main port
                     # show-components: always
+            access: read_only
         prometheus:
-            enabled: true
+            access: read_only
         info:
-            enabled: true
+            access: read_only
         threaddump:
-            enabled: true
+            access: read_only
         heapdump:
-            enabled: true
+            access: read_only
     metrics:
         distribution:
             percentiles-histogram:
