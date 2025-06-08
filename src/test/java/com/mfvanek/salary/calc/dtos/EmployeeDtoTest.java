@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 class EmployeeDtoTest {
 
     @Test
-    @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
     void equalsHashCodeShouldAdhereContracts() {
         EqualsVerifier.forClass(EmployeeDto.class)
             .suppress(Warning.NONFINAL_FIELDS)
