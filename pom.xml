@@ -177,7 +177,7 @@
                     <compilerArgs>
                         <arg>-XDcompilePolicy=simple</arg>
                         <arg>-Xplugin:ErrorProne -XepDisableWarningsInGeneratedCode -Xep:MissingSummary:OFF
-                            -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF
+                            -Xep:FutureReturnValueIgnored:OFF -Xep:TruthSelfEquals:OFF -Xep:BooleanLiteral:OFF
                         </arg>
                         <arg>--should-stop=ifError=FLOW</arg>
                     </compilerArgs>
