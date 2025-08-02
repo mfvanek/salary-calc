@@ -138,7 +138,7 @@ public abstract class TestBase {
 
     @Nonnull
     protected ZonedDateTime beforeMillennium() {
-        return ZonedDateTime.of(BEFORE_MILLENNIUM, clock.getZone());
+        return ZonedDateTime.of(BEFORE_MILLENNIUM, FIXED_ZONE);
     }
 
     private <T> void assertThatNullableFieldsAreNotPrimitive(final Class<T> entityClass) {
