@@ -106,7 +106,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>4.0.7</version>
+            <version>4.0.9</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -246,7 +246,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.9.3.2</version>
+                <version>4.9.4.0</version>
                 <configuration>
                     <includeTests>true</includeTests>
                     <effort>Max</effort>
