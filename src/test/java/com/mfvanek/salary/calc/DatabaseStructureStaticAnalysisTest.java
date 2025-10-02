@@ -41,9 +41,9 @@ class DatabaseStructureStaticAnalysisTest extends TestBase {
                     .as(check.getDiagnostic().name());
 
                 switch (check.getDiagnostic()) {
-                    case COLUMNS_WITHOUT_DESCRIPTION -> listAssert.hasSize(22);
+                    case Diagnostic.COLUMNS_WITHOUT_DESCRIPTION -> listAssert.hasSize(22);
 
-                    case COLUMNS_WITH_FIXED_LENGTH_VARCHAR -> listAssert
+                    case Diagnostic.COLUMNS_WITH_FIXED_LENGTH_VARCHAR -> listAssert
                         .asInstanceOf(list(Column.class))
                         .hasSize(3)
                         .containsExactly(
@@ -52,7 +52,7 @@ class DatabaseStructureStaticAnalysisTest extends TestBase {
                             Column.ofNotNull("tickets", "calc_params")
                         );
 
-                    case TABLES_WHERE_PRIMARY_KEY_COLUMNS_NOT_FIRST -> listAssert
+                    case Diagnostic.TABLES_WHERE_PRIMARY_KEY_COLUMNS_NOT_FIRST -> listAssert
                         .asInstanceOf(list(Table.class))
                         .hasSize(3)
                         .containsExactly(
