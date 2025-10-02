@@ -10,11 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 public class OpenApiConfig {
 
-    @Value("${info.app.version}")
-    private String appVersion;
-
     @Bean
-    public OpenAPI openApi() {
+    public OpenAPI openApi(@Value("${info.app.version}") final String appVersion) {
         return new OpenAPI()
             .info(new Info().title("salary-calc")
                 .description("Demo app for salary calculation")
