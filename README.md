@@ -19,8 +19,8 @@ Demo app for salary calculation (Spring Boot)
 
 ### Actuator
 
-[Swagger UI](http://localhost:8090/actuator/swagger-ui)
-[Health](http://localhost:8090/actuator/health)
+- [Swagger UI](http://localhost:8090/actuator/swagger-ui)
+- [Health](http://localhost:8090/actuator/health)
 
 ### Endpoints
 ```shell
