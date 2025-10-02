@@ -1,8 +1,7 @@
-version: "3.9"
 services:
     postgres:
         container_name: postgres_container
-        image: postgres:17.4
+        image: postgres:17.6
         command:
             - "postgres"
             - "-c"
@@ -59,7 +58,7 @@ services:
 
     salary-calc:
         container_name: salary_calc_container
-        image: docker.io/mfvanek/salary.calc:0.5.0
+        image: docker.io/mfvanek/salary.calc:0.6.2
         environment:
             SPRING_PROFILES_ACTIVE: "docker"
             TZ: Europe/Moscow
