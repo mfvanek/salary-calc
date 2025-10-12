@@ -4,6 +4,7 @@ import com.mfvanek.salary.calc.support.TestBase;
 import io.github.mfvanek.pg.core.checks.common.DatabaseCheckOnHost;
 import io.github.mfvanek.pg.core.checks.common.Diagnostic;
 import io.github.mfvanek.pg.model.column.Column;
+import io.github.mfvanek.pg.model.column.ColumnWithType;
 import io.github.mfvanek.pg.model.dbobject.DbObject;
 import io.github.mfvanek.pg.model.table.Table;
 import org.assertj.core.api.ListAssert;
@@ -38,21 +39,21 @@ class DatabaseStructureStaticAnalysisTest extends TestBase {
             .filter(DatabaseCheckOnHost::isStatic)
             .forEach(check -> {
                 final ListAssert<? extends DbObject> listAssert = assertThat(check.check())
-                    .as(check.getDiagnostic().name());
+                    .as(check.getName());
 
-                switch (check.getDiagnostic()) {
-                    case COLUMNS_WITHOUT_DESCRIPTION -> listAssert.hasSize(22);
+                switch (check.getName()) {
+                    case "COLUMNS_WITHOUT_DESCRIPTION" -> listAssert.hasSize(22);
 
-                    case COLUMNS_WITH_FIXED_LENGTH_VARCHAR -> listAssert
-                        .asInstanceOf(list(Column.class))
+                    case "COLUMNS_WITH_FIXED_LENGTH_VARCHAR" -> listAssert
+                        .asInstanceOf(list(ColumnWithType.class))
                         .hasSize(3)
                         .containsExactly(
-                            Column.ofNotNull("employees", "first_name"),
-                            Column.ofNotNull("employees", "last_name"),
-                            Column.ofNotNull("tickets", "calc_params")
+                            ColumnWithType.ofVarchar(Column.ofNotNull("employees", "first_name")),
+                            ColumnWithType.ofVarchar(Column.ofNotNull("employees", "last_name")),
+                            ColumnWithType.ofVarchar(Column.ofNotNull("tickets", "calc_params"))
                         );
 
-                    case TABLES_WHERE_PRIMARY_KEY_COLUMNS_NOT_FIRST -> listAssert
+                    case "TABLES_WHERE_PRIMARY_KEY_COLUMNS_NOT_FIRST" -> listAssert
                         .asInstanceOf(list(Table.class))
                         .hasSize(3)
                         .containsExactly(
