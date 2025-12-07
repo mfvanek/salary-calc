@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @Configuration(proxyBeanMethods = false)
 public class DatabaseConfig {
 
-    public static final String PG_IMAGE = "postgres:17.6";
+    public static final String PG_IMAGE = "postgres:18.1";
 
     @SuppressWarnings({"resource", "java:S2095", "java:S1452"})
     @Bean(initMethod = "start", destroyMethod = "stop")

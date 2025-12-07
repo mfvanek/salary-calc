@@ -27,7 +27,7 @@ class DatabaseStructureStaticAnalysisTest extends TestBase {
     void checkPostgresVersion() {
         final String pgVersion = jdbcTemplate.queryForObject("select version();", String.class);
         assertThat(pgVersion)
-            .startsWith("PostgreSQL 17.6");
+            .startsWith("PostgreSQL 18.1");
     }
 
     @Test
