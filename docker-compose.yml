@@ -1,7 +1,7 @@
 services:
     postgres:
         container_name: postgres_container
-        image: postgres:17.6
+        image: postgres:18.1
         command:
             - "postgres"
             - "-c"
@@ -36,9 +36,9 @@ services:
             POSTGRES_DB: "salary_calc_demo"
             POSTGRES_USER: "salary_calc_demo_user"
             POSTGRES_PASSWORD: "salary_calc_demo_user_pwd"
-            PGDATA: "/var/lib/postgresql/data/pgdata"
+            PGDATA: "/var/lib/postgresql/18/docker/pgdata"
         volumes:
-            - salary-calc-data:/var/lib/postgresql/data
+            - salary-calc-data:/var/lib/postgresql/18/docker
         ports:
             - "5432:5432"
         healthcheck:
@@ -58,7 +58,7 @@ services:
 
     salary-calc:
         container_name: salary_calc_container
-        image: docker.io/mfvanek/salary.calc:0.6.2
+        image: docker.io/mfvanek/salary.calc:0.7.0
         environment:
             SPRING_PROFILES_ACTIVE: "docker"
             TZ: Europe/Moscow

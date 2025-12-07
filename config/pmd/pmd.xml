@@ -9,6 +9,7 @@
         <exclude name="UnitTestContainsTooManyAsserts"/>
         <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
         <exclude name="GuardLogStatement"/>
+        <exclude name="EnumComparison"/>
     </rule>
 
     <rule ref="category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod">
