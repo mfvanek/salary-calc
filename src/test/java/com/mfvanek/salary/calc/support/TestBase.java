@@ -156,13 +156,13 @@ public abstract class TestBase {
     static class CustomClockConfiguration {
 
         @Bean
-        public MutableClock mutableClock() {
+        MutableClock mutableClock() {
             return MutableClock.of(BEFORE_MILLENNIUM.toInstant(FIXED_ZONE), FIXED_ZONE);
         }
 
         @Bean
         @Primary
-        public Clock fixedClock(@Nonnull final MutableClock mutableClock) {
+        Clock fixedClock(@Nonnull final MutableClock mutableClock) {
             return mutableClock;
         }
     }
