@@ -37,7 +37,7 @@ class CustomConfigurationExampleTest {
 
         @Bean
         @Primary
-        public Clock fixedClock() {
+        Clock fixedClock() {
             return Clock.fixed(MILLENNIUM.toInstant(ZoneOffset.UTC), ZoneOffset.UTC);
         }
     }
