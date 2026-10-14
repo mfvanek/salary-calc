@@ -23,7 +23,7 @@
         <source.encoding>UTF-8</source.encoding>
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
-        <pmd.version>7.26.0</pmd.version>
+        <pmd.version>7.28.0</pmd.version>
         <skipSpotbugs>false</skipSpotbugs>
     </properties>
 
@@ -39,7 +39,7 @@
             <dependency>
                 <groupId>io.github.mfvanek</groupId>
                 <artifactId>pg-index-health-bom</artifactId>
-                <version>0.41.2</version>
+                <version>0.41.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.20.0</version>
+            <version>3.21.0</version>
         </dependency>
         <dependency>
             <groupId>org.modelmapper</groupId>
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>4.5.1</version>
+            <version>4.5.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -170,7 +170,7 @@
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>5.7.0.6970</version>
+                    <version>5.8.0.7211</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -254,7 +254,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.10.4.0</version>
+                <version>4.10.4.1</version>
                 <configuration>
                     <includeTests>true</includeTests>
                     <effort>Max</effort>
@@ -477,7 +477,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>2.22.0</version>
             </plugin>
         </plugins>
     </build>
