@@ -3,16 +3,16 @@ package com.mfvanek.salary.calc.support;
 import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Salary;
 import lombok.experimental.UtilityClass;
+import org.jspecify.annotations.NonNull;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @SuppressWarnings("PMD.TestClassWithoutTestCases")
 @UtilityClass
 public class TestDataProvider {
 
-    @Nonnull
+    @NonNull
     public static Employee prepareIvanIvanov() {
         return Employee.builder()
             .id(UUID.randomUUID())
@@ -23,7 +23,7 @@ public class TestDataProvider {
             .build();
     }
 
-    @Nonnull
+    @NonNull
     public static Employee preparePetrPetrov() {
         return Employee.builder()
             .id(UUID.randomUUID())
@@ -34,7 +34,6 @@ public class TestDataProvider {
             .build();
     }
 
-    @Nonnull
     public Salary.SalaryBuilder<?, ?> prepareSalary() {
         return Salary.builder()
             .id(UUID.randomUUID())

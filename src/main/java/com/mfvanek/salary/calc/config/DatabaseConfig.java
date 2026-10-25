@@ -2,6 +2,7 @@ package com.mfvanek.salary.calc.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -10,7 +11,6 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
-import javax.annotation.Nonnull;
 import javax.sql.DataSource;
 
 @Profile("local")
@@ -31,7 +31,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public DataSource dataSource(@Nonnull final JdbcDatabaseContainer<?> jdbcDatabaseContainer) {
+    public DataSource dataSource(@NonNull final JdbcDatabaseContainer<?> jdbcDatabaseContainer) {
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(jdbcDatabaseContainer.getJdbcUrl());
         hikariConfig.setUsername(jdbcDatabaseContainer.getUsername());

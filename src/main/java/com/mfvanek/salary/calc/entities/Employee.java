@@ -20,11 +20,11 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.jspecify.annotations.NonNull;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.Nonnull;
 
 @NoArgsConstructor
 @SuperBuilder
@@ -68,8 +68,8 @@ public class Employee extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
     private Set<Ticket> tickets = new HashSet<>();
 
-    @Nonnull
-    public Employee withSalary(@Nonnull final Salary salary) {
+    @NonNull
+    public Employee withSalary(@NonNull final Salary salary) {
         salaries.add(salary);
         salary.setEmployeeId(this);
         return this;

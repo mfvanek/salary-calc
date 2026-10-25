@@ -9,12 +9,12 @@ import com.mfvanek.salary.calc.support.TestDataProvider;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -90,7 +90,7 @@ class SalaryServiceTest extends TestBase {
             .isNotNull();
     }
 
-    @Nonnull
+    @NonNull
     private Pair<UUID, UUID> createEmployeeWithSalary() {
         final Salary notSaved = TestDataProvider.prepareSalary()
             .calculationDate(ZonedDateTime.now(clock))

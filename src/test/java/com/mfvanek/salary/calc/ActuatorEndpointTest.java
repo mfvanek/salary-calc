@@ -8,14 +8,13 @@
 package com.mfvanek.salary.calc;
 
 import com.mfvanek.salary.calc.support.TestBase;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import javax.annotation.Nonnull;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,9 +44,9 @@ class ActuatorEndpointTest extends TestBase {
         "openapi/springdocDefault|{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"salary-calc\"|application/json",
         "openapi/x-actuator|{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"salary-calc\"|application/json",
         "info|\"version\":|application/json"}, delimiter = '|')
-    void actuatorEndpointShouldReturnOk(@Nonnull final String endpointName,
-                                        @Nonnull final String expectedSubstring,
-                                        @Nonnull final String mediaType) {
+    void actuatorEndpointShouldReturnOk(@NonNull final String endpointName,
+                                        @NonNull final String expectedSubstring,
+                                        @NonNull final String mediaType) {
         final String result = actuatorClient.get()
             .uri(uriBuilder -> uriBuilder
                 .path(endpointName)

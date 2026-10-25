@@ -4,6 +4,7 @@ import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.repositories.EmployeeRepository;
 import com.mfvanek.salary.calc.requests.EmployeeCreationRequest;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @Service
 @RequiredArgsConstructor
@@ -20,20 +20,20 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    @Nonnull
-    public Optional<Employee> findById(@Nonnull final UUID id) {
+    @NonNull
+    public Optional<Employee> findById(@NonNull final UUID id) {
         Objects.requireNonNull(id, "id cannot be null");
         return employeeRepository.findById(id);
     }
 
-    @Nonnull
+    @NonNull
     public List<Employee> getAll() {
         return employeeRepository.findAll();
     }
 
-    @Nonnull
+    @NonNull
     @Transactional
-    public Employee create(@Nonnull final EmployeeCreationRequest request) {
+    public Employee create(@NonNull final EmployeeCreationRequest request) {
         final Employee employee = Employee.builder()
             .id(UUID.randomUUID())
             .firstName(request.getFirstName())

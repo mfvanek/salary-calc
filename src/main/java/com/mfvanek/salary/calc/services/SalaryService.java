@@ -6,13 +6,13 @@ import com.mfvanek.salary.calc.repositories.SalaryRepository;
 import com.mfvanek.salary.calc.requests.SalaryCalculationOnDateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @Service
 @Transactional(readOnly = true)
@@ -30,7 +30,7 @@ public class SalaryService {
     }
 
     @Transactional
-    public Ticket calculateOnDate(@Nonnull final SalaryCalculationOnDateRequest request) {
+    public Ticket calculateOnDate(@NonNull final SalaryCalculationOnDateRequest request) {
         Objects.requireNonNull(request, "request cannot be null");
         return employeeService.findById(request.getEmployeeId())
             .map(e -> {
