@@ -13,7 +13,7 @@ Demo app for salary calculation (Spring Boot)
 ## Requirements
 
 - Java 25+  
-- Spring Boot 3.5+
+- Spring Boot 4.0+
 
 ## API
 

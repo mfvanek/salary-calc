@@ -38,7 +38,7 @@ class ActuatorEndpointTest extends TestBase {
     @ParameterizedTest
     @CsvSource(value = {
         "prometheus|jvm_threads_live_threads|text/plain",
-        "health|{\"status\":\"UP\",\"groups\":[\"liveness\",\"readiness\"]}|application/json",
+        "health|{\"groups\":[\"liveness\",\"readiness\"],\"status\":\"UP\"}|application/json",
         "health/liveness|{\"status\":\"UP\"}|application/json",
         "health/readiness|{\"status\":\"UP\"}|application/json",
         "openapi/springdocDefault|{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"salary-calc\"|application/json",

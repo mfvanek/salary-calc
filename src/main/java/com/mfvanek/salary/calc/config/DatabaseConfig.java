@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import javax.sql.DataSource;
 
@@ -23,7 +23,7 @@ public class DatabaseConfig {
     @SuppressWarnings({"resource", "java:S2095", "java:S1452"})
     @Bean(initMethod = "start", destroyMethod = "stop")
     public JdbcDatabaseContainer<?> jdbcDatabaseContainer() {
-        return new PostgreSQLContainer<>(PG_IMAGE)
+        return new PostgreSQLContainer(PG_IMAGE)
             .withDatabaseName("salary_calc_demo")
             .withUsername("salary_calc_demo_user")
             .withPassword("salary_calc_demo_user_pwd")
