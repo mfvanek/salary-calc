@@ -4,6 +4,7 @@ import com.mfvanek.salary.calc.entities.BaseEntity;
 import com.mfvanek.salary.calc.repositories.EmployeeRepository;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.reflections.Reflections;
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
@@ -68,12 +68,12 @@ public abstract class TestBase {
         mutableClock.setInstant(BEFORE_MILLENNIUM.toInstant(FIXED_ZONE));
     }
 
-    protected final long countRecordsInTable(@Nonnull final String tableName) {
+    protected final long countRecordsInTable(@NonNull final String tableName) {
         final Long queryResult = jdbcTemplate.queryForObject("select count(*) from " + tableName, Long.class);
         return Objects.requireNonNullElse(queryResult, 0L);
     }
 
-    @Nonnull
+    @NonNull
     protected Set<String> getTables() {
         return Set.of("employees", "salary_calc", "tickets");
     }
@@ -91,8 +91,8 @@ public abstract class TestBase {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    protected <T extends BaseEntity> void assertThatEntityIsCorrect(@Nonnull final Set<T> entities,
-                                                                    @Nonnull final JpaRepository<T, UUID> repository) {
+    protected <T extends BaseEntity> void assertThatEntityIsCorrect(@NonNull final Set<T> entities,
+                                                                    @NonNull final JpaRepository<T, UUID> repository) {
         assertThat(entities)
             .as("The size of the collection must be greater than or equal to two")
             .hasSizeGreaterThanOrEqualTo(2);
@@ -123,7 +123,7 @@ public abstract class TestBase {
             .isThrownBy(c::toString)); // toString
     }
 
-    protected void assertInTransaction(@Nonnull final Runnable check) {
+    protected void assertInTransaction(@NonNull final Runnable check) {
         transactionTemplate.execute(ts -> {
             check.run();
             return null;
@@ -136,7 +136,7 @@ public abstract class TestBase {
         allEntities.forEach(this::assertThatNullableFieldsAreNotPrimitive);
     }
 
-    @Nonnull
+    @NonNull
     protected ZonedDateTime beforeMillennium() {
         return ZonedDateTime.of(BEFORE_MILLENNIUM, FIXED_ZONE);
     }
@@ -162,7 +162,7 @@ public abstract class TestBase {
 
         @Bean
         @Primary
-        Clock fixedClock(@Nonnull final MutableClock mutableClock) {
+        Clock fixedClock(@NonNull final MutableClock mutableClock) {
             return mutableClock;
         }
     }

@@ -61,7 +61,6 @@
         <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
         <exclude name="AvoidCatchingGenericException"/>
-        <exclude name="UseUtilityClass"/>
     </rule>
 
     <rule ref="category/java/design.xml/SimplifyBooleanReturns">
