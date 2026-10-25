@@ -70,9 +70,10 @@ class EmployeeControllerTest extends TestBase {
 
         assertThat(result)
             .isNotNull();
-        assertThat(result.getResponseHeaders())
-            .hasSizeGreaterThanOrEqualTo(2)
-            .containsKeys(HttpHeaders.CONTENT_TYPE, HttpHeaders.LOCATION);
+        assertThat(result.getResponseHeaders().containsHeader(HttpHeaders.CONTENT_TYPE))
+            .isTrue();
+        assertThat(result.getResponseHeaders().containsHeader(HttpHeaders.LOCATION))
+            .isTrue();
 
         final List<String> location = result.getResponseHeaders().get(HttpHeaders.LOCATION);
         assertThat(location)
@@ -98,7 +99,7 @@ class EmployeeControllerTest extends TestBase {
             });
 
         final EmployeeDto foundEmployee = webTestClient.get()
-            .uri(location.get(0))
+            .uri(location.getFirst())
             .accept(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus().isOk()

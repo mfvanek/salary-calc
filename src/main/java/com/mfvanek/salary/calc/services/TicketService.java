@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mfvanek.salary.calc.entities.Employee;
 import com.mfvanek.salary.calc.entities.Ticket;
 import com.mfvanek.salary.calc.repositories.TicketRepository;
@@ -10,6 +9,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.ObjectMapper;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
