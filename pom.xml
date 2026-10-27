@@ -209,7 +209,7 @@
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>4.0.9</version>
+                            <version>4.1.2</version>
                         </path>
                         <path>
                             <groupId>com.uber.nullaway</groupId>
