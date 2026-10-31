@@ -52,7 +52,7 @@ public class Salary extends BaseEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId());
+        return Objects.hashCode(this.getId());
     }
 
     @Override
