@@ -2,22 +2,19 @@ package com.mfvanek.salary.calc.entities;
 
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Clock;
 import java.time.ZonedDateTime;
 
+// Constructor injection is required: field injection doesn't work in native image
 @Component
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class ClockAwareEntityListener {
 
-    // Couldn't use constructor injection here
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-    @Autowired
-    private Clock clock;
+    private final Clock clock;
 
     @PrePersist
     public void initCreatedAt(@NonNull final BaseEntity entity) {

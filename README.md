@@ -40,7 +40,7 @@ curl http://localhost:8080/api/employee/all
 ### With database from Testcontainers
 
 ```
-mvn spring-boot:run -Dspring-boot.run.profiles=local -Dspring-boot.run.jvmArguments="-Duser.timezone=Europe/Moscow"
+mvn spring-boot:test-run -Dspring-boot.run.jvmArguments="-Duser.timezone=Europe/Moscow"
 ```
 
 ### With external database
@@ -59,7 +59,6 @@ mvn clean spring-boot:build-image -DskipTests -DskipSpotbugs=true
 
 ### Build native image
 
-**_Unfortunately, built application doesn't start in container_**
 ```
 mvn clean spring-boot:build-image -DskipTests -DskipSpotbugs=true -Pnative
 ```

@@ -1,6 +1,5 @@
 package com.mfvanek.salary.calc.support;
 
-import com.mfvanek.salary.calc.config.DatabaseConfig;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,7 +10,9 @@ import org.testcontainers.utility.DockerImageName;
 
 public class PostgresInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static final DockerImageName IMAGE = DockerImageName.parse(DatabaseConfig.PG_IMAGE);
+    public static final String PG_IMAGE = "postgres:18.1";
+
+    private static final DockerImageName IMAGE = DockerImageName.parse(PG_IMAGE);
     private static final Network NETWORK = Network.newNetwork();
     private static final PostgreSQLContainer CONTAINER = new PostgreSQLContainer(IMAGE);
 
