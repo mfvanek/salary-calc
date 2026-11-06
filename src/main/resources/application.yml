@@ -23,8 +23,6 @@ spring:
                         timeout: 1000 # 1 second
     main:
         banner-mode: off
-    profiles:
-        active: local
     application:
         name: salary-calc
     datasource:
