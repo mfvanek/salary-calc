@@ -1,11 +1,10 @@
 package com.mfvanek.salary.calc;
 
-import com.mfvanek.salary.calc.support.PostgresInitializer;
+import com.mfvanek.salary.calc.support.PostgresContainerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
-import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
 /**
@@ -29,13 +28,11 @@ public final class LocalDevApplication {
 
         @Bean
         @ServiceConnection
-        @SuppressWarnings({"resource", "java:S2095", "java:S1452"})
         PostgreSQLContainer postgresContainer() {
-            return new PostgreSQLContainer(PostgresInitializer.PG_IMAGE)
+            return PostgresContainerConfiguration.newContainer()
                 .withDatabaseName("salary_calc_demo")
                 .withUsername("salary_calc_demo_user")
-                .withPassword("salary_calc_demo_user_pwd")
-                .waitingFor(Wait.forListeningPort());
+                .withPassword("salary_calc_demo_user_pwd");
         }
     }
 }
