@@ -43,6 +43,8 @@ curl http://localhost:8080/api/employee/all
 mvn spring-boot:test-run -Dspring-boot.run.jvmArguments="-Duser.timezone=Europe/Moscow"
 ```
 
+You can also run `LocalDevApplication` (in test sources) directly from your IDE.
+
 ### With external database
 
 ```

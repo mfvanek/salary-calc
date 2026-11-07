@@ -5,13 +5,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.9</version>
+        <version>4.1.2</version>
         <relativePath/>
     </parent>
 
     <groupId>com.mfvanek</groupId>
     <artifactId>salary.calc</artifactId>
-    <version>0.9.1</version>
+    <version>0.10.0</version>
     <name>salary.calc</name>
     <description>Demo app for salary calculation (Spring Boot)</description>
 
@@ -215,7 +215,7 @@
                         <path>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>4.0.9</version>
+                            <version>4.1.2</version>
                         </path>
                         <path>
                             <groupId>com.uber.nullaway</groupId>

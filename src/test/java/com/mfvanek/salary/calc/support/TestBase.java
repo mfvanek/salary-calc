@@ -42,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 @ActiveProfiles("test")
 @AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
+@ContextConfiguration(classes = {TestBase.CustomClockConfiguration.class, PostgresContainerConfiguration.class})
 public abstract class TestBase {
 
     protected static final ZoneOffset FIXED_ZONE = ZoneOffset.ofHours(-1);
